@@ -29,5 +29,24 @@ return [
         ],
     ],
 
+    'customer' => [
+        'title' => 'Customers',
+
+        'actions' => [
+            'index' => 'Customers',
+            'create' => 'New Customer',
+            'edit' => 'Edit :name',
+        ],
+
+        'columns' => [
+            'id' => "ID",
+            'name' => "Name",
+            'wechat_name' => "Wechat name",
+            'remarks' => "Remarks",
+            'status' => "Status",
+            
+        ],
+    ],
+
     // Do not delete me :) I'm used for auto-generation
 ];

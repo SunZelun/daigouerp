@@ -18,3 +18,17 @@ $factory->define(App\Models\User::class, function (Faker\Generator $faker) {
     ];
 });
 
+/** @var  \Illuminate\Database\Eloquent\Factory $factory */
+$factory->define(App\Models\Customer::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->firstName,
+        'wechat_name' => $faker->sentence,
+        'remarks' => $faker->sentence,
+        'status' => $faker->boolean(),
+        'created_at' => $faker->dateTime,
+        'updated_at' => $faker->dateTime,
+        
+        
+    ];
+});
+
