@@ -9,6 +9,7 @@ use App\Http\Requests\Admin\Customer\UpdateCustomer;
 use App\Http\Requests\Admin\Customer\DestroyCustomer;
 use Brackets\AdminListing\Facades\AdminListing;
 use App\Models\Customer;
+use Illuminate\Support\Facades\Auth;
 
 class CustomersController extends Controller
 {
@@ -27,7 +28,7 @@ class CustomersController extends Controller
             $request,
 
             // set columns to query
-            ['id', 'name', 'wechat_name', 'remarks', 'status'],
+            ['id', 'user_id', 'name', 'wechat_name', 'remarks', 'status'],
 
             // set columns to searchIn
             ['id', 'name', 'wechat_name', 'remarks']
@@ -63,6 +64,7 @@ class CustomersController extends Controller
     {
         // Sanitize input
         $sanitized = $request->validated();
+        $sanitized['user_id'] = Auth::id();
 
         // Store the Customer
         $customer = Customer::create($sanitized);
@@ -113,6 +115,7 @@ class CustomersController extends Controller
     {
         // Sanitize input
         $sanitized = $request->validated();
+        $sanitized['user_id'] = Auth::id();
 
         // Update changed values Customer
         $customer->update($sanitized);

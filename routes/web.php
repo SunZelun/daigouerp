@@ -44,3 +44,23 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/admin/customers/{customer}',                  'Admin\CustomersController@update')->name('admin/customers/update');
     Route::delete('/admin/customers/{customer}',                'Admin\CustomersController@destroy')->name('admin/customers/destroy');
 });
+
+/* Auto-generated admin routes */
+Route::middleware(['admin'])->group(function () {
+    Route::get('/admin/customer-addresses',                     'Admin\CustomerAddressesController@index');
+    Route::get('/admin/customer-addresses/create',              'Admin\CustomerAddressesController@create');
+    Route::post('/admin/customer-addresses',                    'Admin\CustomerAddressesController@store');
+    Route::get('/admin/customer-addresses/{customerAddress}/edit','Admin\CustomerAddressesController@edit')->name('admin/customer-addresses/edit');
+    Route::post('/admin/customer-addresses/{customerAddress}',  'Admin\CustomerAddressesController@update')->name('admin/customer-addresses/update');
+    Route::delete('/admin/customer-addresses/{customerAddress}','Admin\CustomerAddressesController@destroy')->name('admin/customer-addresses/destroy');
+});
+
+/* Auto-generated admin routes */
+Route::middleware(['admin'])->group(function () {
+    Route::get('/admin/products',                               'Admin\ProductsController@index');
+    Route::get('/admin/products/create',                        'Admin\ProductsController@create');
+    Route::post('/admin/products',                              'Admin\ProductsController@store');
+    Route::get('/admin/products/{product}/edit',                'Admin\ProductsController@edit')->name('admin/products/edit');
+    Route::post('/admin/products/{product}',                    'Admin\ProductsController@update')->name('admin/products/update');
+    Route::delete('/admin/products/{product}',                  'Admin\ProductsController@destroy')->name('admin/products/destroy');
+});

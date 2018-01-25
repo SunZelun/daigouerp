@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Customers extends Migration
+class CustomerAddresses extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class Customers extends Migration
      */
     public function up()
     {
-        Schema::create('customers', function (Blueprint $table) {
+        Schema::create('customer_addresses', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
-            $table->string('name');
-            $table->string('wechat_name')->nullable();
+            $table->integer('customer_id');
+            $table->text('address');
+            $table->string('contact_person')->nullable();
+            $table->string('contact_number')->nullable();
             $table->string('remarks')->nullable();
             $table->tinyInteger('status');
             $table->timestamps();
@@ -31,6 +32,6 @@ class Customers extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('customers');
+        Schema::dropIfExists('customer_addresses');
     }
 }

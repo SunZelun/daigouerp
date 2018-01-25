@@ -2,14 +2,17 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class Customer extends Model
+class Product extends Model
 {
     
     
     protected $fillable = [
-        "user_id",
         "name",
-        "wechat_name",
+        "description",
+        "selling_price_rmb",
+        "selling_price_sgd",
+        "buying_price_rmb",
+        "buying_price_sgd",
         "remarks",
         "status",
     
@@ -32,7 +35,7 @@ class Customer extends Model
     /* ************************ ACCESSOR ************************* */
 
     public function getResourceUrlAttribute() {
-        return url('/admin/customers/'.$this->getKey());
+        return url('/admin/products/'.$this->getKey());
     }
 
     

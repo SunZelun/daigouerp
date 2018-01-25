@@ -1,20 +1,20 @@
 @extends('brackets/admin-ui::admin.layout.default')
 
-@section('title', trans('admin.customer.actions.index'))
+@section('title', trans('admin.customer-address.actions.index'))
 
 @section('body')
 
-    <customer-listing
+    <customer-address-listing
         :data="{{ $data->toJson() }}"
-        :url="'{{ url('admin/customers') }}'"
+        :url="'{{ url('admin/customer-addresses') }}'"
         inline-template>
 
         <div class="row">
             <div class="col">
                 <div class="card">
                     <div class="card-header">
-                        <i class="fa fa-align-justify"></i> {{ trans('admin.customer.actions.index') }}
-                        <a class="btn btn-primary btn-spinner btn-sm pull-right m-b-0" href="{{ url('admin/customers/create') }}" role="button"><i class="fa fa-plus"></i>&nbsp; {{ trans('admin.customer.actions.create') }}</a>
+                        <i class="fa fa-align-justify"></i> {{ trans('admin.customer-address.actions.index') }}
+                        <a class="btn btn-primary btn-spinner btn-sm pull-right m-b-0" href="{{ url('admin/customer-addresses/create') }}" role="button"><i class="fa fa-plus"></i>&nbsp; {{ trans('admin.customer-address.actions.create') }}</a>
                     </div>
                     <div class="card-block" v-cloak>
                         <form @submit.prevent="">
@@ -43,12 +43,13 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th is='sortable' :column="'id'">{{ trans('admin.customer.columns.id') }}</th>
-                                    <th is='sortable' :column="'user_id'">{{ trans('admin.customer.columns.user_id') }}</th>
-                                    <th is='sortable' :column="'name'">{{ trans('admin.customer.columns.name') }}</th>
-                                    <th is='sortable' :column="'wechat_name'">{{ trans('admin.customer.columns.wechat_name') }}</th>
-                                    <th is='sortable' :column="'remarks'">{{ trans('admin.customer.columns.remarks') }}</th>
-                                    <th is='sortable' :column="'status'">{{ trans('admin.customer.columns.status') }}</th>
+                                    <th is='sortable' :column="'id'">{{ trans('admin.customer-address.columns.id') }}</th>
+                                    <th is='sortable' :column="'customer_id'">{{ trans('admin.customer-address.columns.customer_id') }}</th>
+                                    <th is='sortable' :column="'address'">{{ trans('admin.customer-address.columns.address') }}</th>
+                                    <th is='sortable' :column="'contact_person'">{{ trans('admin.customer-address.columns.contact_person') }}</th>
+                                    <th is='sortable' :column="'contact_number'">{{ trans('admin.customer-address.columns.contact_number') }}</th>
+                                    <th is='sortable' :column="'remarks'">{{ trans('admin.customer-address.columns.remarks') }}</th>
+                                    <th is='sortable' :column="'status'">{{ trans('admin.customer-address.columns.status') }}</th>
                                     
                                     <th></th>
                                 </tr>
@@ -56,13 +57,13 @@
                             <tbody>
                                 <tr v-for="(item, index) in collection">
                                     <td>@{{ item.id }}</td>
-                                    <td>@{{ item.user_id }}</td>
-                                    <td>@{{ item.name }}</td>
-                                    <td>@{{ item.wechat_name }}</td>
+                                    <td>@{{ item.customer_id }}</td>
+                                    <td>@{{ item.address }}</td>
+                                    <td>@{{ item.contact_person }}</td>
+                                    <td>@{{ item.contact_number }}</td>
                                     <td>@{{ item.remarks }}</td>
-                                    <td v-if="item.status == 1">Active</td>
-                                    <td v-else>Inactive</td>
-
+                                    <td>@{{ item.status }}</td>
+                                    
                                     <td>
                                         <div class="row no-gutters">
                                             <div class="col-auto">
@@ -90,12 +91,12 @@
 		                    <i class="icon-magnifier"></i>
 		                    <h3>{{ trans('brackets/admin-ui::admin.index.no_items') }}</h3>
 		                    <p>{{ trans('brackets/admin-ui::admin.index.try_changing_items') }}</p>
-                            <a class="btn btn-primary btn-spinner" href="{{ url('admin/customers/create') }}" role="button"><i class="fa fa-plus"></i>&nbsp; {{ trans('admin.customer.actions.create') }}</a>
+                            <a class="btn btn-primary btn-spinner" href="{{ url('admin/customer-addresses/create') }}" role="button"><i class="fa fa-plus"></i>&nbsp; {{ trans('admin.customer-address.actions.create') }}</a>
 	                    </div>
                     </div>
                 </div>
             </div>
         </div>
-    </customer-listing>
+    </customer-address-listing>
 
 @endsection

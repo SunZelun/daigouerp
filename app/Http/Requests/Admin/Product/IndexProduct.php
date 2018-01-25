@@ -1,9 +1,9 @@
-<?php namespace App\Http\Requests\Admin\Customer;
+<?php namespace App\Http\Requests\Admin\Product;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
 
-class IndexCustomer extends FormRequest
+class IndexProduct extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -12,7 +12,7 @@ class IndexCustomer extends FormRequest
      */
     public function authorize()
     {
-        return Gate::allows('admin.customer.index');
+        return Gate::allows('admin.product.index');
     }
 
     /**
@@ -23,7 +23,7 @@ class IndexCustomer extends FormRequest
     public function rules()
     {
         return [
-            'orderBy' => 'in:id,user_id,name,wechat_name,remarks,status|nullable',
+            'orderBy' => 'in:id,name,selling_price_rmb,selling_price_sgd,buying_price_rmb,buying_price_sgd,status|nullable',
             'orderDirection' => 'in:asc,desc|nullable',
             'search' => 'string|nullable',
             'page' => 'integer|nullable',

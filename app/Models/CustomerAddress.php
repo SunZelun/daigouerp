@@ -2,14 +2,15 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class Customer extends Model
+class CustomerAddress extends Model
 {
     
     
     protected $fillable = [
-        "user_id",
-        "name",
-        "wechat_name",
+        "customer_id",
+        "address",
+        "contact_person",
+        "contact_number",
         "remarks",
         "status",
     
@@ -32,7 +33,7 @@ class Customer extends Model
     /* ************************ ACCESSOR ************************* */
 
     public function getResourceUrlAttribute() {
-        return url('/admin/customers/'.$this->getKey());
+        return url('/admin/customer-addresses/'.$this->getKey());
     }
 
     
