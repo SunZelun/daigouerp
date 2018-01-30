@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use \Illuminate\Http\Response;
 use App\Http\Requests\Admin\Order\IndexOrder;
@@ -9,9 +10,11 @@ use App\Http\Requests\Admin\Order\UpdateOrder;
 use App\Http\Requests\Admin\Order\DestroyOrder;
 use Brackets\AdminListing\Facades\AdminListing;
 use App\Models\Order;
+use Illuminate\Support\Facades\Auth;
 
 class OrdersController extends Controller
 {
+    public $currencies = ['RMB', 'SGD'];
 
     /**
      * Display a listing of the resource.
@@ -50,7 +53,9 @@ class OrdersController extends Controller
     {
         $this->authorize('admin.order.create');
 
-        return view('admin.order.create');
+        $customers = Customer::where(['user_id' => Auth::id(), 'status' => Customer::STATUS_ACTIVE])->select(['id','name'])->get();
+
+        return view('admin.order.create', ['customers' => $customers, 'currencies' => $this->currencies]);
     }
 
     /**
@@ -97,8 +102,12 @@ class OrdersController extends Controller
     {
         $this->authorize('admin.order.edit', $order);
 
+        $customers = Customer::where(['user_id' => Auth::id(), 'status' => Customer::STATUS_ACTIVE])->get()->toArray();
+
         return view('admin.order.edit', [
             'order' => $order,
+            'customers' => $customers,
+            'currencies' => $this->currencies
         ]);
     }
 
