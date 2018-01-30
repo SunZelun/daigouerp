@@ -96,3 +96,24 @@ $factory->define(App\Models\Product::class, function (Faker\Generator $faker) {
     ];
 });
 
+/** @var  \Illuminate\Database\Eloquent\Factory $factory */
+$factory->define(App\Models\Order::class, function (Faker\Generator $faker) {
+    return [
+        'user_id' => $faker->randomNumber(5),
+        'customer_id' => $faker->randomNumber(5),
+        'customer_address_id' => $faker->randomNumber(5),
+        'cost_currency' => $faker->sentence,
+        'total_cost' => $faker->randomFloat,
+        'amount_currency' => $faker->sentence,
+        'total_amount' => $faker->randomFloat,
+        'profit_currency' => $faker->sentence,
+        'total_profit' => $faker->randomFloat,
+        'remarks' => $faker->sentence,
+        'status' => $faker->randomNumber(5),
+        'created_at' => $faker->dateTime,
+        'updated_at' => $faker->dateTime,
+        
+        
+    ];
+});
+

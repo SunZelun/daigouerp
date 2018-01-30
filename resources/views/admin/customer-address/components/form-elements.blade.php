@@ -2,10 +2,9 @@
     <label for="customer_id" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-2'">{{ trans('Customer Name') }}</label>
         <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-8'">
             <select v-model="form.customer_id" v-validate="'required|numeric'" @input="validate($event)" class="form-control" :class="{'form-control-danger': errors.has('customer_id'), 'form-control-success': this.fields.customer_id && this.fields.customer_id.valid}" id="customer_id" name="customer_id">
-                <option disabled value="">Please select one</option>
-                <option value="1">A</option>
-                <option>B</option>
-                <option>C</option>
+                @foreach($customers as $key => $customer)
+                    <option value="{{ $customer['id'] }}">{{ $customer['name'] }}</option>
+                @endforeach
             </select>
         <div v-if="errors.has('customer_id')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('customer_id') }}</div>
     </div>
@@ -47,18 +46,9 @@
     <div class="ml-md-auto" :class="isFormLocalized ? 'col-md-8' : 'col-md-10'">
         <input class="form-check-input" id="status" type="checkbox" v-model="form.status" v-validate="''" data-vv-name="status"  name="status_fake_element">
         <label class="form-check-label" for="status">
-            {{ trans('admin.customer-address.columns.status') }}
+            {{ trans('Active') }}
         </label>
         <input type="hidden" name="status" :value="form.status">
         <div v-if="errors.has('status')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('status') }}</div>
     </div>
 </div>
-
-<script>
-    new Vue({
-        el: '#customer_id',
-        data: {
-            selected: ''
-        }
-    })
-</script>

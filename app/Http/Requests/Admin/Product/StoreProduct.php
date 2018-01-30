@@ -24,7 +24,7 @@ class StoreProduct extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'integer'],
+            'name' => ['required', 'string'],
             'description' => ['nullable', 'string'],
             'selling_price_rmb' => ['nullable', 'numeric'],
             'selling_price_sgd' => ['nullable', 'numeric'],

@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use \Illuminate\Http\Response;
 use App\Http\Requests\Admin\CustomerAddress\IndexCustomerAddress;
@@ -9,6 +10,7 @@ use App\Http\Requests\Admin\CustomerAddress\UpdateCustomerAddress;
 use App\Http\Requests\Admin\CustomerAddress\DestroyCustomerAddress;
 use Brackets\AdminListing\Facades\AdminListing;
 use App\Models\CustomerAddress;
+use Illuminate\Support\Facades\Auth;
 
 class CustomerAddressesController extends Controller
 {
@@ -48,9 +50,11 @@ class CustomerAddressesController extends Controller
      */
     public function create()
     {
+        $customers = Customer::where(['user_id' => Auth::id(), 'status' => Customer::STATUS_ACTIVE])->get()->toArray();
+
         $this->authorize('admin.customer-address.create');
 
-        return view('admin.customer-address.create');
+        return view('admin.customer-address.create', ['customers' => $customers]);
     }
 
     /**
@@ -95,10 +99,13 @@ class CustomerAddressesController extends Controller
      */
     public function edit(CustomerAddress $customerAddress)
     {
+        $customers = Customer::where(['user_id' => Auth::id(), 'status' => Customer::STATUS_ACTIVE])->get()->toArray();
+
         $this->authorize('admin.customer-address.edit', $customerAddress);
 
         return view('admin.customer-address.edit', [
             'customerAddress' => $customerAddress,
+            'customers' => $customers
         ]);
     }
 

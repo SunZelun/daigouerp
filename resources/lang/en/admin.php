@@ -132,5 +132,31 @@ return [
         ],
     ],
 
+    'order' => [
+        'title' => 'Orders',
+
+        'actions' => [
+            'index' => 'Orders',
+            'create' => 'New Order',
+            'edit' => 'Edit :name',
+        ],
+
+        'columns' => [
+            'id' => "ID",
+            'user_id' => "User id",
+            'customer_id' => "Customer id",
+            'customer_address_id' => "Customer address id",
+            'cost_currency' => "Cost currency",
+            'total_cost' => "Total cost",
+            'amount_currency' => "Amount currency",
+            'total_amount' => "Total amount",
+            'profit_currency' => "Profit currency",
+            'total_profit' => "Total profit",
+            'remarks' => "Remarks",
+            'status' => "Status",
+            
+        ],
+    ],
+
     // Do not delete me :) I'm used for auto-generation
 ];

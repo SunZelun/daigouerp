@@ -15,7 +15,7 @@ class Products extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('name');
+            $table->text('name');
             $table->text('description')->nullable();
             $table->float('selling_price_rmb')->nullable();
             $table->float('selling_price_sgd')->nullable();

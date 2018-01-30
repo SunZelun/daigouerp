@@ -2,15 +2,20 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class Customer extends Model
+class Order extends Model
 {
-    const STATUS_ACTIVE = 1;
-    const STATUS_INACTIVE = 0;
+    
     
     protected $fillable = [
         "user_id",
-        "name",
-        "wechat_name",
+        "customer_id",
+        "customer_address_id",
+        "cost_currency",
+        "total_cost",
+        "amount_currency",
+        "total_amount",
+        "profit_currency",
+        "total_profit",
         "remarks",
         "status",
     
@@ -33,7 +38,7 @@ class Customer extends Model
     /* ************************ ACCESSOR ************************* */
 
     public function getResourceUrlAttribute() {
-        return url('/admin/customers/'.$this->getKey());
+        return url('/admin/orders/'.$this->getKey());
     }
 
     

@@ -4,3 +4,4 @@ import './profile-edit-password';
 import './customer';
 import './customer-address';
 import './product';
+import './order';

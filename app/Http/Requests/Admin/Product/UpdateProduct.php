@@ -24,7 +24,7 @@ class UpdateProduct extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['sometimes', 'integer'],
+            'name' => ['sometimes', 'string'],
             'description' => ['nullable', 'string'],
             'selling_price_rmb' => ['nullable', 'numeric'],
             'selling_price_sgd' => ['nullable', 'numeric'],

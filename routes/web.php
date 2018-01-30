@@ -64,3 +64,13 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/admin/products/{product}',                    'Admin\ProductsController@update')->name('admin/products/update');
     Route::delete('/admin/products/{product}',                  'Admin\ProductsController@destroy')->name('admin/products/destroy');
 });
+
+/* Auto-generated admin routes */
+Route::middleware(['admin'])->group(function () {
+    Route::get('/admin/orders',                                 'Admin\OrdersController@index');
+    Route::get('/admin/orders/create',                          'Admin\OrdersController@create');
+    Route::post('/admin/orders',                                'Admin\OrdersController@store');
+    Route::get('/admin/orders/{order}/edit',                    'Admin\OrdersController@edit')->name('admin/orders/edit');
+    Route::post('/admin/orders/{order}',                        'Admin\OrdersController@update')->name('admin/orders/update');
+    Route::delete('/admin/orders/{order}',                      'Admin\OrdersController@destroy')->name('admin/orders/destroy');
+});

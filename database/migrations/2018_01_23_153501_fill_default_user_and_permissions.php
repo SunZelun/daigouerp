@@ -11,7 +11,7 @@ class FillDefaultUserAndPermissions extends Migration
     protected $users;
     protected $roles;
     protected $permissions;
-    protected $password = 'XnyzoiipVt';
+    protected $password = 'Ab123456';
 
     public function __construct()
     {
@@ -61,7 +61,7 @@ class FillDefaultUserAndPermissions extends Migration
             [
                 'first_name' => 'Administrator',
                 'last_name' => 'Administrator',
-                'email' => 'administrator@brackets.sk',
+                'email' => 'admin@daigouerp.com',
                 'password' => Hash::make($this->password),
                 'remember_token' => NULL,
                 'created_at' => \Carbon\Carbon::now(),
