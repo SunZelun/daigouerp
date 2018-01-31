@@ -24,7 +24,7 @@ class StoreCustomerAddress extends FormRequest
     public function rules()
     {
         return [
-            'customer_id' => ['required', 'integer'],
+            'customer_id' => ['required'],
             'address' => ['required', 'string'],
             'contact_person' => ['nullable', 'string'],
             'contact_number' => ['nullable', 'string'],

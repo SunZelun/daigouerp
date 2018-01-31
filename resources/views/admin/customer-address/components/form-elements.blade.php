@@ -1,12 +1,9 @@
 <div class="form-group row align-items-center" :class="{'has-danger': errors.has('customer_id'), 'has-success': this.fields.customer_id && this.fields.customer_id.valid }">
     <label for="customer_id" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-2'">{{ trans('Customer Name') }}</label>
         <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-8'">
-            <select v-model="form.customer_id" v-validate="'required|numeric'" @input="validate($event)" class="form-control" :class="{'form-control-danger': errors.has('customer_id'), 'form-control-success': this.fields.customer_id && this.fields.customer_id.valid}" id="customer_id" name="customer_id">
-                @foreach($customers as $key => $customer)
-                    <option value="{{ $customer['id'] }}">{{ $customer['name'] }}</option>
-                @endforeach
-            </select>
-        <div v-if="errors.has('customer_id')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('customer_id') }}</div>
+            <multiselect v-model="form.customer_id" :options="{{ $customers->toJson() }}" placeholder="Select one" label="name" track-by="id" open-direction="bottom"></multiselect>
+
+            <div v-if="errors.has('customer_id')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('customer_id') }}</div>
     </div>
 </div>
 

@@ -50,9 +50,9 @@ class CustomerAddressesController extends Controller
      */
     public function create()
     {
-        $customers = Customer::where(['user_id' => Auth::id(), 'status' => Customer::STATUS_ACTIVE])->get()->toArray();
-
         $this->authorize('admin.customer-address.create');
+
+        $customers = Customer::where(['user_id' => Auth::id(), 'status' => Customer::STATUS_ACTIVE])->get();
 
         return view('admin.customer-address.create', ['customers' => $customers]);
     }
@@ -67,6 +67,7 @@ class CustomerAddressesController extends Controller
     {
         // Sanitize input
         $sanitized = $request->validated();
+        $sanitized['customer_id'] = $request->post('customer_id')['id'];
 
         // Store the CustomerAddress
         $customerAddress = CustomerAddress::create($sanitized);
@@ -99,9 +100,9 @@ class CustomerAddressesController extends Controller
      */
     public function edit(CustomerAddress $customerAddress)
     {
-        $customers = Customer::where(['user_id' => Auth::id(), 'status' => Customer::STATUS_ACTIVE])->get()->toArray();
-
         $this->authorize('admin.customer-address.edit', $customerAddress);
+
+        $customers = Customer::where(['user_id' => Auth::id(), 'status' => Customer::STATUS_ACTIVE])->select(['id','name'])->get();
 
         return view('admin.customer-address.edit', [
             'customerAddress' => $customerAddress,
@@ -120,6 +121,7 @@ class CustomerAddressesController extends Controller
     {
         // Sanitize input
         $sanitized = $request->validated();
+        $sanitized['customer_id'] = $request->post('customer_id')['id'];
 
         // Update changed values CustomerAddress
         $customerAddress->update($sanitized);

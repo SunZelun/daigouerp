@@ -24,7 +24,7 @@ class UpdateCustomerAddress extends FormRequest
     public function rules()
     {
         return [
-            'customer_id' => ['sometimes', 'integer'],
+            'customer_id' => ['sometimes'],
             'address' => ['sometimes', 'string'],
             'contact_person' => ['nullable', 'string'],
             'contact_number' => ['nullable', 'string'],
