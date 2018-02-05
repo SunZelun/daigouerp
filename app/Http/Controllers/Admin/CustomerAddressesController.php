@@ -150,4 +150,27 @@ class CustomerAddressesController extends Controller
 
         return redirect()->back();
     }
+
+    /**
+     * Return list of selected customer addresses
+     * @param Request $request
+     * @return array|null
+     */
+    public function getAddressByCustomer(Request $request){
+        $customerId = $request->get('customer_id');
+
+        if (empty($customerId)){
+            return null;
+        }
+
+        $customer = Customer::where(['user_id' => Auth::id(), 'status' => Customer::STATUS_ACTIVE, 'id' => $customerId])->first();
+
+        if (!$customer){
+            return null;
+        }
+
+        $addresses = $customer->addresses;
+
+        return $addresses;
+    }
 }

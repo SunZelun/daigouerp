@@ -41,3 +41,26 @@
     </div>
 
 @endsection
+
+@section('bottom-scripts')
+    <script>
+        $('#customer_selection').change(function () {
+            $.ajax({
+                url: "/admin/customer-addresses/get-address-by-customer",
+                type: 'get',
+                data: {
+                    customer_id: $(this).val()
+                },
+                success: function( result ) {
+                    $('#address_selection').empty();
+                    if (result.length > 0){
+                        $.each(result, function (i,val) {
+                            var option = '<option value="'+val.id+'">'+val.address+' '+val.contact_person+' '+val.contact_number+'</option>';
+                            $('#address_selection').append(option);
+                        })
+                    }
+                }
+            })
+        })
+    </script>
+@endsection

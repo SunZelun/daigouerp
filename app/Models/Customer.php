@@ -36,5 +36,13 @@ class Customer extends Model
         return url('/admin/customers/'.$this->getKey());
     }
 
+    /**
+     * Get the address for the customer.
+     */
+    public function addresses()
+    {
+        return $this->hasMany('App\Models\CustomerAddress','customer_id', 'id')->where(['status' => CustomerAddress::STATUS_ACTIVE]);
+    }
+
     
 }

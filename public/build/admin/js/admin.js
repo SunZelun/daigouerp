@@ -87768,7 +87768,10 @@ Vue.component('order-form', {
             }
         };
     }
+});
 
+$('#customer_selection').change(function () {
+    console.log('change');
 });
 
 /***/ }),

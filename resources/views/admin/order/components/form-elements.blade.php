@@ -1,15 +1,21 @@
 <div class="form-group row align-items-center" :class="{'has-danger': errors.has('customer_id'), 'has-success': this.fields.customer_id && this.fields.customer_id.valid }">
     <label for="customer_id" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-2'">{{ trans('admin.order.columns.customer_id') }}</label>
         <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-8'">
-            <multiselect v-model="form.customer_id" :options="{{ $customers->toJson() }}" placeholder="Select one" label="name" track-by="name" open-direction="bottom"></multiselect>
+            <select id="customer_selection" name="customer_id">
+                <option>Select Customer</option>
+                @foreach($customers as $customer)
+                    <option value="{{ $customer->id }}">{{ $customer->name }}</option>
+                @endforeach
+            </select>
             <div v-if="errors.has('customer_id')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('customer_id') }}</div>
     </div>
 </div>
 
 <div class="form-group row align-items-center" :class="{'has-danger': errors.has('customer_address_id'), 'has-success': this.fields.customer_address_id && this.fields.customer_address_id.valid }">
-    <label for="customer_address_id" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-2'">{{ trans('admin.order.columns.customer_address_id') }}</label>
+    <label for="customer_address_id" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-2'">{{ trans('Customer Address') }}</label>
         <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-8'">
-        <input type="text" v-model="form.customer_address_id" v-validate="'numeric'" @input="validate($event)" class="form-control" :class="{'form-control-danger': errors.has('customer_address_id'), 'form-control-success': this.fields.customer_address_id && this.fields.customer_address_id.valid}" id="customer_address_id" name="customer_address_id" placeholder="{{ trans('admin.order.columns.customer_address_id') }}">
+            <select id="address_selection" name="customer_address_id">
+            </select>
         <div v-if="errors.has('customer_address_id')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('customer_address_id') }}</div>
     </div>
 </div>

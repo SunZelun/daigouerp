@@ -53,6 +53,7 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/customer-addresses/{customerAddress}/edit','Admin\CustomerAddressesController@edit')->name('admin/customer-addresses/edit');
     Route::post('/admin/customer-addresses/{customerAddress}',  'Admin\CustomerAddressesController@update')->name('admin/customer-addresses/update');
     Route::delete('/admin/customer-addresses/{customerAddress}','Admin\CustomerAddressesController@destroy')->name('admin/customer-addresses/destroy');
+    Route::get('/admin/customer-addresses/get-address-by-customer','Admin\CustomerAddressesController@getAddressByCustomer');
 });
 
 /* Auto-generated admin routes */
