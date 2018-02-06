@@ -150,4 +150,12 @@ class OrdersController extends Controller
 
         return redirect()->back();
     }
+
+    public function addProduct(Request $request){
+        $index = $request->get('index');
+
+        return view('admin.order.components.order-product', [
+            'index' => $index
+        ]);
+    }
 }

@@ -23,6 +23,32 @@
 
                         @include('admin.order.components.form-elements')
 
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="product-block">
+                            <div class="col-sm-12 row hidden-sms-down product-block-header">
+                                <div class="col-md-2 col-sm-12">
+                                    <label class="control-label">Product Name</label>
+                                </div>
+                                <div class="col-md-2 col-sm-12">
+                                    <label class="control-label">Quantity</label>
+                                </div>
+                                <div class="col-md-3 col-sm-12">
+                                    <label class="control-label">Buying Price</label>
+                                </div>
+                                <div class="col-md-3 col-sm-12">
+                                    <label class="control-label">Selling Price</label>
+                                </div>
+                                <div class="col-md-2 col-sm-12">
+                                    <label class="control-label">Remarks</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <br>
+                        <div class="col-sm-12">
+                            <a id="add_product_btn" href="#" class="btn btn-sm btn-primary">Add Product</a>
+                        </div>
                     </div>
 
                     <div class="card-footer">
@@ -62,5 +88,25 @@
                 }
             })
         })
+
+        $('#add_product_btn').click(function () {
+            var index = $('.products').length;
+            $.ajax({
+                url: "/admin/orders/add-product",
+                type: 'get',
+                data: {
+                    index: index
+                },
+                success: function( result ) {
+                    $('.product-block').append(result);
+                }
+            })
+        })
+
+        $(document).on('click','.delete-product',function(){
+            var parent = $(this).closest('.products');
+            parent.next('.hrline').remove();
+            parent.remove();
+        });
     </script>
 @endsection

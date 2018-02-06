@@ -69,6 +69,7 @@ Route::middleware(['admin'])->group(function () {
 /* Auto-generated admin routes */
 Route::middleware(['admin'])->group(function () {
     Route::get('/admin/orders',                                 'Admin\OrdersController@index');
+    Route::get('/admin/orders/add-product',                     'Admin\OrdersController@addProduct');
     Route::get('/admin/orders/create',                          'Admin\OrdersController@create');
     Route::post('/admin/orders',                                'Admin\OrdersController@store');
     Route::get('/admin/orders/{order}/edit',                    'Admin\OrdersController@edit')->name('admin/orders/edit');

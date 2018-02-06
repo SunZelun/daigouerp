@@ -19706,3 +19706,14 @@ main.main {
   }
 }
 
+@media (min-width: 768px) {
+  .hidden-sms-up {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .hidden-sms-down {
+    display: none;
+  }
+}
