@@ -66,6 +66,7 @@ class OrdersController extends Controller
      */
     public function store(StoreOrder $request)
     {
+        return $request->all();
         // Sanitize input
         $sanitized = $request->validated();
 

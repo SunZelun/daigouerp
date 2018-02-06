@@ -87763,15 +87763,46 @@ Vue.component('order-form', {
                 profit_currency: '',
                 total_profit: '',
                 remarks: '',
-                status: ''
-
-            }
+                status: '',
+                products: []
+            },
+            products: [{
+                product_id: '',
+                quantity: '',
+                buying_currency: '',
+                buying_price: '',
+                selling_currency: '',
+                selling_price: '',
+                remarks: ''
+            }]
         };
-    }
-});
+    },
+    methods: {
+        addRow: function addRow() {
+            this.products.push({
+                product_id: '',
+                quantity: '',
+                buying_currency: '',
+                buying_price: '',
+                selling_currency: '',
+                selling_price: '',
+                remarks: ''
+            });
+        },
 
-$('#customer_selection').change(function () {
-    console.log('change');
+        delRow: function delRow(item) {
+            console.log(item);
+            console.log(this.products);
+            var ind = this.products.indexOf(item);
+            this.products.splice(ind, 1);
+        },
+
+        pushFields: function pushFields() {
+            this.form.products = [];
+            this.form.products.push(this.products);
+        }
+    }
+
 });
 
 /***/ }),

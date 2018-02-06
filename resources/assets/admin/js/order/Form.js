@@ -16,8 +16,45 @@ Vue.component('order-form', {
                 total_profit:  '' ,
                 remarks:  '' ,
                 status:  '' ,
-                
-            }
+                products:[]
+            },
+            products:[{
+                product_id: '',
+                quantity: '',
+                buying_currency: '',
+                buying_price: '',
+                selling_currency: '',
+                selling_price: '',
+                remarks: ''
+            }]
+        }
+    },
+    methods:{
+        addRow: function() {
+            this.products.push({
+                product_id: '',
+                quantity: '',
+                buying_currency: '',
+                buying_price: '',
+                selling_currency: '',
+                selling_price: '',
+                remarks: ''
+            });
+        },
+
+        delRow: function(item) {
+            console.log(item);
+            console.log(this.products);
+            let ind = this.products.indexOf(item);
+            this.products.splice(ind, 1);
+        },
+
+        pushFields: function()
+        {
+            this.form.products = [];
+            this.form.products.push(
+                this.products
+            );
         }
     }
 
