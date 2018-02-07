@@ -5,7 +5,6 @@ Vue.component('order-form', {
     data: function() {
         return {
             form: {
-                user_id:  '' ,
                 customer_id:  '' ,
                 customer_address_id:  '' ,
                 cost_currency:  '' ,
@@ -16,14 +15,14 @@ Vue.component('order-form', {
                 total_profit:  '' ,
                 remarks:  '' ,
                 status:  '' ,
-                products:[]
+                products: []
             },
             products:[{
-                product_id: '',
+                detail: '',
                 quantity: '',
-                buying_currency: '',
+                buying_currency: 'SGD',
                 buying_price: '',
-                selling_currency: '',
+                selling_currency: 'RMB',
                 selling_price: '',
                 remarks: ''
             }]
@@ -32,29 +31,25 @@ Vue.component('order-form', {
     methods:{
         addRow: function() {
             this.products.push({
-                product_id: '',
+                detail: '',
                 quantity: '',
-                buying_currency: '',
+                buying_currency: 'SGD',
                 buying_price: '',
-                selling_currency: '',
+                selling_currency: 'RMB',
                 selling_price: '',
                 remarks: ''
             });
         },
 
-        delRow: function(item) {
-            console.log(item);
-            console.log(this.products);
-            let ind = this.products.indexOf(item);
-            this.products.splice(ind, 1);
+        delRow: function(index) {
+            Vue.delete(this.products, index);
         },
 
-        pushFields: function()
-        {
-            this.form.products = [];
-            this.form.products.push(
-                this.products
-            );
+        pushFields: function() {
+            this.form.products = this.products;
+        },
+        nameOnly: function ({ name }) {
+            return `${name}`
         }
     }
 

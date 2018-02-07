@@ -10,7 +10,7 @@
 
             <order-form
                 :action="'{{ url('admin/orders') }}'"
-                
+
                 inline-template>
 
                 <form class="form-horizontal form-create" method="post" @submit.prevent="onSubmit" :action="this.action" novalidate>
@@ -58,6 +58,8 @@
                 },
                 success: function( result ) {
                     $('#address_selection').empty();
+                    var option = '<option value=""></option>';
+                    $('#address_selection').append(option);
                     if (result.length > 0){
                         $.each(result, function (i,val) {
                             var option = '<option value="'+val.id+'">'+val.address+' '+val.contact_person+' '+val.contact_number+'</option>';

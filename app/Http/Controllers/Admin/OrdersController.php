@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use \Illuminate\Http\Response;
 use App\Http\Requests\Admin\Order\IndexOrder;
@@ -11,6 +12,7 @@ use App\Http\Requests\Admin\Order\DestroyOrder;
 use Brackets\AdminListing\Facades\AdminListing;
 use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class OrdersController extends Controller
 {
@@ -54,8 +56,9 @@ class OrdersController extends Controller
         $this->authorize('admin.order.create');
 
         $customers = Customer::where(['user_id' => Auth::id(), 'status' => Customer::STATUS_ACTIVE])->select(['id','name'])->get();
+        $products = Product::where(['user_id' => Auth::id(), 'status' => Product::STATUS_ACTIVE])->get();
 
-        return view('admin.order.create', ['customers' => $customers, 'currencies' => $this->currencies]);
+        return view('admin.order.create', ['customers' => $customers, 'currencies' => $this->currencies, 'products' => $products]);
     }
 
     /**
@@ -66,12 +69,24 @@ class OrdersController extends Controller
      */
     public function store(StoreOrder $request)
     {
-        return $request->all();
         // Sanitize input
         $sanitized = $request->validated();
 
-        // Store the Order
-        $order = Order::create($sanitized);
+        //abstract products
+        $products = isset($sanitized['products']) && !empty($sanitized['products']) ? $sanitized['products'] : null;
+
+        DB::transaction(function () use ($sanitized, $products) {
+            // Store the Order
+            $order = Order::create($sanitized);
+
+            if (!empty($products)){
+                foreach ($products as $product){
+                    $product['order_id'] = $order->id;
+                    $product['']
+                }
+            }
+            DB::table('posts')->delete();
+        }, 5);
 
         if ($request->ajax()) {
             return ['redirect' => url('admin/orders'), 'message' => trans('brackets/admin-ui::admin.operation.succeeded')];

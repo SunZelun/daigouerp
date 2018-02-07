@@ -13,7 +13,7 @@ Vue.component('product-form', {
                 buying_price_sgd:  '' ,
                 remarks:  '' ,
                 status:  '' ,
-                
+                quantity:  ''
             }
         }
     }

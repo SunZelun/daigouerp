@@ -28,12 +28,11 @@
     </div>
 </div>
 
-<div v-for="(product, key, index) in products">
+<div v-for="(product, index) in products">
     <div class="col-sm-12 row products">
-        <div class="col-md-2 col-sm-12">
+        <div class="col-md-8 col-sm-12">
             <label class="control-label hidden-sms-up">Product Name</label>
-            <input v-model="product.product_id" type="hidden" />
-            <input type="text" class="product-search form-control" placeholder="Product Name" />
+            <multiselect v-model="product.detail" placeholder="Product Name" :custom-label="nameOnly" :options="{{ $products->toJson() }}" open-direction="bottom" label="name" track-by="name"></multiselect>
         </div>
         <div class="col-md-2 col-sm-12">
             <label class="control-label hidden-sms-up">Quantity</label>
@@ -74,7 +73,7 @@
                     <input v-model="product.remarks" placeholder="Remarks" class="form-control" type="text" />
                 </div>
                 <div class="col-sm-2">
-                    <a class="btn btn-sm btn-danger" title="Delete" @click="delRow(product)"><i class="fa fa-trash-o"></i></a>
+                    <a class="btn btn-sm btn-danger" title="Delete" @click="delRow(index)"><i class="fa fa-trash-o"></i></a>
                 </div>
             </div>
         </div>

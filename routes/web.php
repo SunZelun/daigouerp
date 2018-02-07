@@ -64,6 +64,7 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/products/{product}/edit',                'Admin\ProductsController@edit')->name('admin/products/edit');
     Route::post('/admin/products/{product}',                    'Admin\ProductsController@update')->name('admin/products/update');
     Route::delete('/admin/products/{product}',                  'Admin\ProductsController@destroy')->name('admin/products/destroy');
+    Route::get('/admin/products/search',                  'Admin\ProductsController@search');
 });
 
 /* Auto-generated admin routes */

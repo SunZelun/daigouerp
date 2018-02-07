@@ -4,8 +4,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    
-    
+    const STATUS_ACTIVE = 1;
+    const STATUS_INACTIVE = 0;
+
     protected $fillable = [
         "name",
         "description",
@@ -15,7 +16,8 @@ class Product extends Model
         "buying_price_sgd",
         "remarks",
         "status",
-    
+        "quantity",
+        "user_id"
     ];
     
     protected $hidden = [

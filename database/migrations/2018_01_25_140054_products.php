@@ -15,12 +15,14 @@ class Products extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id');
             $table->text('name');
             $table->text('description')->nullable();
             $table->float('selling_price_rmb')->nullable();
             $table->float('selling_price_sgd')->nullable();
             $table->float('buying_price_rmb')->nullable();
             $table->float('buying_price_sgd')->nullable();
+            $table->double('quantity');
             $table->text('remarks')->nullable();
             $table->tinyInteger('status');
             $table->timestamps();

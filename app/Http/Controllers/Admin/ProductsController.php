@@ -9,6 +9,7 @@ use App\Http\Requests\Admin\Product\UpdateProduct;
 use App\Http\Requests\Admin\Product\DestroyProduct;
 use Brackets\AdminListing\Facades\AdminListing;
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 
 class ProductsController extends Controller
 {
@@ -63,6 +64,7 @@ class ProductsController extends Controller
     {
         // Sanitize input
         $sanitized = $request->validated();
+        $sanitized['user_id'] = Auth::id();
 
         // Store the Product
         $product = Product::create($sanitized);
@@ -113,6 +115,7 @@ class ProductsController extends Controller
     {
         // Sanitize input
         $sanitized = $request->validated();
+        $sanitized['user_id'] = Auth::id();
 
         // Update changed values Product
         $product->update($sanitized);
@@ -140,5 +143,20 @@ class ProductsController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    public function search(Request $request){
+        $searchTerm = $request->get('q');
+
+        if (empty($searchTerm)){
+            return null;
+        }
+
+        $products = Product::where('name', 'like', '%'.$searchTerm.'%')
+            ->orWhere('description', 'like', '%'.$searchTerm.'%')
+            ->where(['status' => Product::STATUS_ACTIVE, 'user_id' => Auth::id()])
+            ->get();
+
+        return $products;
     }
 }
