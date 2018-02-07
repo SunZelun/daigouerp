@@ -1,10 +1,19 @@
 <?php namespace App\Models;
 
+use App\Http\Observers\OrderProductUpdateObserver;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    
+    const STATUS_ACTIVE = 1;
+    const STATUS_INACTIVE = 0;
+
+    public static function boot() {
+
+        parent::boot();
+
+        parent::observe(new OrderProductUpdateObserver());
+    }
     
     protected $fillable = [
         "user_id",
@@ -31,8 +40,6 @@ class Order extends Model
     
     ];
     
-    
-    
     protected $appends = ['resource_url'];
 
     /* ************************ ACCESSOR ************************* */
@@ -41,5 +48,12 @@ class Order extends Model
         return url('/admin/orders/'.$this->getKey());
     }
 
+    /**
+     * Get the products for the order.
+     */
+    public function products()
+    {
+        return $this->hasMany('App\Models\OrderProduct','order_id', 'id');
+    }
     
 }

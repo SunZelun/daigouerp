@@ -15,6 +15,11 @@
     <label for="customer_address_id" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-2'">{{ trans('Customer Address') }}</label>
         <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-8'">
             <select v-model="form.customer_address_id" id="address_selection" name="customer_address_id" class="form-control">
+                @if(isset($addresses) && !empty($addresses))
+                    @foreach($addresses as $address)
+                        <option value="{{ $address->id }}">{{ $address->address }}</option>
+                    @endforeach
+                @endif
             </select>
         <div v-if="errors.has('customer_address_id')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('customer_address_id') }}</div>
     </div>
@@ -28,7 +33,7 @@
     </div>
 </div>
 
-<div v-for="(product, index) in products">
+<div v-for="(product, index) in form.products">
     <div class="col-sm-12 row products">
         <div class="col-md-8 col-sm-12">
             <label class="control-label hidden-sms-up">Product Name</label>

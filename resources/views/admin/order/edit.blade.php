@@ -23,6 +23,11 @@
 
                         @include('admin.order.components.form-elements')
 
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="col-sm-12">
+                            <a @click="addRow" href="#" class="btn btn-sm btn-primary">Add Product</a>
+                        </div>
                     </div>
 
                     <div class="card-footer">

@@ -45,9 +45,9 @@ class Orders extends Migration
             $table->integer('order_id');
             $table->integer('product_id');
             $table->double('quantity')->nullable();
-            $table->string('selling_price_currency')->nullable();
+            $table->string('selling_currency')->nullable();
             $table->double('selling_price')->nullable();
-            $table->string('buying_price_currency')->nullable();
+            $table->string('buying_currency')->nullable();
             $table->double('buying_price')->nullable();
             $table->text('remarks')->nullable();
             $table->tinyInteger('status');

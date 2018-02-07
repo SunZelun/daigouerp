@@ -15,22 +15,21 @@ Vue.component('order-form', {
                 total_profit:  '' ,
                 remarks:  '' ,
                 status:  '' ,
-                products: []
-            },
-            products:[{
-                detail: '',
-                quantity: '',
-                buying_currency: 'SGD',
-                buying_price: '',
-                selling_currency: 'RMB',
-                selling_price: '',
-                remarks: ''
-            }]
+                products: [{
+                    detail: '',
+                    quantity: '',
+                    buying_currency: '',
+                    buying_price: '',
+                    selling_currency: '',
+                    selling_price: '',
+                    remarks: ''
+                }]
+            }
         }
     },
     methods:{
         addRow: function() {
-            this.products.push({
+            this.form.products.push({
                 detail: '',
                 quantity: '',
                 buying_currency: 'SGD',
@@ -42,11 +41,11 @@ Vue.component('order-form', {
         },
 
         delRow: function(index) {
-            Vue.delete(this.products, index);
+            Vue.delete(this.form.products, index);
         },
 
         pushFields: function() {
-            this.form.products = this.products;
+            //this.form.products = this.products;
         },
         nameOnly: function ({ name }) {
             return `${name}`

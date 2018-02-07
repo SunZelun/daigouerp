@@ -34,7 +34,7 @@ class StoreOrder extends FormRequest
             'profit_currency' => ['nullable', 'string'],
             'total_profit' => ['nullable', 'numeric'],
             'remarks' => ['nullable', 'string'],
-            //'status' => ['required', 'integer'],
+            'products' => ['nullable', 'array'],
             
         ];
     }

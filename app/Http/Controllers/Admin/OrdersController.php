@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
+use App\Models\CustomerAddress;
 use App\Models\Product;
+use App\Models\OrderProduct;
 use Illuminate\Http\Request;
 use \Illuminate\Http\Response;
 use App\Http\Requests\Admin\Order\IndexOrder;
@@ -69,24 +71,38 @@ class OrdersController extends Controller
      */
     public function store(StoreOrder $request)
     {
+        return $request->all();
         // Sanitize input
         $sanitized = $request->validated();
+        $sanitized['user_id'] = Auth::id();
+        $sanitized['status'] = Order::STATUS_ACTIVE;
 
         //abstract products
         $products = isset($sanitized['products']) && !empty($sanitized['products']) ? $sanitized['products'] : null;
 
-        DB::transaction(function () use ($sanitized, $products) {
-            // Store the Order
-            $order = Order::create($sanitized);
+        DB::beginTransaction();
 
-            if (!empty($products)){
-                foreach ($products as $product){
-                    $product['order_id'] = $order->id;
-                    $product['']
+        // Store the Order
+        $order = Order::create($sanitized);
+
+        if (!$order){
+            DB::rollBack();
+        }
+
+        if (!empty($products)){
+            foreach ($products as $product){
+                $product['order_id'] = $order->id;
+                $product['product_id'] = isset($product['detail']['id']) ? $product['detail']['id'] : null;
+                $product['status'] = OrderProduct::STATUS_ACTIVE;
+                $saveProduct = OrderProduct::create($product);
+
+                if (!$saveProduct){
+                    DB::rollBack();
                 }
             }
-            DB::table('posts')->delete();
-        }, 5);
+        }
+
+        DB::commit();
 
         if ($request->ajax()) {
             return ['redirect' => url('admin/orders'), 'message' => trans('brackets/admin-ui::admin.operation.succeeded')];
@@ -116,14 +132,19 @@ class OrdersController extends Controller
      */
     public function edit(Order $order)
     {
+        $order = Order::with('products')->where(['id' => $order->id])->first();
         $this->authorize('admin.order.edit', $order);
 
-        $customers = Customer::where(['user_id' => Auth::id(), 'status' => Customer::STATUS_ACTIVE])->get()->toArray();
+        $addresses = CustomerAddress::where(['customer_id' => $order->customer_id])->get();
+        $customers = Customer::where(['user_id' => Auth::id(), 'status' => Customer::STATUS_ACTIVE])->select(['id','name'])->get();
+        $products = Product::where(['user_id' => Auth::id(), 'status' => Product::STATUS_ACTIVE])->get();
 
         return view('admin.order.edit', [
             'order' => $order,
             'customers' => $customers,
-            'currencies' => $this->currencies
+            'products' => $products,
+            'currencies' => $this->currencies,
+            'addresses' => $addresses
         ]);
     }
 
@@ -138,9 +159,27 @@ class OrdersController extends Controller
     {
         // Sanitize input
         $sanitized = $request->validated();
+        $sanitized['status'] = Order::STATUS_ACTIVE;
+
+        //abstract products
+        $products = isset($sanitized['products']) && !empty($sanitized['products']) ? $sanitized['products'] : null;
 
         // Update changed values Order
         $order->update($sanitized);
+
+        if (!empty($products)){
+            $previousProducts = $order->products()->delete();
+            foreach ($products as $product){
+                $product['order_id'] = $order->id;
+                $product['product_id'] = isset($product['detail']['id']) ? $product['detail']['id'] : null;
+                $product['status'] = OrderProduct::STATUS_ACTIVE;
+                $saveProduct = OrderProduct::create($product);
+
+                if (!$saveProduct){
+                    DB::rollBack();
+                }
+            }
+        }
 
         if ($request->ajax()) {
             return ['redirect' => url('admin/orders'), 'message' => trans('brackets/admin-ui::admin.operation.succeeded')];

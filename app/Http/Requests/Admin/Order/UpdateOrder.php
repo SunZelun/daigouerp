@@ -35,7 +35,7 @@ class UpdateOrder extends FormRequest
             'total_profit' => ['nullable', 'numeric'],
             'remarks' => ['nullable', 'string'],
             'status' => ['sometimes', 'integer'],
-            
+            'products' => ['nullable', 'array'],
         ];
     }
 }
