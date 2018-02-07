@@ -30,4 +30,12 @@ class OrderProduct extends Model
 
     ];
 
+    /**
+     * Get the product detail
+     */
+    public function detail()
+    {
+        return $this->belongsTo('App\Models\Product','product_id','id');
+    }
+
 }

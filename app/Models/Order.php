@@ -1,30 +1,22 @@
 <?php namespace App\Models;
 
-use App\Http\Observers\OrderProductUpdateObserver;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 0;
-
-    public static function boot() {
-
-        parent::boot();
-
-        parent::observe(new OrderProductUpdateObserver());
-    }
     
     protected $fillable = [
         "user_id",
         "customer_id",
         "customer_address_id",
-        "cost_currency",
-        "total_cost",
-        "amount_currency",
-        "total_amount",
-        "profit_currency",
-        "total_profit",
+        "cost_in_rmb",
+        "cost_in_sgd",
+        "revenue_in_rmb",
+        "revenue_in_sgd",
+        "profit_in_rmb",
+        "profit_in_sgd",
         "remarks",
         "status",
     

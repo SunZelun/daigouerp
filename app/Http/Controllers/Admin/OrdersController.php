@@ -34,10 +34,10 @@ class OrdersController extends Controller
             $request,
 
             // set columns to query
-            ['id', 'user_id', 'customer_id', 'customer_address_id', 'cost_currency', 'total_cost', 'amount_currency', 'total_amount', 'profit_currency', 'total_profit', 'remarks', 'status'],
+            ['id', 'customer_id', 'customer_address_id', 'cost_in_rmb', 'cost_in_sgd', 'revenue_in_rmb', 'revenue_in_sgd', 'profit_in_rmb', 'profit_in_sgd', 'remarks', 'status'],
 
             // set columns to searchIn
-            ['id', 'cost_currency', 'amount_currency', 'profit_currency', 'remarks']
+            ['id', 'remarks']
         );
 
         if ($request->ajax()) {
@@ -71,7 +71,6 @@ class OrdersController extends Controller
      */
     public function store(StoreOrder $request)
     {
-        return $request->all();
         // Sanitize input
         $sanitized = $request->validated();
         $sanitized['user_id'] = Auth::id();
@@ -132,7 +131,7 @@ class OrdersController extends Controller
      */
     public function edit(Order $order)
     {
-        $order = Order::with('products')->where(['id' => $order->id])->first();
+        $order = Order::with('products.detail')->where(['id' => $order->id])->first();
         $this->authorize('admin.order.edit', $order);
 
         $addresses = CustomerAddress::where(['customer_id' => $order->customer_id])->get();

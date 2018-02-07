@@ -87,3 +87,32 @@
         <hr>
     </div>
 </div>
+
+<div>
+    <div class="summary-board col-md-6">
+        <table class="table">
+            <tbody>
+            <tr>
+                <td>Total Cost in SGD</td>
+                <td>@{{ totalSGD }}</td>
+                <td>Total Cost in RMB</td>
+                <td><span></span></td>
+            </tr>
+            <tr>
+                <td>Total Selling Price (SGD)</td>
+                <td><span></span></td>
+                <td>Total Selling Price (RMB)</td>
+                <td><span></span></td>
+            </tr>
+            <tr>
+                <td colspan="3"><b>Total Profit (RMB)</b></td>
+                <td><span></span></td>
+            </tr>
+            <tr>
+                <td colspan="3"><b>Total Profit (SGD)</b></td>
+                <td><span></span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,6 +1,6 @@
 @extends('brackets/admin-ui::admin.layout.default')
 
-@section('title', trans('admin.order.actions.edit', ['name' => $order->id]))
+@section('title', trans('admin.order.actions.edit', ['name' => 'Order '.$order->id]))
 
 @section('body')
 
@@ -24,11 +24,17 @@
                         @include('admin.order.components.form-elements')
 
                         <div class="clearfix"></div>
-                        <hr>
+
                         <div class="col-sm-12">
                             <a @click="addRow" href="#" class="btn btn-sm btn-primary">Add Product</a>
                         </div>
+
                     </div>
+
+                    <div class="clearfix"></div>
+                    <br>
+
+
 
                     <div class="card-footer">
 	                    <button type="submit" class="btn btn-primary" :disabled="submiting">
@@ -38,11 +44,34 @@
                     </div>
 
                 </form>
-
         </order-form>
-
     </div>
 
 </div>
 
+@endsection
+
+@section('bottom-scripts')
+    <script>
+        $('#customer_selection').change(function () {
+            $.ajax({
+                url: "/admin/customer-addresses/get-address-by-customer",
+                type: 'get',
+                data: {
+                    customer_id: $(this).val()
+                },
+                success: function( result ) {
+                    $('#address_selection').empty();
+                    var option = '<option value=""></option>';
+                    $('#address_selection').append(option);
+                    if (result.length > 0){
+                        $.each(result, function (i,val) {
+                            var option = '<option value="'+val.id+'">'+val.address+' '+val.contact_person+' '+val.contact_number+'</option>';
+                            $('#address_selection').append(option);
+                        })
+                    }
+                }
+            })
+        })
+    </script>
 @endsection

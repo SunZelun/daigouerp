@@ -18,12 +18,12 @@ class Orders extends Migration
             $table->integer('user_id');
             $table->integer('customer_id');
             $table->integer('customer_address_id')->nullable();
-            $table->string('cost_currency')->nullable();
-            $table->double('total_cost')->nullable();
-            $table->string('amount_currency')->nullable();
-            $table->double('total_amount')->nullable();
-            $table->string('profit_currency')->nullable();
-            $table->double('total_profit')->nullable();
+            $table->string('cost_in_rmb')->nullable();
+            $table->double('cost_in_sgd')->nullable();
+            $table->string('revenue_in_rmb')->nullable();
+            $table->double('revenue_in_sgd')->nullable();
+            $table->string('profit_in_rmb')->nullable();
+            $table->double('profit_in_sgd')->nullable();
             $table->string('remarks')->nullable();
             $table->integer('status');
             $table->timestamps();

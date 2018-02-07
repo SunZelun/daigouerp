@@ -44,33 +44,30 @@
                             <thead>
                                 <tr>
                                     <th is='sortable' :column="'id'">{{ trans('admin.order.columns.id') }}</th>
-                                    <th is='sortable' :column="'user_id'">{{ trans('admin.order.columns.user_id') }}</th>
                                     <th is='sortable' :column="'customer_id'">{{ trans('admin.order.columns.customer_id') }}</th>
                                     <th is='sortable' :column="'customer_address_id'">{{ trans('admin.order.columns.customer_address_id') }}</th>
-                                    <th is='sortable' :column="'cost_currency'">{{ trans('admin.order.columns.cost_currency') }}</th>
-                                    <th is='sortable' :column="'total_cost'">{{ trans('admin.order.columns.total_cost') }}</th>
-                                    <th is='sortable' :column="'amount_currency'">{{ trans('admin.order.columns.amount_currency') }}</th>
-                                    <th is='sortable' :column="'total_amount'">{{ trans('admin.order.columns.total_amount') }}</th>
-                                    <th is='sortable' :column="'profit_currency'">{{ trans('admin.order.columns.profit_currency') }}</th>
-                                    <th is='sortable' :column="'total_profit'">{{ trans('admin.order.columns.total_profit') }}</th>
+                                    <th is='sortable' :column="'cost_in_rmb'">{{ trans('Cost in RMB') }}</th>
+                                    <th is='sortable' :column="'cost_in_sgd'">{{ trans('Cost in SGD') }}</th>
+                                    <th is='sortable' :column="'revenue_in_rmb'">{{ trans('Revenue in RMB') }}</th>
+                                    <th is='sortable' :column="'revenue_in_sgd'">{{ trans('Revenue in SGD') }}</th>
+                                    <th is='sortable' :column="'profit_in_rmb'">{{ trans('Profit in RMB') }}</th>
+                                    <th is='sortable' :column="'profit_in_sgd'">{{ trans('Profit in SGD') }}</th>
                                     <th is='sortable' :column="'remarks'">{{ trans('admin.order.columns.remarks') }}</th>
                                     <th is='sortable' :column="'status'">{{ trans('admin.order.columns.status') }}</th>
-                                    
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr v-for="(item, index) in collection">
                                     <td>@{{ item.id }}</td>
-                                    <td>@{{ item.user_id }}</td>
                                     <td>@{{ item.customer_id }}</td>
                                     <td>@{{ item.customer_address_id }}</td>
-                                    <td>@{{ item.cost_currency }}</td>
-                                    <td>@{{ item.total_cost }}</td>
-                                    <td>@{{ item.amount_currency }}</td>
-                                    <td>@{{ item.total_amount }}</td>
-                                    <td>@{{ item.profit_currency }}</td>
-                                    <td>@{{ item.total_profit }}</td>
+                                    <td>@{{ item.cost_in_rmb }}</td>
+                                    <td>@{{ item.cost_in_sgd }}</td>
+                                    <td>@{{ item.revenue_in_rmb }}</td>
+                                    <td>@{{ item.revenue_in_sgd }}</td>
+                                    <td>@{{ item.profit_in_rmb }}</td>
+                                    <td>@{{ item.profit_in_sgd }}</td>
                                     <td>@{{ item.remarks }}</td>
                                     <td>@{{ item.status }}</td>
                                     
