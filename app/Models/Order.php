@@ -47,5 +47,20 @@ class Order extends Model
     {
         return $this->hasMany('App\Models\OrderProduct','order_id', 'id');
     }
-    
+
+    /**
+     * Get the products for the order.
+     */
+    public function customer()
+    {
+        return $this->hasOne('App\Models\Customer','id', 'customer_id');
+    }
+
+    /**
+     * Get the products for the order.
+     */
+    public function address()
+    {
+        return $this->hasOne('App\Models\CustomerAddress','id', 'customer_address_id');
+    }
 }

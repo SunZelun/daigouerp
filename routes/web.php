@@ -15,9 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
 /* Auto-generated admin routes */
 Route::middleware(['admin'])->group(function () {
+    Route::get('/admin',                                  'DashboardController@index');
+    Route::get('/admin/dashboard',                                  'DashboardController@index');
     Route::get('/admin/users',                                  'Admin\UsersController@index');
     Route::get('/admin/users/create',                           'Admin\UsersController@create');
     Route::post('/admin/users',                                 'Admin\UsersController@store');
@@ -74,6 +75,7 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/orders/create',                          'Admin\OrdersController@create');
     Route::post('/admin/orders',                                'Admin\OrdersController@store');
     Route::get('/admin/orders/{order}/edit',                    'Admin\OrdersController@edit')->name('admin/orders/edit');
+    Route::get('/admin/orders/{order}',                    'Admin\OrdersController@show');
     Route::post('/admin/orders/{order}',                        'Admin\OrdersController@update')->name('admin/orders/update');
     Route::delete('/admin/orders/{order}',                      'Admin\OrdersController@destroy')->name('admin/orders/destroy');
 });

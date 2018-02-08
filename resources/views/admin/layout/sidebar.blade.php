@@ -2,6 +2,7 @@
     <nav class="sidebar-nav">
         <ul class="nav">
             <li class="nav-title">{{ trans('brackets/admin-ui::admin.sidebar.content') }}</li>
+            <li class="nav-item"><a class="nav-link" href="{{ url('admin/dashboard') }}"><i class="icon-graph"></i> <span class="nav-link-text">{{ trans('Dashboard') }}</span></a></li>
             <li class="nav-item"><a class="nav-link" href="{{ url('admin/customers') }}"><i class="icon-umbrella"></i> <span class="nav-link-text">{{ trans('admin.customer.title') }}</span></a></li>
             <li class="nav-item"><a class="nav-link" href="{{ url('admin/customer-addresses') }}"><i class="icon-graduation"></i> <span class="nav-link-text">{{ trans('admin.customer-address.title') }}</span></a></li>
             <li class="nav-item"><a class="nav-link" href="{{ url('admin/products') }}"><i class="icon-star"></i> <span class="nav-link-text">{{ trans('admin.product.title') }}</span></a></li>

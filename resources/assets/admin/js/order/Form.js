@@ -33,20 +33,56 @@ Vue.component('order-form', {
         //         return Number(item.qty * item.price)
         //     });
         // },
-        totalRmb() {
-            return this.form.products.reduce((total, product) => {
+        totalCostRmb() {
+            this.form.cost_in_rmb = this.form.products.reduce((total, product) => {
                 if (product.buying_currency == 'RMB'){
-                    return total + product.buying_price;
+                    return total + Number(product.buying_price);
+                } else {
+                    return total;
                 }
             }, 0);
+            return this.form.cost_in_rmb;
         },
-        totalSgd() {
-            return this.form.products.reduce((total, product) => {
+        totalCostSgd() {
+            this.form.cost_in_sgd = this.form.products.reduce((total, product) => {
                 if (product.buying_currency == 'SGD'){
-                    return total + product.buying_price;
+                    return total + Number(product.buying_price);
+                } else {
+                    return total;
                 }
+                console.log(total);
             }, 0);
-        }
+
+            return this.form.cost_in_sgd;
+        },
+        totalRevSgd() {
+            this.form.revenue_in_sgd = this.form.products.reduce((total, product) => {
+                if (product.selling_currency == 'SGD'){
+                return total + Number(product.selling_price);
+            } else {
+                return total;
+            }
+        }, 0);
+            return this.form.revenue_in_sgd;
+        },
+        totalRevRmb() {
+            this.form.revenue_in_rmb = this.form.products.reduce((total, product) => {
+                if (product.selling_currency == 'RMB'){
+                return total + Number(product.selling_price);
+            } else {
+                return total;
+            }
+        }, 0);
+            return this.form.revenue_in_rmb;
+        },
+        totalProfitSgd() {
+            this.form.profit_in_sgd = Number(this.form.revenue_in_sgd) - Number(this.form.cost_in_sgd);
+            return this.form.profit_in_sgd;
+        },
+        totalProfitRmb() {
+            this.form.profit_in_rmb = Number(this.form.revenue_in_rmb) - Number(this.form.cost_in_rmb);
+            return this.form.profit_in_rmb;
+        },
     },
     methods:{
         addRow: function() {

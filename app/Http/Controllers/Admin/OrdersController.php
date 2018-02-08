@@ -98,6 +98,8 @@ class OrdersController extends Controller
                 if (!$saveProduct){
                     DB::rollBack();
                 }
+
+                Product::updateStock($saveProduct->product_id, $saveProduct->quantity);
             }
         }
 
@@ -118,9 +120,12 @@ class OrdersController extends Controller
      */
     public function show(Order $order)
     {
+        $order = Order::with(['products.detail', 'customer', 'address'])->where(['id' => $order->id])->first();
         $this->authorize('admin.order.show', $order);
 
-        // TODO your code goes here
+        return view('admin.order.show', [
+            'order' => $order
+        ]);
     }
 
     /**
@@ -163,6 +168,8 @@ class OrdersController extends Controller
         //abstract products
         $products = isset($sanitized['products']) && !empty($sanitized['products']) ? $sanitized['products'] : null;
 
+        DB::beginTransaction();
+
         // Update changed values Order
         $order->update($sanitized);
 
@@ -177,8 +184,13 @@ class OrdersController extends Controller
                 if (!$saveProduct){
                     DB::rollBack();
                 }
+
+                Product::updateStock($saveProduct->product_id, $saveProduct->quantity);
+
             }
         }
+
+        DB::commit();
 
         if ($request->ajax()) {
             return ['redirect' => url('admin/orders'), 'message' => trans('brackets/admin-ui::admin.operation.succeeded')];

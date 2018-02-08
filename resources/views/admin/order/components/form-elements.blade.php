@@ -94,23 +94,23 @@
             <tbody>
             <tr>
                 <td>Total Cost in SGD</td>
-                <td>@{{ totalSGD }}</td>
+                <td>@{{ totalCostSgd }}</td>
                 <td>Total Cost in RMB</td>
-                <td><span></span></td>
+                <td>@{{ totalCostRmb }}</td>
             </tr>
             <tr>
                 <td>Total Selling Price (SGD)</td>
-                <td><span></span></td>
+                <td>@{{ totalRevSgd }}</td>
                 <td>Total Selling Price (RMB)</td>
-                <td><span></span></td>
-            </tr>
-            <tr>
-                <td colspan="3"><b>Total Profit (RMB)</b></td>
-                <td><span></span></td>
+                <td>@{{ totalRevRmb }}</td>
             </tr>
             <tr>
                 <td colspan="3"><b>Total Profit (SGD)</b></td>
-                <td><span></span></td>
+                <td>@{{ totalProfitSgd }}</td>
+            </tr>
+            <tr>
+                <td colspan="3"><b>Total Profit (RMB)</b></td>
+                <td>@{{ totalProfitRmb }}</td>
             </tr>
             </tbody>
         </table>

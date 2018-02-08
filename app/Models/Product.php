@@ -40,5 +40,17 @@ class Product extends Model
         return url('/admin/products/'.$this->getKey());
     }
 
-    
+    /**
+     * Update product stock
+     * @param $productId
+     * @param $quantity
+     * @return mixed
+     */
+    public static function updateStock($productId, $quantity){
+        $product = Product::where(['id' => $productId])->first();
+        $product->quantity = $product->quantity - $quantity;
+        $product->update();
+
+        return $product;
+    }
 }

@@ -64,6 +64,7 @@ class ProductsController extends Controller
     {
         // Sanitize input
         $sanitized = $request->validated();
+        return $sanitized;
         $sanitized['user_id'] = Auth::id();
 
         // Store the Product
