@@ -32,7 +32,7 @@ class UpdateProduct extends FormRequest
             'buying_price_sgd' => ['nullable', 'numeric'],
             'remarks' => ['nullable', 'string'],
             'status' => ['sometimes', 'integer'],
-            
+            'quantity' => ['required', 'numeric'],
         ];
     }
 }

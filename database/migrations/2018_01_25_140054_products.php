@@ -22,7 +22,7 @@ class Products extends Migration
             $table->float('selling_price_sgd')->nullable();
             $table->float('buying_price_rmb')->nullable();
             $table->float('buying_price_sgd')->nullable();
-            $table->double('quantity');
+            $table->double('quantity')->nullable();
             $table->text('remarks')->nullable();
             $table->tinyInteger('status');
             $table->timestamps();
