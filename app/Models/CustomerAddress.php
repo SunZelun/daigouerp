@@ -37,5 +37,11 @@ class CustomerAddress extends Model
         return url('/admin/customer-addresses/'.$this->getKey());
     }
 
-    
+    /**
+     * Get the customer detail
+     */
+    public function customer()
+    {
+        return $this->belongsTo('App\Models\Customer','customer_id','id');
+    }
 }

@@ -40,6 +40,21 @@ class OrdersController extends Controller
             ['id', 'remarks']
         );
 
+        $rate = session('rate') ? session('rate') : 4.5;
+
+        //append customer name to order
+        if (!empty($data->items())){
+            foreach($data->items() as &$order){
+                $order->customer_name = $order->customer->name;
+                $order->total_cost_in_rmb = round($order->cost_in_rmb + $order->cost_in_sgd * $rate,2);
+                $order->total_cost_in_sgd = round($order->cost_in_rmb / $rate + $order->cost_in_sgd,2);
+                $order->total_rev_in_rmb = round($order->revenue_in_rmb + $order->revenue_in_sgd * $rate,2);
+                $order->total_rev_in_sgd = round($order->revenue_in_rmb / $rate + $order->revenue_in_sgd,2);
+                $order->total_profit_in_rmb = round($order->profit_in_rmb + $order->profit_in_sgd * $rate,2);
+                $order->total_profit_in_sgd = round($order->profit_in_rmb / $rate + $order->profit_in_sgd,2);
+            }
+        }
+
         if ($request->ajax()) {
             return ['data' => $data];
         }

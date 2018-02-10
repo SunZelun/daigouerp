@@ -44,7 +44,7 @@
                             <thead>
                                 <tr>
                                     <th is='sortable' :column="'id'">{{ trans('admin.customer-address.columns.id') }}</th>
-                                    <th is='sortable' :column="'customer_id'">{{ trans('admin.customer-address.columns.customer_id') }}</th>
+                                    <th is='sortable' :column="'customer_id'">{{ trans('Customer Name') }}</th>
                                     <th is='sortable' :column="'address'">{{ trans('admin.customer-address.columns.address') }}</th>
                                     <th is='sortable' :column="'contact_person'">{{ trans('admin.customer-address.columns.contact_person') }}</th>
                                     <th is='sortable' :column="'contact_number'">{{ trans('admin.customer-address.columns.contact_number') }}</th>

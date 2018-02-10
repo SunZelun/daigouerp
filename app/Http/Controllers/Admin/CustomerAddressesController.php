@@ -35,6 +35,13 @@ class CustomerAddressesController extends Controller
             ['id', 'address', 'contact_person', 'contact_number', 'remarks']
         );
 
+        //append customer name to order
+        if (!empty($data->items())){
+            foreach($data->items() as &$address){
+                $address->customer_name = $address->customer->name;
+            }
+        }
+
         if ($request->ajax()) {
             return ['data' => $data];
         }

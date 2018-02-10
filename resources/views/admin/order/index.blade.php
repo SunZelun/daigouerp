@@ -44,14 +44,10 @@
                             <thead>
                                 <tr>
                                     <th is='sortable' :column="'id'">{{ trans('admin.order.columns.id') }}</th>
-                                    <th is='sortable' :column="'customer_id'">{{ trans('admin.order.columns.customer_id') }}</th>
-                                    <th is='sortable' :column="'customer_address_id'">{{ trans('admin.order.columns.customer_address_id') }}</th>
-                                    <th is='sortable' :column="'cost_in_rmb'">{{ trans('Cost in RMB') }}</th>
-                                    <th is='sortable' :column="'cost_in_sgd'">{{ trans('Cost in SGD') }}</th>
-                                    <th is='sortable' :column="'revenue_in_rmb'">{{ trans('Revenue in RMB') }}</th>
-                                    <th is='sortable' :column="'revenue_in_sgd'">{{ trans('Revenue in SGD') }}</th>
-                                    <th is='sortable' :column="'profit_in_rmb'">{{ trans('Profit in RMB') }}</th>
-                                    <th is='sortable' :column="'profit_in_sgd'">{{ trans('Profit in SGD') }}</th>
+                                    <th is='sortable' :column="'customer_id'">{{ trans('Customer Name') }}</th>
+                                    <th is='sortable' :column="'cost_in_rmb'">{{ trans('Cost') }}</th>
+                                    <th is='sortable' :column="'revenue_in_rmb'">{{ trans('Revenue') }}</th>
+                                    <th is='sortable' :column="'profit_in_rmb'">{{ trans('Profit') }}</th>
                                     <th is='sortable' :column="'remarks'">{{ trans('admin.order.columns.remarks') }}</th>
                                     <th is='sortable' :column="'status'">{{ trans('admin.order.columns.status') }}</th>
                                     <th></th>
@@ -60,14 +56,10 @@
                             <tbody>
                                 <tr v-for="(item, index) in collection">
                                     <td>@{{ item.id }}</td>
-                                    <td>@{{ item.customer_id }}</td>
-                                    <td>@{{ item.customer_address_id }}</td>
-                                    <td>@{{ item.cost_in_rmb }}</td>
-                                    <td>@{{ item.cost_in_sgd }}</td>
-                                    <td>@{{ item.revenue_in_rmb }}</td>
-                                    <td>@{{ item.revenue_in_sgd }}</td>
-                                    <td>@{{ item.profit_in_rmb }}</td>
-                                    <td>@{{ item.profit_in_sgd }}</td>
+                                    <td>@{{ item.customer_name }}</td>
+                                    <td>RMB @{{ item.total_cost_in_rmb }} &asymp; SGD @{{ item.total_cost_in_rmb }}</td>
+                                    <td>RMB @{{ item.total_rev_in_rmb }} &asymp; SGD @{{ item.total_rev_in_sgd }}</td>
+                                    <td>RMB @{{ item.total_profit_in_rmb }} &asymp; SGD @{{ item.total_profit_in_sgd }}</td>
                                     <td>@{{ item.remarks }}</td>
                                     <td>@{{ item.status }}</td>
                                     
