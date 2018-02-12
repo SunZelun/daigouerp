@@ -14,6 +14,8 @@ class Product extends Model
         "selling_price_sgd",
         "buying_price_rmb",
         "buying_price_sgd",
+        "category_id",
+        "brand_id",
         "remarks",
         "status",
         "quantity",
@@ -52,5 +54,21 @@ class Product extends Model
         $product->update();
 
         return $product;
+    }
+
+    /**
+     * Get the product category
+     */
+    public function category()
+    {
+        return $this->belongsTo('App\Models\SysCode','category_id','id');
+    }
+
+    /**
+     * Get the product brand
+     */
+    public function brand()
+    {
+        return $this->belongsTo('App\Models\SysCode','brand_id','id');
     }
 }

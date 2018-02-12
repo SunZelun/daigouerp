@@ -13,9 +13,9 @@ class DashboardController extends Controller
 {
     public function index(){
         $rate = $this->getCurrencyRate();
-        $activeOrders = Order::with(['products'])->where(['user_id' => Auth::id(), 'status' => Order::STATUS_ACTIVE])->get();
+        $activeOrders = Order::with(['products.detail.category'])->where(['user_id' => Auth::id(), 'status' => Order::STATUS_ACTIVE])->get();
         $activeCustomers = Customer::where(['status' => Customer::STATUS_ACTIVE, 'user_id' => Auth::id()])->count();
-        $activeProducts = Product::where(['status' => Product::STATUS_ACTIVE, 'user_id' => Auth::id()])->get();
+        $activeProducts = Product::with(['category', 'brand'])->where(['status' => Product::STATUS_ACTIVE, 'user_id' => Auth::id()])->get();
 
         $totalCostInRmb = 0;
         $totalCostInSgd = 0;
@@ -24,6 +24,7 @@ class DashboardController extends Controller
         $totalProfitInRmb = 0;
         $totalProfitInSgd = 0;
         $productsSold = 0;
+        $categories = [];
 
         $salesBreakdown = null;
         $buyerBreakdown = null;
@@ -50,6 +51,15 @@ class DashboardController extends Controller
                         } else {
                             $salesBreakdown[$product->product_id]['quantity'] += $product->quantity;
                         }
+
+                        //group sales based on categories
+                        $categoryName = $product->detail->category ? $product->detail->category->name : '无分类';
+                        if (empty($categories) || !in_array($categoryName, array_keys($categories))){
+                            $categories[$categoryName] = $product->quantity;
+                        } else {
+                            $categories[$categoryName] += $product->quantity;
+                        }
+
                     }
                 }
 
@@ -100,7 +110,8 @@ class DashboardController extends Controller
             'activeCustomers' => $activeCustomers,
             'activeProducts' => $activeProducts,
             'salesBreakdown' => $salesBreakdown,
-            'buyerBreakdown' => $buyerBreakdown
+            'buyerBreakdown' => $buyerBreakdown,
+            'salesByCategories' => $categories,
         ]);
     }
 

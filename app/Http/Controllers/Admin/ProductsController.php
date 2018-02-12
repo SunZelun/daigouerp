@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\SysCode;
 use Illuminate\Http\Request;
 use \Illuminate\Http\Response;
 use App\Http\Requests\Admin\Product\IndexProduct;
@@ -28,11 +29,19 @@ class ProductsController extends Controller
             $request,
 
             // set columns to query
-            ['id', 'name', 'selling_price_rmb', 'selling_price_sgd', 'buying_price_rmb', 'buying_price_sgd', 'status', 'quantity'],
+            ['id', 'name', 'selling_price_rmb', 'selling_price_sgd', 'buying_price_rmb', 'buying_price_sgd', 'status', 'quantity', 'brand_id', 'category_id'],
 
             // set columns to searchIn
             ['id', 'description', 'remarks']
         );
+
+        //append category and brand name to product
+        if (!empty($data->items())){
+            foreach($data->items() as &$product){
+                $product->brand_name = $product->brand ? $product->brand->name : '-';
+                $product->category_name = $product->category ? $product->category->name : '-';
+            }
+        }
 
         if ($request->ajax()) {
             return ['data' => $data];
@@ -50,8 +59,22 @@ class ProductsController extends Controller
     public function create()
     {
         $this->authorize('admin.product.create');
+        $codes = SysCode::whereIn('type', ['brand', 'category'])->where(['status' => SysCode::STATUS_ACTIVE])->get();
+        $categories = [];
+        $brands = [];
 
-        return view('admin.product.create');
+        //get brands and categories
+        if ($codes){
+            foreach ($codes as $code){
+                if ($code->type == 'brand'){
+                    $brands[] = $code;
+                } else {
+                    $categories[] = $code;
+                }
+            }
+        }
+
+        return view('admin.product.create', ['brands' => $brands, 'categories' => $categories]);
     }
 
     /**
@@ -98,9 +121,27 @@ class ProductsController extends Controller
     public function edit(Product $product)
     {
         $this->authorize('admin.product.edit', $product);
+        $product = Product::with(['category', 'brand'])->where(['id' => $product->id])->first();
+
+        $codes = SysCode::whereIn('type', ['brand', 'category'])->where(['status' => SysCode::STATUS_ACTIVE])->get();
+        $categories = [];
+        $brands = [];
+
+        //get brands and categories
+        if ($codes){
+            foreach ($codes as $code){
+                if ($code->type == 'brand'){
+                    $brands[] = $code;
+                } else {
+                    $categories[] = $code;
+                }
+            }
+        }
 
         return view('admin.product.edit', [
             'product' => $product,
+            'brands' => $brands,
+            'categories' => $categories,
         ]);
     }
 

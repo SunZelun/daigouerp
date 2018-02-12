@@ -43,6 +43,17 @@
         </div>
 
         <div class="col-md-12">
+            <div class="card col-lg-3 col-sm-6">
+                <div class="card-body text-center">
+                    <div class="text-muted small text-uppercase font-weight-bold">Sales Distribution By Category</div>
+                    <div class="chart-wrapper">
+                        <canvas id="categoryChart" width="100" height="100"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
                     Sales
@@ -180,4 +191,80 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('bottom-scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    <script>
+        var default_colors = [
+            '#F8CCAC',
+            '#da5086',
+            '#5e2087',
+            '#3c1558',
+            '#ed8a96',
+            '#742894',
+            '#e86a8c',
+            '#f2aba1',
+            '#b8428b',
+            '#97358e',
+            '#4d1a6f',
+            '#2c0540'
+        ];
+        var randomColors = function(number) {
+            if (number > 0 && number < default_colors.length){
+                return default_colors.slice(0,number);
+            } else {
+                return null;
+            }
+        };
+
+        var config = {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                    data: {!! json_encode(array_values($salesByCategories)) !!},
+                    backgroundColor: randomColors({{ count($salesByCategories) }}),
+                    label: 'category'
+                }],
+                labels: {!! json_encode(array_keys($salesByCategories)) !!}
+            },
+            options: {
+                responsive: true,
+                legend: {
+                    display: true
+                },
+                pieceLabel: {
+                    // mode 'label', 'value' or 'percentage', default is 'percentage'
+                    mode: 'percentage',
+
+                    // precision for percentage, default is 0
+                    precision: 0,
+
+                    // font size, default is defaultFontSize
+                    fontSize: 18,
+
+                    // font color, default is '#fff'
+                    fontColor: '#151b1e',
+
+                    // font style, default is defaultFontStyle
+                    fontStyle: 'bold',
+
+                    // font family, default is defaultFontFamily
+                    fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif"
+                },
+                title: {
+                    display: false,
+                    text: 'Sales Category Distribution'
+                },
+                animation: {
+                    animateScale: true,
+                    animateRotate: true
+                }
+            }
+        };
+
+        var ctx = document.getElementById("categoryChart");
+        var categoryChart = new Chart(ctx, config);
+
+    </script>
 @endsection

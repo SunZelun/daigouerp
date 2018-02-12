@@ -30,6 +30,8 @@ class StoreProduct extends FormRequest
             'selling_price_sgd' => ['nullable', 'numeric'],
             'buying_price_rmb' => ['nullable', 'numeric'],
             'buying_price_sgd' => ['nullable', 'numeric'],
+            'brand_id' => ['nullable', 'numeric'],
+            'category_id' => ['nullable', 'numeric'],
             'remarks' => ['nullable', 'string'],
             'status' => ['required', 'integer'],
             'quantity' => ['required', 'numeric'],

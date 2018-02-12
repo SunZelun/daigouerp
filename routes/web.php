@@ -79,3 +79,13 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/admin/orders/{order}',                        'Admin\OrdersController@update')->name('admin/orders/update');
     Route::delete('/admin/orders/{order}',                      'Admin\OrdersController@destroy')->name('admin/orders/destroy');
 });
+
+/* Auto-generated admin routes */
+Route::middleware(['admin'])->group(function () {
+    Route::get('/admin/sys-codes',                              'Admin\SysCodesController@index');
+    Route::get('/admin/sys-codes/create',                       'Admin\SysCodesController@create');
+    Route::post('/admin/sys-codes',                             'Admin\SysCodesController@store');
+    Route::get('/admin/sys-codes/{sysCode}/edit',               'Admin\SysCodesController@edit')->name('admin/sys-codes/edit');
+    Route::post('/admin/sys-codes/{sysCode}',                   'Admin\SysCodesController@update')->name('admin/sys-codes/update');
+    Route::delete('/admin/sys-codes/{sysCode}',                 'Admin\SysCodesController@destroy')->name('admin/sys-codes/destroy');
+});

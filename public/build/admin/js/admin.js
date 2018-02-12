@@ -15761,6 +15761,18 @@ module.exports = Vue$3;
 
 /***/ }),
 /* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_craftable__ = __webpack_require__(15);
+
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+	mixins: [__WEBPACK_IMPORTED_MODULE_0_craftable__["b" /* BaseForm */]]
+});
+
+/***/ }),
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15860,7 +15872,7 @@ module.exports = defaults;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15868,11 +15880,11 @@ module.exports = defaults;
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-	mixins: [__WEBPACK_IMPORTED_MODULE_0_craftable__["b" /* BaseForm */]]
+	mixins: [__WEBPACK_IMPORTED_MODULE_0_craftable__["c" /* BaseListing */]]
 });
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports) {
 
 /*
@@ -15952,18 +15964,6 @@ function toComment(sourceMap) {
 	return '/*# ' + data + ' */';
 }
 
-
-/***/ }),
-/* 7 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_craftable__ = __webpack_require__(15);
-
-
-/* harmony default export */ __webpack_exports__["a"] = ({
-	mixins: [__WEBPACK_IMPORTED_MODULE_0_craftable__["c" /* BaseListing */]]
-});
 
 /***/ }),
 /* 8 */
@@ -44317,7 +44317,7 @@ module.exports = __webpack_require__(20);
 var utils = __webpack_require__(1);
 var bind = __webpack_require__(8);
 var Axios = __webpack_require__(22);
-var defaults = __webpack_require__(4);
+var defaults = __webpack_require__(5);
 
 /**
  * Create an instance of Axios
@@ -44400,7 +44400,7 @@ function isSlowBuffer (obj) {
 "use strict";
 
 
-var defaults = __webpack_require__(4);
+var defaults = __webpack_require__(5);
 var utils = __webpack_require__(1);
 var InterceptorManager = __webpack_require__(31);
 var dispatchRequest = __webpack_require__(32);
@@ -44941,7 +44941,7 @@ module.exports = InterceptorManager;
 var utils = __webpack_require__(1);
 var transformData = __webpack_require__(33);
 var isCancel = __webpack_require__(12);
-var defaults = __webpack_require__(4);
+var defaults = __webpack_require__(5);
 var isAbsoluteURL = __webpack_require__(34);
 var combineURLs = __webpack_require__(35);
 
@@ -72264,7 +72264,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__bootstrap__ = __webpack_require__(264);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__app_components_bootstrap__ = __webpack_require__(265);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__index__ = __webpack_require__(267);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_craftable_coreui__ = __webpack_require__(287);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_craftable_coreui__ = __webpack_require__(290);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_craftable_coreui___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14_craftable_coreui__);
 
 
@@ -72331,7 +72331,7 @@ if(false) {
 /* 225 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(6)(false);
+exports = module.exports = __webpack_require__(7)(false);
 // imports
 
 
@@ -76576,7 +76576,7 @@ if(false) {
 /* 235 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(6)(false);
+exports = module.exports = __webpack_require__(7)(false);
 // imports
 
 
@@ -77004,7 +77004,7 @@ if(false) {
 /* 240 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(6)(false);
+exports = module.exports = __webpack_require__(7)(false);
 // imports
 
 
@@ -77049,7 +77049,7 @@ if(false) {
 /* 242 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(6)(false);
+exports = module.exports = __webpack_require__(7)(false);
 // imports
 
 
@@ -77094,7 +77094,7 @@ if(false) {
 /* 244 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(6)(false);
+exports = module.exports = __webpack_require__(7)(false);
 // imports
 
 
@@ -85271,7 +85271,7 @@ if(false) {
 /* 250 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(6)(false);
+exports = module.exports = __webpack_require__(7)(false);
 // imports
 
 
@@ -87391,7 +87391,7 @@ if (token) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_craftable__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Listing_AppListing__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Listing_AppListing__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Form_AppUpload__ = __webpack_require__(266);
 
 
@@ -87421,6 +87421,8 @@ Vue.component('media-upload', {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__customer_address__ = __webpack_require__(278);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__product__ = __webpack_require__(281);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__order__ = __webpack_require__(284);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__sys_code__ = __webpack_require__(287);
+
 
 
 
@@ -87444,7 +87446,7 @@ Vue.component('media-upload', {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_components_Listing_AppListing__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_components_Listing_AppListing__ = __webpack_require__(6);
 
 
 Vue.component('user-listing', {
@@ -87481,7 +87483,7 @@ Vue.component('user-listing', {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_components_Form_AppForm__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_components_Form_AppForm__ = __webpack_require__(4);
 
 
 Vue.component('user-form', {
@@ -87515,7 +87517,7 @@ Vue.component('user-form', {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_components_Form_AppForm__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_components_Form_AppForm__ = __webpack_require__(4);
 
 
 Vue.component('profile-edit-profile-form', {
@@ -87558,7 +87560,7 @@ Vue.component('profile-edit-profile-form', {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_components_Form_AppForm__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_components_Form_AppForm__ = __webpack_require__(4);
 
 
 Vue.component('profile-edit-password-form', {
@@ -87589,7 +87591,7 @@ Vue.component('profile-edit-password-form', {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_components_Listing_AppListing__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_components_Listing_AppListing__ = __webpack_require__(6);
 
 
 Vue.component('customer-listing', {
@@ -87601,7 +87603,7 @@ Vue.component('customer-listing', {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_components_Form_AppForm__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_components_Form_AppForm__ = __webpack_require__(4);
 
 
 Vue.component('customer-form', {
@@ -87635,7 +87637,7 @@ Vue.component('customer-form', {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_components_Listing_AppListing__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_components_Listing_AppListing__ = __webpack_require__(6);
 
 
 Vue.component('customer-address-listing', {
@@ -87647,7 +87649,7 @@ Vue.component('customer-address-listing', {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_components_Form_AppForm__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_components_Form_AppForm__ = __webpack_require__(4);
 
 
 Vue.component('customer-address-form', {
@@ -87683,7 +87685,7 @@ Vue.component('customer-address-form', {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_components_Listing_AppListing__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_components_Listing_AppListing__ = __webpack_require__(6);
 
 
 Vue.component('product-listing', {
@@ -87695,7 +87697,7 @@ Vue.component('product-listing', {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_components_Form_AppForm__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_components_Form_AppForm__ = __webpack_require__(4);
 
 
 Vue.component('product-form', {
@@ -87709,13 +87711,29 @@ Vue.component('product-form', {
                 selling_price_sgd: '',
                 buying_price_rmb: '',
                 buying_price_sgd: '',
+                category_id: '',
+                category: '',
+                brand_id: '',
+                brand: '',
                 remarks: '',
                 status: '',
                 quantity: ''
             }
         };
-    }
+    },
+    methods: {
+        nameOnly: function nameOnly(_ref) {
+            var name = _ref.name;
 
+            return '' + name;
+        },
+        updateSelectedCategory: function updateSelectedCategory(value) {
+            this.form.category_id = value.id;
+        },
+        updateSelectedBrand: function updateSelectedBrand(value) {
+            this.form.brand_id = value.id;
+        }
+    }
 });
 
 /***/ }),
@@ -87733,7 +87751,7 @@ Vue.component('product-form', {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_components_Listing_AppListing__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_components_Listing_AppListing__ = __webpack_require__(6);
 
 
 Vue.component('order-listing', {
@@ -87745,7 +87763,7 @@ Vue.component('order-listing', {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_components_Form_AppForm__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_components_Form_AppForm__ = __webpack_require__(4);
 
 
 Vue.component('order-form', {
@@ -87891,6 +87909,52 @@ Vue.component('order-form', {
 
 /***/ }),
 /* 287 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Listing__ = __webpack_require__(288);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Form__ = __webpack_require__(289);
+
+
+
+/***/ }),
+/* 288 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_components_Listing_AppListing__ = __webpack_require__(6);
+
+
+Vue.component('sys-code-listing', {
+    mixins: [__WEBPACK_IMPORTED_MODULE_0__app_components_Listing_AppListing__["a" /* default */]]
+});
+
+/***/ }),
+/* 289 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_components_Form_AppForm__ = __webpack_require__(4);
+
+
+Vue.component('sys-code-form', {
+    mixins: [__WEBPACK_IMPORTED_MODULE_0__app_components_Form_AppForm__["a" /* default */]],
+    data: function data() {
+        return {
+            form: {
+                code: '',
+                type: 'brand',
+                name: '',
+                status: false
+
+            }
+        };
+    }
+
+});
+
+/***/ }),
+/* 290 */
 /***/ (function(module, exports) {
 
 /*****

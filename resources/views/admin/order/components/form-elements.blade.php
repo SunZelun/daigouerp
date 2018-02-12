@@ -131,7 +131,7 @@
                         </select>
                     </div>
                     <div class="col-sm-8">
-                        <input v-model="form.inter_shipping_cost" class="form-control" placeholder="Shipping Fee" />
+                        <input v-model="form.inter_shipping_cost" type="number"  class="form-control" placeholder="Shipping Fee" />
                     </div>
                 </div>
             </div>
@@ -148,7 +148,7 @@
                         </select>
                     </div>
                     <div class="col-sm-8">
-                        <input v-model="form.dome_shipping_cost" class="form-control" placeholder="Shipping Fee" />
+                        <input v-model="form.dome_shipping_cost" type="number" class="form-control" placeholder="Shipping Fee" />
                     </div>
                 </div>
             </div>

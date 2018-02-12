@@ -45,7 +45,7 @@ class OrdersController extends Controller
         //append customer name to order
         if (!empty($data->items())){
             foreach($data->items() as &$order){
-                $order->customer_name = $order->customer->name;
+                $order->customer_name = $order->customer ? $order->customer->name : '-';
                 $order->total_cost_in_rmb = round($order->cost_in_rmb + $order->cost_in_sgd * $rate,2);
                 $order->total_cost_in_sgd = round($order->cost_in_rmb / $rate + $order->cost_in_sgd,2);
                 $order->total_rev_in_rmb = round($order->revenue_in_rmb + $order->revenue_in_sgd * $rate,2);

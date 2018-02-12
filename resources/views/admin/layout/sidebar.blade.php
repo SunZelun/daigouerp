@@ -7,6 +7,7 @@
             <li class="nav-item"><a class="nav-link" href="{{ url('admin/customer-addresses') }}"><i class="icon-graduation"></i> <span class="nav-link-text">{{ trans('admin.customer-address.title') }}</span></a></li>
             <li class="nav-item"><a class="nav-link" href="{{ url('admin/products') }}"><i class="icon-star"></i> <span class="nav-link-text">{{ trans('admin.product.title') }}</span></a></li>
             <li class="nav-item"><a class="nav-link" href="{{ url('admin/orders') }}"><i class="icon-drop"></i> <span class="nav-link-text">{{ trans('admin.order.title') }}</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url('admin/sys-codes') }}"><i class="icon-graduation"></i> <span class="nav-link-text">{{ trans('System Codes') }}</span></a></li>
             {{-- Do not delete me :) I'm used for auto-generation menu items --}}
 
             {{--<li class="nav-title">E-shop</li>--}}

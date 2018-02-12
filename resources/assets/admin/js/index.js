@@ -5,3 +5,4 @@ import './customer';
 import './customer-address';
 import './product';
 import './order';
+import './sys-code';

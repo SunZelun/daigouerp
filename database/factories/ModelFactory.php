@@ -117,3 +117,17 @@ $factory->define(App\Models\Order::class, function (Faker\Generator $faker) {
     ];
 });
 
+/** @var  \Illuminate\Database\Eloquent\Factory $factory */
+$factory->define(App\Models\SysCode::class, function (Faker\Generator $faker) {
+    return [
+        'code' => $faker->sentence,
+        'type' => $faker->sentence,
+        'name' => $faker->firstName,
+        'status' => $faker->randomNumber(5),
+        'created_at' => $faker->dateTime,
+        'updated_at' => $faker->dateTime,
+        
+        
+    ];
+});
+
