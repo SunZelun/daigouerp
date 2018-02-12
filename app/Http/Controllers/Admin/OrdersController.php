@@ -74,8 +74,14 @@ class OrdersController extends Controller
 
         $customers = Customer::where(['user_id' => Auth::id(), 'status' => Customer::STATUS_ACTIVE])->select(['id','name'])->get();
         $products = Product::where(['user_id' => Auth::id(), 'status' => Product::STATUS_ACTIVE])->get();
+        $rate = session('rate') ? session('rate') : 4.5;
 
-        return view('admin.order.create', ['customers' => $customers, 'currencies' => $this->currencies, 'products' => $products]);
+        return view('admin.order.create', [
+            'customers' => $customers,
+            'currencies' => $this->currencies,
+            'products' => $products,
+            'rate' => $rate
+        ]);
     }
 
     /**
@@ -157,13 +163,15 @@ class OrdersController extends Controller
         $addresses = CustomerAddress::where(['customer_id' => $order->customer_id])->get();
         $customers = Customer::where(['user_id' => Auth::id(), 'status' => Customer::STATUS_ACTIVE])->select(['id','name'])->get();
         $products = Product::where(['user_id' => Auth::id(), 'status' => Product::STATUS_ACTIVE])->get();
+        $rate = session('rate') ? session('rate') : 4.5;
 
         return view('admin.order.edit', [
             'order' => $order,
             'customers' => $customers,
             'products' => $products,
             'currencies' => $this->currencies,
-            'addresses' => $addresses
+            'addresses' => $addresses,
+            'rate' => $rate
         ]);
     }
 

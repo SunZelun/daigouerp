@@ -45,10 +45,9 @@
                                 <tr>
                                     <th is='sortable' :column="'id'">{{ trans('admin.product.columns.id') }}</th>
                                     <th is='sortable' :column="'name'">{{ trans('admin.product.columns.name') }}</th>
-                                    <th is='sortable' :column="'selling_price_rmb'">{{ trans('admin.product.columns.selling_price_rmb') }}</th>
-                                    <th is='sortable' :column="'selling_price_sgd'">{{ trans('admin.product.columns.selling_price_sgd') }}</th>
-                                    <th is='sortable' :column="'buying_price_rmb'">{{ trans('admin.product.columns.buying_price_rmb') }}</th>
-                                    <th is='sortable' :column="'buying_price_sgd'">{{ trans('admin.product.columns.buying_price_sgd') }}</th>
+                                    <th is='sortable' :column="'selling_price_rmb'">{{ trans('Selling Price') }}</th>
+                                    <th is='sortable' :column="'buying_price_sgd'">{{ trans('Buying Price') }}</th>
+                                    <th is='sortable' :column="'quantity'">{{ trans('Quantity') }}</th>
                                     <th is='sortable' :column="'status'">{{ trans('admin.product.columns.status') }}</th>
                                     
                                     <th></th>
@@ -58,10 +57,9 @@
                                 <tr v-for="(item, index) in collection">
                                     <td>@{{ item.id }}</td>
                                     <td>@{{ item.name }}</td>
-                                    <td>@{{ item.selling_price_rmb }}</td>
-                                    <td>@{{ item.selling_price_sgd }}</td>
-                                    <td>@{{ item.buying_price_rmb }}</td>
-                                    <td>@{{ item.buying_price_sgd }}</td>
+                                    <td>RMB @{{ item.selling_price_rmb }} / SGD @{{ item.selling_price_sgd }}</td>
+                                    <td>RMB @{{ item.buying_price_rmb }} / SGD@{{ item.buying_price_sgd }}</td>
+                                    <td>@{{ item.quantity }}</td>
                                     <td>@{{ item.status }}</td>
                                     
                                     <td>

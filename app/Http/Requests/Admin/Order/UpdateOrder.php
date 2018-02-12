@@ -36,6 +36,10 @@ class UpdateOrder extends FormRequest
             'remarks' => ['nullable', 'string'],
             'status' => ['sometimes', 'integer'],
             'products' => ['nullable', 'array'],
+            'inter_shipping_currency' => ['nullable', 'string'],
+            'inter_shipping_cost' => ['nullable', 'numeric'],
+            'dome_shipping_currency' => ['nullable', 'string'],
+            'dome_shipping_cost' => ['nullable', 'numeric'],
         ];
     }
 }

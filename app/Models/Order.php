@@ -19,7 +19,10 @@ class Order extends Model
         "profit_in_sgd",
         "remarks",
         "status",
-    
+        'inter_shipping_currency',
+        'inter_shipping_cost',
+        'dome_shipping_currency',
+        'dome_shipping_cost',
     ];
     
     protected $hidden = [

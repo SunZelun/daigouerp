@@ -28,7 +28,7 @@ class ProductsController extends Controller
             $request,
 
             // set columns to query
-            ['id', 'name', 'selling_price_rmb', 'selling_price_sgd', 'buying_price_rmb', 'buying_price_sgd', 'status'],
+            ['id', 'name', 'selling_price_rmb', 'selling_price_sgd', 'buying_price_rmb', 'buying_price_sgd', 'status', 'quantity'],
 
             // set columns to searchIn
             ['id', 'description', 'remarks']

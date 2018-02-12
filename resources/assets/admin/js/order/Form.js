@@ -1,6 +1,7 @@
 import AppForm from '../app-components/Form/AppForm';
 
 Vue.component('order-form', {
+    props: ["rate"],
     mixins: [AppForm],
     data: function() {
         return {
@@ -13,6 +14,12 @@ Vue.component('order-form', {
                 revenue_in_sgd:  '' ,
                 profit_in_rmb:  '' ,
                 profit_in_sgd:  '' ,
+                inter_shipping_currency:  'SGD' ,
+                inter_shipping_cost:  '0' ,
+                dome_shipping_currency:  'RMB' ,
+                dome_shipping_cost:  '0' ,
+                sum_profit_in_rmb:  '' ,
+                sum_profit_in_sgd:  '' ,
                 remarks:  '' ,
                 status:  '' ,
                 products: [{
@@ -28,37 +35,48 @@ Vue.component('order-form', {
         }
     },
     computed: {
-        // subtotalRow() {
-        //     return this.items.map((item) => {
-        //         return Number(item.qty * item.price)
-        //     });
-        // },
         totalCostRmb() {
             this.form.cost_in_rmb = this.form.products.reduce((total, product) => {
                 if (product.buying_currency == 'RMB'){
-                    return total + Number(product.buying_price);
+                    return total + Number(product.buying_price)*Number(product.quantity);
                 } else {
                     return total;
                 }
             }, 0);
+
+            if (this.form.inter_shipping_currency == 'RMB'){
+                this.form.cost_in_rmb += Number(this.form.inter_shipping_cost);
+            }
+
+            if (this.form.dome_shipping_currency == 'RMB'){
+                this.form.cost_in_rmb += Number(this.form.dome_shipping_cost);
+            }
+
             return this.form.cost_in_rmb;
         },
         totalCostSgd() {
             this.form.cost_in_sgd = this.form.products.reduce((total, product) => {
                 if (product.buying_currency == 'SGD'){
-                    return total + Number(product.buying_price);
+                    return total + Number(product.buying_price)*Number(product.quantity);
                 } else {
                     return total;
                 }
-                console.log(total);
             }, 0);
+
+            if (this.form.inter_shipping_currency == 'SGD'){
+                this.form.cost_in_sgd += Number(this.form.inter_shipping_cost);
+            }
+
+            if (this.form.dome_shipping_currency == 'SGD'){
+                this.form.cost_in_sgd += Number(this.form.dome_shipping_cost);
+            }
 
             return this.form.cost_in_sgd;
         },
         totalRevSgd() {
             this.form.revenue_in_sgd = this.form.products.reduce((total, product) => {
                 if (product.selling_currency == 'SGD'){
-                return total + Number(product.selling_price);
+                return total + Number(product.selling_price)*Number(product.quantity);
             } else {
                 return total;
             }
@@ -68,20 +86,30 @@ Vue.component('order-form', {
         totalRevRmb() {
             this.form.revenue_in_rmb = this.form.products.reduce((total, product) => {
                 if (product.selling_currency == 'RMB'){
-                return total + Number(product.selling_price);
+                return total + Number(product.selling_price)*Number(product.quantity);
             } else {
                 return total;
             }
         }, 0);
             return this.form.revenue_in_rmb;
         },
-        totalProfitSgd() {
+        totalProfitInSgd() {
             this.form.profit_in_sgd = Number(this.form.revenue_in_sgd) - Number(this.form.cost_in_sgd);
             return this.form.profit_in_sgd;
         },
-        totalProfitRmb() {
+        totalProfitInRmb() {
             this.form.profit_in_rmb = Number(this.form.revenue_in_rmb) - Number(this.form.cost_in_rmb);
             return this.form.profit_in_rmb;
+        },
+        calcSumProfitInRmb() {
+            var sum_profit = 0;
+            sum_profit = Number((Number(this.form.profit_in_rmb) + Number(this.form.profit_in_sgd)*this.rate).toFixed(2));
+            return sum_profit;
+        },
+        calcSumProfitInSgd() {
+            var sum_profit = 0;
+            sum_profit = Number((Number(this.form.profit_in_sgd) + Number(this.form.profit_in_rmb)/this.rate).toFixed(2));
+            return sum_profit;
         },
     },
     methods:{

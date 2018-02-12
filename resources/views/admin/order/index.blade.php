@@ -57,7 +57,7 @@
                                 <tr v-for="(item, index) in collection">
                                     <td>@{{ item.id }}</td>
                                     <td>@{{ item.customer_name }}</td>
-                                    <td>RMB @{{ item.total_cost_in_rmb }} &asymp; SGD @{{ item.total_cost_in_rmb }}</td>
+                                    <td>RMB @{{ item.total_cost_in_rmb }} &asymp; SGD @{{ item.total_cost_in_sgd }}</td>
                                     <td>RMB @{{ item.total_rev_in_rmb }} &asymp; SGD @{{ item.total_rev_in_sgd }}</td>
                                     <td>RMB @{{ item.total_profit_in_rmb }} &asymp; SGD @{{ item.total_profit_in_sgd }}</td>
                                     <td>@{{ item.remarks }}</td>

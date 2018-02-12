@@ -33,9 +33,12 @@ class StoreOrder extends FormRequest
             'revenue_in_sgd' => ['nullable', 'numeric'],
             'profit_in_rmb' => ['nullable', 'numeric'],
             'profit_in_sgd' => ['nullable', 'numeric'],
+            'inter_shipping_currency' => ['nullable', 'string'],
+            'inter_shipping_cost' => ['nullable', 'numeric'],
+            'dome_shipping_currency' => ['nullable', 'string'],
+            'dome_shipping_cost' => ['nullable', 'numeric'],
             'remarks' => ['nullable', 'string'],
             'products' => ['nullable', 'array'],
-            
         ];
     }
 }

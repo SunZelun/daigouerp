@@ -44,7 +44,6 @@
                             <thead>
                                 <tr>
                                     <th is='sortable' :column="'id'">{{ trans('admin.customer.columns.id') }}</th>
-                                    <th is='sortable' :column="'user_id'">{{ trans('admin.customer.columns.user_id') }}</th>
                                     <th is='sortable' :column="'name'">{{ trans('admin.customer.columns.name') }}</th>
                                     <th is='sortable' :column="'wechat_name'">{{ trans('admin.customer.columns.wechat_name') }}</th>
                                     <th is='sortable' :column="'remarks'">{{ trans('admin.customer.columns.remarks') }}</th>
@@ -56,7 +55,6 @@
                             <tbody>
                                 <tr v-for="(item, index) in collection">
                                     <td>@{{ item.id }}</td>
-                                    <td>@{{ item.user_id }}</td>
                                     <td>@{{ item.name }}</td>
                                     <td>@{{ item.wechat_name }}</td>
                                     <td>@{{ item.remarks }}</td>

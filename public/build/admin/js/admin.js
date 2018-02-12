@@ -76525,7 +76525,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "node_modules/vue-quill-editor/src/editor.vue"
+Component.options.__file = "node_modules\\vue-quill-editor\\src\\editor.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -76534,9 +76534,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-56b68e14", Component.options)
+    hotAPI.createRecord("data-v-3ef6e1a1", Component.options)
   } else {
-    hotAPI.reload("data-v-56b68e14", Component.options)
+    hotAPI.reload("data-v-3ef6e1a1", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -76557,13 +76557,13 @@ var content = __webpack_require__(235);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(236)("5f5a9cd6", content, false);
+var update = __webpack_require__(236)("5bbed48e", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../css-loader/index.js!../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-56b68e14\",\"scoped\":false,\"hasInlineConfig\":true}!../../vue-loader/lib/selector.js?type=styles&index=0!./editor.vue", function() {
-     var newContent = require("!!../../css-loader/index.js!../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-56b68e14\",\"scoped\":false,\"hasInlineConfig\":true}!../../vue-loader/lib/selector.js?type=styles&index=0!./editor.vue");
+   module.hot.accept("!!../../css-loader/index.js!../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3ef6e1a1\",\"scoped\":false,\"hasInlineConfig\":true}!../../vue-loader/lib/selector.js?type=styles&index=0!./editor.vue", function() {
+     var newContent = require("!!../../css-loader/index.js!../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3ef6e1a1\",\"scoped\":false,\"hasInlineConfig\":true}!../../vue-loader/lib/selector.js?type=styles&index=0!./editor.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -77125,7 +77125,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-56b68e14", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-3ef6e1a1", module.exports)
   }
 }
 
@@ -87749,6 +87749,7 @@ Vue.component('order-listing', {
 
 
 Vue.component('order-form', {
+    props: ["rate"],
     mixins: [__WEBPACK_IMPORTED_MODULE_0__app_components_Form_AppForm__["a" /* default */]],
     data: function data() {
         return {
@@ -87761,6 +87762,12 @@ Vue.component('order-form', {
                 revenue_in_sgd: '',
                 profit_in_rmb: '',
                 profit_in_sgd: '',
+                inter_shipping_currency: 'SGD',
+                inter_shipping_cost: '0',
+                dome_shipping_currency: 'RMB',
+                dome_shipping_cost: '0',
+                sum_profit_in_rmb: '',
+                sum_profit_in_sgd: '',
                 remarks: '',
                 status: '',
                 products: [{
@@ -87776,37 +87783,48 @@ Vue.component('order-form', {
         };
     },
     computed: {
-        // subtotalRow() {
-        //     return this.items.map((item) => {
-        //         return Number(item.qty * item.price)
-        //     });
-        // },
         totalCostRmb: function totalCostRmb() {
             this.form.cost_in_rmb = this.form.products.reduce(function (total, product) {
                 if (product.buying_currency == 'RMB') {
-                    return total + Number(product.buying_price);
+                    return total + Number(product.buying_price) * Number(product.quantity);
                 } else {
                     return total;
                 }
             }, 0);
+
+            if (this.form.inter_shipping_currency == 'RMB') {
+                this.form.cost_in_rmb += Number(this.form.inter_shipping_cost);
+            }
+
+            if (this.form.dome_shipping_currency == 'RMB') {
+                this.form.cost_in_rmb += Number(this.form.dome_shipping_cost);
+            }
+
             return this.form.cost_in_rmb;
         },
         totalCostSgd: function totalCostSgd() {
             this.form.cost_in_sgd = this.form.products.reduce(function (total, product) {
                 if (product.buying_currency == 'SGD') {
-                    return total + Number(product.buying_price);
+                    return total + Number(product.buying_price) * Number(product.quantity);
                 } else {
                     return total;
                 }
-                console.log(total);
             }, 0);
+
+            if (this.form.inter_shipping_currency == 'SGD') {
+                this.form.cost_in_sgd += Number(this.form.inter_shipping_cost);
+            }
+
+            if (this.form.dome_shipping_currency == 'SGD') {
+                this.form.cost_in_sgd += Number(this.form.dome_shipping_cost);
+            }
 
             return this.form.cost_in_sgd;
         },
         totalRevSgd: function totalRevSgd() {
             this.form.revenue_in_sgd = this.form.products.reduce(function (total, product) {
                 if (product.selling_currency == 'SGD') {
-                    return total + Number(product.selling_price);
+                    return total + Number(product.selling_price) * Number(product.quantity);
                 } else {
                     return total;
                 }
@@ -87816,20 +87834,30 @@ Vue.component('order-form', {
         totalRevRmb: function totalRevRmb() {
             this.form.revenue_in_rmb = this.form.products.reduce(function (total, product) {
                 if (product.selling_currency == 'RMB') {
-                    return total + Number(product.selling_price);
+                    return total + Number(product.selling_price) * Number(product.quantity);
                 } else {
                     return total;
                 }
             }, 0);
             return this.form.revenue_in_rmb;
         },
-        totalProfitSgd: function totalProfitSgd() {
+        totalProfitInSgd: function totalProfitInSgd() {
             this.form.profit_in_sgd = Number(this.form.revenue_in_sgd) - Number(this.form.cost_in_sgd);
             return this.form.profit_in_sgd;
         },
-        totalProfitRmb: function totalProfitRmb() {
+        totalProfitInRmb: function totalProfitInRmb() {
             this.form.profit_in_rmb = Number(this.form.revenue_in_rmb) - Number(this.form.cost_in_rmb);
             return this.form.profit_in_rmb;
+        },
+        calcSumProfitInRmb: function calcSumProfitInRmb() {
+            var sum_profit = 0;
+            sum_profit = Number((Number(this.form.profit_in_rmb) + Number(this.form.profit_in_sgd) * this.rate).toFixed(2));
+            return sum_profit;
+        },
+        calcSumProfitInSgd: function calcSumProfitInSgd() {
+            var sum_profit = 0;
+            sum_profit = Number((Number(this.form.profit_in_sgd) + Number(this.form.profit_in_rmb) / this.rate).toFixed(2));
+            return sum_profit;
         }
     },
     methods: {

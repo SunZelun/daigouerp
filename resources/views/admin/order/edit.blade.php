@@ -6,42 +6,27 @@
 
     <div class="container-xl">
 
-        <div class="card">
+        <div class="col-md-12 p-0">
 
             <order-form
                 :action="'{{ $order->resource_url }}'"
                 :data="{{ $order->toJson() }}"
+                rate="{{ $rate }}"
                 inline-template>
             
                 <form class="form-horizontal form-edit" method="post" @submit.prevent="onSubmit" :action="this.action" novalidate>
-
-                    <div class="card-header">
-                        <i class="fa fa-pencil"></i> {{ trans('admin.order.actions.edit', ['name' => $order->id]) }}
-                    </div>
-
-                    <div class="card-block">
-
-                        @include('admin.order.components.form-elements')
-
-                        <div class="clearfix"></div>
-
-                        <div class="col-sm-12">
-                            <a @click="addRow" href="#" class="btn btn-sm btn-primary">Add Product</a>
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fa fa-pencil"></i> {{ trans('admin.order.actions.edit', ['name' => $order->id]) }}
                         </div>
-
                     </div>
 
-                    <div class="clearfix"></div>
-                    <br>
+                    @include('admin.order.components.form-elements')
 
-
-
-                    <div class="card-footer">
-	                    <button type="submit" class="btn btn-primary" :disabled="submiting">
-		                    <i class="fa" :class="submiting ? 'fa-spinner' : 'fa-download'"></i>
-		                    {{ trans('brackets/admin-ui::admin.btn.save') }}
-	                    </button>
-                    </div>
+                    <button type="submit" class="btn btn-primary" :disabled="submiting">
+                        <i class="fa" :class="submiting ? 'fa-spinner' : 'fa-download'"></i>
+                        {{ trans('brackets/admin-ui::admin.btn.save') }}
+                    </button>
 
                 </form>
         </order-form>

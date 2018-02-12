@@ -6,36 +6,27 @@
 
     <div class="container-xl">
 
-        <div class="card">
+        <div class="col-md-12 p-0">
 
             <order-form
                 :action="'{{ url('admin/orders') }}'"
-
+                rate="{{ $rate }}"
                 inline-template>
 
                 <form class="form-horizontal form-create" method="post" @submit.prevent="onSubmit" :action="this.action" novalidate>
 
-                    <div class="card-header">
-                        <i class="fa fa-plus"></i> {{ trans('admin.order.actions.create') }}
-                    </div>
-
-                    <div class="card-block">
-
-                        @include('admin.order.components.form-elements')
-
-                        <div class="clearfix"></div>
-                        <hr>
-                        <div class="col-sm-12">
-                            <a @click="addRow" href="#" class="btn btn-sm btn-primary">Add Product</a>
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fa fa-plus"></i> {{ trans('admin.order.actions.create') }}
                         </div>
                     </div>
 
-                    <div class="card-footer">
-	                    <button type="submit" class="btn btn-primary" :disabled="submiting" @click="pushFields">
-		                    <i class="fa" :class="submiting ? 'fa-spinner' : 'fa-download'"></i>
-		                    {{ trans('brackets/admin-ui::admin.btn.save') }}
-	                    </button>
-                    </div>
+                    @include('admin.order.components.form-elements')
+
+                    <button type="submit" class="btn btn-primary" :disabled="submiting" @click="pushFields">
+                        <i class="fa" :class="submiting ? 'fa-spinner' : 'fa-download'"></i>
+                        {{ trans('brackets/admin-ui::admin.btn.save') }}
+                    </button>
 
                 </form>
 
