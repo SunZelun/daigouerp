@@ -76525,7 +76525,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "node_modules\\vue-quill-editor\\src\\editor.vue"
+Component.options.__file = "node_modules/vue-quill-editor/src/editor.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -76534,9 +76534,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-3ef6e1a1", Component.options)
+    hotAPI.createRecord("data-v-56b68e14", Component.options)
   } else {
-    hotAPI.reload("data-v-3ef6e1a1", Component.options)
+    hotAPI.reload("data-v-56b68e14", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -76557,13 +76557,13 @@ var content = __webpack_require__(235);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(236)("5bbed48e", content, false);
+var update = __webpack_require__(236)("5f5a9cd6", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../css-loader/index.js!../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3ef6e1a1\",\"scoped\":false,\"hasInlineConfig\":true}!../../vue-loader/lib/selector.js?type=styles&index=0!./editor.vue", function() {
-     var newContent = require("!!../../css-loader/index.js!../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3ef6e1a1\",\"scoped\":false,\"hasInlineConfig\":true}!../../vue-loader/lib/selector.js?type=styles&index=0!./editor.vue");
+   module.hot.accept("!!../../css-loader/index.js!../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-56b68e14\",\"scoped\":false,\"hasInlineConfig\":true}!../../vue-loader/lib/selector.js?type=styles&index=0!./editor.vue", function() {
+     var newContent = require("!!../../css-loader/index.js!../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-56b68e14\",\"scoped\":false,\"hasInlineConfig\":true}!../../vue-loader/lib/selector.js?type=styles&index=0!./editor.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -77125,7 +77125,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-3ef6e1a1", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-56b68e14", module.exports)
   }
 }
 
@@ -87657,6 +87657,7 @@ Vue.component('customer-address-form', {
     data: function data() {
         return {
             form: {
+                customer: '',
                 customer_id: '',
                 address: '',
                 contact_person: '',
@@ -87666,8 +87667,21 @@ Vue.component('customer-address-form', {
 
             }
         };
-    }
+    },
+    methods: {
+        nameOnly: function nameOnly(_ref) {
+            var name = _ref.name;
 
+            return '' + name;
+        },
+        updateSelectedCustomer: function updateSelectedCustomer(value) {
+            if (value != null) {
+                this.form.customer_id = value.id;
+            } else {
+                this.form.customer_id = null;
+            }
+        }
+    }
 });
 
 /***/ }),
@@ -87728,10 +87742,18 @@ Vue.component('product-form', {
             return '' + name;
         },
         updateSelectedCategory: function updateSelectedCategory(value) {
-            this.form.category_id = value.id;
+            if (value != null) {
+                this.form.category_id = value.id;
+            } else {
+                this.form.category_id = null;
+            }
         },
         updateSelectedBrand: function updateSelectedBrand(value) {
-            this.form.brand_id = value.id;
+            if (value != null) {
+                this.form.brand_id = value.id;
+            } else {
+                this.form.brand_id = null;
+            }
         }
     }
 });
@@ -87787,6 +87809,7 @@ Vue.component('order-form', {
                 sum_profit_in_rmb: '',
                 sum_profit_in_sgd: '',
                 remarks: '',
+                number_of_items_sold: 0,
                 status: '',
                 products: [{
                     detail: '',
@@ -87876,6 +87899,12 @@ Vue.component('order-form', {
             var sum_profit = 0;
             sum_profit = Number((Number(this.form.profit_in_sgd) + Number(this.form.profit_in_rmb) / this.rate).toFixed(2));
             return sum_profit;
+        },
+        totalItemSold: function totalItemSold() {
+            this.form.number_of_items_sold = this.form.products.reduce(function (total, product) {
+                return Number(total) + Number(product.quantity);
+            }, 0);
+            return this.form.number_of_items_sold;
         }
     },
     methods: {

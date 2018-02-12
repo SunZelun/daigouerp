@@ -39,6 +39,7 @@ class StoreOrder extends FormRequest
             'dome_shipping_cost' => ['nullable', 'numeric'],
             'remarks' => ['nullable', 'string'],
             'products' => ['nullable', 'array'],
+            'number_of_items_sold' => ['nullable', 'numeric'],
         ];
     }
 }

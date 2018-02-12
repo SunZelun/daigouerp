@@ -21,6 +21,7 @@ Vue.component('order-form', {
                 sum_profit_in_rmb:  '' ,
                 sum_profit_in_sgd:  '' ,
                 remarks:  '' ,
+                number_of_items_sold: 0,
                 status:  '' ,
                 products: [{
                     detail: '',
@@ -110,6 +111,12 @@ Vue.component('order-form', {
             var sum_profit = 0;
             sum_profit = Number((Number(this.form.profit_in_sgd) + Number(this.form.profit_in_rmb)/this.rate).toFixed(2));
             return sum_profit;
+        },
+        totalItemSold() {
+            this.form.number_of_items_sold = this.form.products.reduce((total, product) => {
+                return Number(total) + Number(product.quantity);
+        }, 0);
+            return this.form.number_of_items_sold;
         },
     },
     methods:{

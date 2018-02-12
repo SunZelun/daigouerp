@@ -5,6 +5,7 @@ Vue.component('customer-address-form', {
     data: function() {
         return {
             form: {
+                customer: '',
                 customer_id:  '' ,
                 address:  '' ,
                 contact_person:  '' ,
@@ -14,6 +15,17 @@ Vue.component('customer-address-form', {
                 
             }
         }
+    },
+    methods:{
+        nameOnly: function ({ name }) {
+            return `${name}`
+        },
+        updateSelectedCustomer: function (value) {
+            if (value != null) {
+                this.form.customer_id = value.id;
+            } else {
+                this.form.customer_id = null;
+            }
+        },
     }
-
 });

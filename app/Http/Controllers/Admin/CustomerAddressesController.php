@@ -76,7 +76,6 @@ class CustomerAddressesController extends Controller
     {
         // Sanitize input
         $sanitized = $request->validated();
-        $sanitized['customer_id'] = $request->post('customer_id')['id'];
 
         // Store the CustomerAddress
         $customerAddress = CustomerAddress::create($sanitized);
@@ -109,9 +108,10 @@ class CustomerAddressesController extends Controller
      */
     public function edit(CustomerAddress $customerAddress)
     {
+        $customerAddress = CustomerAddress::with('customer')->where(['id' => $customerAddress->id])->first();
         $this->authorize('admin.customer-address.edit', $customerAddress);
 
-        $customers = Customer::where(['user_id' => Auth::id(), 'status' => Customer::STATUS_ACTIVE])->select(['id','name'])->get();
+        $customers = Customer::where(['user_id' => Auth::id(), 'status' => Customer::STATUS_ACTIVE])->select(['id','name', 'wechat_name'])->get();
 
         return view('admin.customer-address.edit', [
             'customerAddress' => $customerAddress,
@@ -130,7 +130,6 @@ class CustomerAddressesController extends Controller
     {
         // Sanitize input
         $sanitized = $request->validated();
-        $sanitized['customer_id'] = $request->post('customer_id')['id'];
 
         // Update changed values CustomerAddress
         $customerAddress->update($sanitized);

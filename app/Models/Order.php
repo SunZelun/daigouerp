@@ -23,6 +23,7 @@ class Order extends Model
         'inter_shipping_cost',
         'dome_shipping_currency',
         'dome_shipping_cost',
+        'number_of_items_sold',
     ];
     
     protected $hidden = [

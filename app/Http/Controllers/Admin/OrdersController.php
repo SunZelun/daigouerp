@@ -30,16 +30,16 @@ class OrdersController extends Controller
     {
         // create and AdminListing instance for a specific model and
         $data = AdminListing::create(Order::class)->modifyQuery(function($query){
-            $query->where('user_id', Auth::id());
+            $query->join('customers', 'orders.customer_id', '=', 'customers.id')->where('orders.user_id', Auth::id());
         })->processRequestAndGet(
             // pass the request with params
             $request,
 
             // set columns to query
-            ['id', 'customer_id', 'customer_address_id', 'cost_in_rmb', 'cost_in_sgd', 'revenue_in_rmb', 'revenue_in_sgd', 'profit_in_rmb', 'profit_in_sgd', 'remarks', 'status'],
+            ['id', 'number_of_items_sold', 'customer_id', 'customer_address_id', 'cost_in_rmb', 'cost_in_sgd', 'revenue_in_rmb', 'revenue_in_sgd', 'profit_in_rmb', 'profit_in_sgd', 'remarks', 'status'],
 
             // set columns to searchIn
-            ['id', 'remarks']
+            ['id', 'remarks', 'customers.name']
         );
 
         $rate = session('rate') ? session('rate') : 4.5;
@@ -74,7 +74,7 @@ class OrdersController extends Controller
     {
         $this->authorize('admin.order.create');
 
-        $customers = Customer::where(['user_id' => Auth::id(), 'status' => Customer::STATUS_ACTIVE])->select(['id','name'])->get();
+        $customers = Customer::where(['user_id' => Auth::id(), 'status' => Customer::STATUS_ACTIVE])->select(['id','name', 'wechat_name'])->get();
         $products = Product::where(['user_id' => Auth::id(), 'status' => Product::STATUS_ACTIVE])->get();
         $rate = session('rate') ? session('rate') : 4.5;
 
@@ -163,7 +163,7 @@ class OrdersController extends Controller
         $this->authorize('admin.order.edit', $order);
 
         $addresses = CustomerAddress::where(['customer_id' => $order->customer_id])->get();
-        $customers = Customer::where(['user_id' => Auth::id(), 'status' => Customer::STATUS_ACTIVE])->select(['id','name'])->get();
+        $customers = Customer::where(['user_id' => Auth::id(), 'status' => Customer::STATUS_ACTIVE])->select(['id','name', 'wechat_name'])->get();
         $products = Product::where(['user_id' => Auth::id(), 'status' => Product::STATUS_ACTIVE])->get();
         $rate = session('rate') ? session('rate') : 4.5;
 

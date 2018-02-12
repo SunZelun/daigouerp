@@ -9,7 +9,7 @@
                 <select v-model="form.customer_id" id="customer_selection" name="customer_id" class="form-control">
                     <option>Select Customer</option>
                     @foreach($customers as $customer)
-                        <option value="{{ $customer->id }}">{{ $customer->name }}</option>
+                        <option value="{{ $customer->id }}">{{ $customer->name.' - '.$customer->wechat_name }}</option>
                     @endforeach
                 </select>
                 <div v-if="errors.has('customer_id')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('customer_id') }}</div>
@@ -104,9 +104,14 @@
 
     <div class="clearfix"></div>
 
-    <div class="card-block col-sm-12">
-        <div class="col-md-12 col-sm-12">
-            <a @click="addRow" href="#" class="btn btn-sm btn-primary">Add Product</a>
+    <div class="card-block">
+        <div class="row">
+            <div class="col-md-8 col-sm-12">
+                <a @click="addRow" href="#" class="btn btn-sm btn-primary">Add Product</a>
+            </div>
+            <div class="col-md-3 col-sm-12">
+                <td><b>Total Item Sold: @{{ totalItemSold }}</b></td>
+            </div>
         </div>
     </div>
 

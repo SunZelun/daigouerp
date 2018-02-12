@@ -26,10 +26,18 @@ Vue.component('product-form', {
             return `${name}`
         },
         updateSelectedCategory: function (value) {
-            this.form.category_id = value.id
+            if (value != null) {
+                this.form.category_id = value.id;
+            } else {
+                this.form.category_id = null;
+            }
         },
         updateSelectedBrand: function (value) {
-            this.form.brand_id = value.id
+            if (value != null) {
+                this.form.brand_id = value.id;
+            } else {
+                this.form.brand_id = null;
+            }
         },
     }
 });

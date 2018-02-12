@@ -40,6 +40,7 @@ class UpdateOrder extends FormRequest
             'inter_shipping_cost' => ['nullable', 'numeric'],
             'dome_shipping_currency' => ['nullable', 'string'],
             'dome_shipping_cost' => ['nullable', 'numeric'],
+            'number_of_items_sold' => ['nullable', 'numeric'],
         ];
     }
 }
