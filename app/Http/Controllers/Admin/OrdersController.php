@@ -29,7 +29,9 @@ class OrdersController extends Controller
     public function index(IndexOrder $request)
     {
         // create and AdminListing instance for a specific model and
-        $data = AdminListing::create(Order::class)->processRequestAndGet(
+        $data = AdminListing::create(Order::class)->modifyQuery(function($query){
+            $query->where('user_id', Auth::id());
+        })->processRequestAndGet(
             // pass the request with params
             $request,
 

@@ -23,7 +23,9 @@ class CustomersController extends Controller
     public function index(IndexCustomer $request)
     {
         // create and AdminListing instance for a specific model and
-        $data = AdminListing::create(Customer::class)->processRequestAndGet(
+        $data = AdminListing::create(Customer::class)->modifyQuery(function($query){
+            $query->where('user_id', Auth::id());
+        })->processRequestAndGet(
             // pass the request with params
             $request,
 
