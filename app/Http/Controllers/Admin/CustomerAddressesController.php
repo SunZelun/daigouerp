@@ -34,7 +34,7 @@ class CustomerAddressesController extends Controller
             ['id', 'customer_id', 'address', 'contact_person', 'contact_number', 'remarks', 'status'],
 
             // set columns to searchIn
-            ['id', 'address', 'contact_person', 'contact_number', 'remarks']
+            ['id', 'address', 'contact_person', 'contact_number', 'remarks', 'customers.name']
         );
 
         //append customer name to order
