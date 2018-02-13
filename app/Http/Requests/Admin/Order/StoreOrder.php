@@ -24,7 +24,6 @@ class StoreOrder extends FormRequest
     public function rules()
     {
         return [
-            //'user_id' => ['required', 'integer'],
             'customer_id' => ['required', 'integer'],
             'customer_address_id' => ['nullable', 'integer'],
             'cost_in_rmb' => ['nullable', 'numeric'],
@@ -40,6 +39,7 @@ class StoreOrder extends FormRequest
             'remarks' => ['nullable', 'string'],
             'products' => ['nullable', 'array'],
             'number_of_items_sold' => ['nullable', 'numeric'],
+            'order_status' => ['required', 'integer'],
         ];
     }
 }

@@ -22,7 +22,9 @@ class SysCodesController extends Controller
     public function index(IndexSysCode $request)
     {
         // create and AdminListing instance for a specific model and
-        $data = AdminListing::create(SysCode::class)->processRequestAndGet(
+        $data = AdminListing::create(SysCode::class)->modifyQuery(function($query){
+            $query->whereIn('type', ['category', 'brand']);
+        })->processRequestAndGet(
             // pass the request with params
             $request,
 

@@ -6,7 +6,21 @@ class Order extends Model
 {
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 0;
-    
+
+    const PENDING_DELIVERY = 10;
+    const INTERNATIONAL_SHIPPED = 20;
+    const IN_WAREHOUSE = 30;
+    const DOMESTIC_SHIPPED = 40;
+    const DELIVERED = 50;
+
+    const ORDER_STATUS_LABELS = [
+        self::PENDING_DELIVERY => '待发货',
+        self::INTERNATIONAL_SHIPPED => '国际运输中',
+        self::IN_WAREHOUSE => '已入库',
+        self::DOMESTIC_SHIPPED => '国内已发货',
+        self::DELIVERED => '已送达',
+    ];
+
     protected $fillable = [
         "user_id",
         "customer_id",
@@ -24,6 +38,7 @@ class Order extends Model
         'dome_shipping_currency',
         'dome_shipping_cost',
         'number_of_items_sold',
+        'order_status',
     ];
     
     protected $hidden = [

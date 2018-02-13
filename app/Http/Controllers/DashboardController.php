@@ -25,6 +25,7 @@ class DashboardController extends Controller
         $totalProfitInSgd = 0;
         $productsSold = 0;
         $categories = [];
+        $brands = [];
 
         $salesBreakdown = null;
         $buyerBreakdown = null;
@@ -60,6 +61,13 @@ class DashboardController extends Controller
                             $categories[$categoryName] += $product->quantity;
                         }
 
+                        //group sales based on brands
+                        $brandName = $product->detail->brand ? $product->detail->brand->name : '无品牌';
+                        if (empty($brands) || !in_array($brandName, array_keys($brands))){
+                            $brands[$brandName] = $product->quantity;
+                        } else {
+                            $brands[$brandName] += $product->quantity;
+                        }
                     }
                 }
 
@@ -100,9 +108,9 @@ class DashboardController extends Controller
             'total_cost_in_sgd' => round($totalCostInRmb / $rate + $totalCostInSgd, 2),
         ];
 
-        $salesBreakdown = collect($salesBreakdown)->sortBy('quantity')->reverse()->toArray();
-        $buyerBreakdown = collect($buyerBreakdown)->sortBy('total_revenue_in_rmb')->reverse()->toArray();
-        $activeProducts = collect($activeProducts)->sortBy('quantity')->reverse()->toArray();
+        $salesBreakdown = collect($salesBreakdown)->sortBy('quantity')->reverse()->take(10)->toArray();
+        $buyerBreakdown = collect($buyerBreakdown)->sortBy('total_revenue_in_rmb')->reverse()->take(10)->toArray();
+        $activeProducts = collect($activeProducts)->sortBy('quantity')->reverse()->take(10)->toArray();
 
         return view('admin.dashboard.home', [
             'summary' => $summary,
@@ -112,6 +120,7 @@ class DashboardController extends Controller
             'salesBreakdown' => $salesBreakdown,
             'buyerBreakdown' => $buyerBreakdown,
             'salesByCategories' => $categories,
+            'salesByBrands' => $brands,
         ]);
     }
 

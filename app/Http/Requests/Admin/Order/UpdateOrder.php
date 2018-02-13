@@ -35,6 +35,7 @@ class UpdateOrder extends FormRequest
             'profit_in_sgd' => ['nullable', 'numeric'],
             'remarks' => ['nullable', 'string'],
             'status' => ['sometimes', 'integer'],
+            'order_status' => ['sometimes', 'integer'],
             'products' => ['nullable', 'array'],
             'inter_shipping_currency' => ['nullable', 'string'],
             'inter_shipping_cost' => ['nullable', 'numeric'],

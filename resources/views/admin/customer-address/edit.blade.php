@@ -12,7 +12,7 @@
                 :action="'{{ $customerAddress->resource_url }}'"
                 :data="{{ $customerAddress->toJson() }}"
                 inline-template>
-            
+
                 <form class="form-horizontal form-edit" method="post" @submit.prevent="onSubmit" :action="this.action" novalidate>
 
                     <div class="card-header">

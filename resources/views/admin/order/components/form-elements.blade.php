@@ -121,41 +121,19 @@
 
 <div class="card">
     <div class="card-header">
-        <i class="icon-wallet"></i> Shipping Cost
+        <i class="icon-speedometer"></i> Order Status
     </div>
 
     <div class="card-block">
-        <div class="form-group row align-items-center" >
-            <label for="remarks" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-2'">{{ trans('International') }}</label>
+        <div class="form-group row align-items-center" :class="{'has-danger': errors.has('order_status'), 'has-success': this.fields.order_status && this.fields.order_status.valid }">
+            <label for="order_status" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-2'">{{ trans('Order Status') }}</label>
             <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-8'">
-                <div class="row">
-                    <div class="col-sm-4">
-                        <select v-model="form.inter_shipping_currency" class="form-control">
-                            <option value="SGD">SGD</option>
-                            <option value="RMB">RMB</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-8">
-                        <input v-model="form.inter_shipping_cost" type="number"  class="form-control" placeholder="Shipping Fee" />
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group row align-items-center">
-            <label for="remarks" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-2'">{{ trans('Domestic(China)') }}</label>
-            <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-8'">
-                <div class="row">
-                    <div class="col-sm-4">
-                        <select v-model="form.dome_shipping_currency" class="form-control">
-                            <option value="RMB">RMB</option>
-                            <option value="SGD">SGD</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-8">
-                        <input v-model="form.dome_shipping_cost" type="number" class="form-control" placeholder="Shipping Fee" />
-                    </div>
-                </div>
+                <select v-model="form.order_status" name="order_status" class="form-control">
+                    @foreach($orderStatus as $statusCode => $status)
+                        <option value="{{ $statusCode }}">{{ $status }}</option>
+                    @endforeach
+                </select>
+                <div v-if="errors.has('order_status')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('order_status') }}</div>
             </div>
         </div>
     </div>

@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\CustomerAddress;
 use Illuminate\Http\Request;
 use \Illuminate\Http\Response;
 use App\Http\Requests\Admin\Customer\IndexCustomer;
@@ -71,6 +72,14 @@ class CustomersController extends Controller
         // Store the Customer
         $customer = Customer::create($sanitized);
 
+        //set address model
+        if($request->input('addresses') && !empty($request->input('addresses'))) {
+            foreach($request->input('addresses') as $address){
+                $address['customer_id'] = $customer->id;
+                CustomerAddress::create($address);
+            }
+        }
+
         if ($request->ajax()) {
             return ['redirect' => url('admin/customers'), 'message' => trans('brackets/admin-ui::admin.operation.succeeded')];
         }
@@ -99,6 +108,7 @@ class CustomersController extends Controller
      */
     public function edit(Customer $customer)
     {
+        $customer = Customer::with('addresses')->where(['id' => $customer->id])->first();
         $this->authorize('admin.customer.edit', $customer);
 
         return view('admin.customer.edit', [

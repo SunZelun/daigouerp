@@ -18,6 +18,18 @@
             </div>
 
             <div class="col-sm-6 col-lg-3">
+                <div class="social-box linkedin">
+                    <i style="font-size: 30px;"><small>Cost</small></i>
+                    <ul>
+                        <li style="width: 100%; border-right: none;">
+                            <strong>RMB {{ $summary['total_cost_in_rmb'] }}</strong>
+                            <span>&asymp; SGD {{ $summary['total_cost_in_sgd'] }}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-lg-3">
                 <div class="social-box google-plus">
                     <i style="font-size: 30px;"><small>Revenue</small></i>
                     <ul>
@@ -42,12 +54,24 @@
             </div>
         </div>
 
-        <div class="col-md-12">
-            <div class="card col-lg-3 col-sm-6">
-                <div class="card-body text-center">
-                    <div class="text-muted small text-uppercase font-weight-bold">Sales Distribution By Category</div>
-                    <div class="chart-wrapper">
-                        <canvas id="categoryChart" width="100" height="100"></canvas>
+        <div class="row col-md-12">
+            <div class="col-lg-4 col-sm-6">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <div class="text-muted small text-uppercase font-weight-bold">Sales Distribution By Category</div>
+                        <div class="chart-wrapper">
+                            <canvas id="categoryChart" width="100" height="50"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <div class="text-muted small text-uppercase font-weight-bold">Sales Distribution By Brand</div>
+                        <div class="chart-wrapper">
+                            <canvas id="brandChart" width="100" height="50"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -197,19 +221,47 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
     <script>
         var default_colors = [
-            '#F8CCAC',
-            '#da5086',
-            '#5e2087',
-            '#3c1558',
+            '#ff6384',
+            '#ffcd56',
+            '#36a2eb',
+            '#4bc0c0',
+            '#a34ba3',
+            '#ff9440',
+            '#c9cbcf',
             '#ed8a96',
-            '#742894',
-            '#e86a8c',
-            '#f2aba1',
+            // '#da5086',
+            // '#5e2087',
+            // '#3c1558',
+            '#F8CCAC',
+            // '#742894',
+            // '#e86a8c',
+            // '#f2aba1',
             '#b8428b',
-            '#97358e',
-            '#4d1a6f',
-            '#2c0540'
+            // '#97358e',
+            // '#4d1a6f',
+            // '#2c0540'
         ];
+
+        // function shuffle(array) {
+        //     var currentIndex = array.length, temporaryValue, randomIndex;
+        //
+        //     // While there remain elements to shuffle...
+        //     while (0 !== currentIndex) {
+        //
+        //         // Pick a remaining element...
+        //         randomIndex = Math.floor(Math.random() * currentIndex);
+        //         currentIndex -= 1;
+        //
+        //         // And swap it with the current element.
+        //         temporaryValue = array[currentIndex];
+        //         array[currentIndex] = array[randomIndex];
+        //         array[randomIndex] = temporaryValue;
+        //     }
+        //
+        //     return array;
+        // }
+
+
         var randomColors = function(number) {
             if (number > 0 && number < default_colors.length){
                 return default_colors.slice(0,number);
@@ -218,7 +270,7 @@
             }
         };
 
-        var config = {
+        var pieConfig = {
             type: 'doughnut',
             data: {
                 datasets: [{
@@ -233,25 +285,6 @@
                 legend: {
                     display: true
                 },
-                pieceLabel: {
-                    // mode 'label', 'value' or 'percentage', default is 'percentage'
-                    mode: 'percentage',
-
-                    // precision for percentage, default is 0
-                    precision: 0,
-
-                    // font size, default is defaultFontSize
-                    fontSize: 18,
-
-                    // font color, default is '#fff'
-                    fontColor: '#151b1e',
-
-                    // font style, default is defaultFontStyle
-                    fontStyle: 'bold',
-
-                    // font family, default is defaultFontFamily
-                    fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif"
-                },
                 title: {
                     display: false,
                     text: 'Sales Category Distribution'
@@ -263,8 +296,35 @@
             }
         };
 
+        var barConfig = {
+            type: 'horizontalBar',
+            data: {
+                datasets: [{
+                    data: {!! json_encode(array_values($salesByBrands)) !!},
+                    backgroundColor: randomColors({{ count($salesByBrands) }}),
+                }],
+                labels: {!! json_encode(array_keys($salesByBrands)) !!}
+            },
+            options: {
+                responsive: true,
+                legend: {
+                    display: false
+                },
+                title: {
+                    display: false,
+                    text: 'Brand Distribution'
+                },
+                animation: {
+                    animateScale: true,
+                    animateRotate: true
+                }
+            }
+        };
+
         var ctx = document.getElementById("categoryChart");
-        var categoryChart = new Chart(ctx, config);
+        var bar = document.getElementById("brandChart");
+        var categoryChart = new Chart(ctx, pieConfig);
+        var barChart = new Chart(bar, barConfig);
 
     </script>
 @endsection

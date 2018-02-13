@@ -23,6 +23,7 @@ Vue.component('order-form', {
                 remarks:  '' ,
                 number_of_items_sold: 0,
                 status:  '' ,
+                order_status:  10,
                 products: [{
                     detail: '',
                     quantity: '',

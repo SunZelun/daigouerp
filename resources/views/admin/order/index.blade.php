@@ -50,7 +50,7 @@
                                     <th is='sortable' :column="'revenue_in_rmb'">{{ trans('Revenue') }}</th>
                                     <th is='sortable' :column="'profit_in_rmb'">{{ trans('Profit') }}</th>
                                     <th is='sortable' :column="'remarks'">{{ trans('admin.order.columns.remarks') }}</th>
-                                    <th is='sortable' :column="'status'">{{ trans('admin.order.columns.status') }}</th>
+                                    <th is='sortable' :column="'order_status'">{{ trans('Order Status') }}</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -63,10 +63,12 @@
                                     <td>RMB @{{ item.revenue_in_rmb }} / SGD @{{ item.revenue_in_sgd }}</td>
                                     <td>RMB @{{ item.total_profit_in_rmb }} &asymp; SGD @{{ item.total_profit_in_sgd }}</td>
                                     <td>@{{ item.remarks }}</td>
-                                    <td>@{{ item.status }}</td>
-                                    
+                                    <td>@{{ item.order_status_name }}</td>
                                     <td>
                                         <div class="row no-gutters">
+                                            <div class="col-auto">
+                                                <a class="btn btn-sm btn-spinner btn-primary" :href="item.resource_url" title="{{ trans('View') }}" role="button"><i class="icon-eye"></i></a>
+                                            </div>
                                             <div class="col-auto">
                                                 <a class="btn btn-sm btn-spinner btn-info" :href="item.resource_url + '/edit'" title="{{ trans('brackets/admin-ui::admin.btn.edit') }}" role="button"><i class="fa fa-edit"></i></a>
                                             </div>

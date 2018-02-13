@@ -30,18 +30,24 @@ class OrdersController extends Controller
     {
         // create and AdminListing instance for a specific model and
         $data = AdminListing::create(Order::class)->modifyQuery(function($query){
-            $query->join('customers', 'orders.customer_id', '=', 'customers.id')->where('orders.user_id', Auth::id());
+            $query->leftJoin('customers', 'orders.customer_id', '=', 'customers.id')
+                ->join('sys_codes', function ($join) {
+                    $join->on('orders.order_status', '=', 'sys_codes.code')
+                        ->where('sys_codes.type', '=', 'order_status');
+                })
+                ->where('orders.user_id', Auth::id());
         })->processRequestAndGet(
             // pass the request with params
             $request,
 
             // set columns to query
-            ['id', 'number_of_items_sold', 'customer_id', 'customer_address_id', 'cost_in_rmb', 'cost_in_sgd', 'revenue_in_rmb', 'revenue_in_sgd', 'profit_in_rmb', 'profit_in_sgd', 'remarks', 'status'],
+            ['id', 'number_of_items_sold', 'customer_id', 'customer_address_id', 'cost_in_rmb', 'cost_in_sgd', 'revenue_in_rmb', 'revenue_in_sgd', 'profit_in_rmb', 'profit_in_sgd', 'remarks', 'status', 'order_status'],
 
             // set columns to searchIn
-            ['id', 'remarks', 'customers.name']
+            ['id', 'remarks', 'customers.name', 'sys_codes.name']
         );
 
+        $status = Order::ORDER_STATUS_LABELS;
         $rate = session('rate') ? session('rate') : 4.5;
 
         //append customer name to order
@@ -54,6 +60,7 @@ class OrdersController extends Controller
                 $order->total_rev_in_sgd = round($order->revenue_in_rmb / $rate + $order->revenue_in_sgd,2);
                 $order->total_profit_in_rmb = round($order->profit_in_rmb + $order->profit_in_sgd * $rate,2);
                 $order->total_profit_in_sgd = round($order->profit_in_rmb / $rate + $order->profit_in_sgd,2);
+                $order->order_status_name = isset($status[$order->order_status]) ? $status[$order->order_status] : '-';
             }
         }
 
@@ -77,12 +84,14 @@ class OrdersController extends Controller
         $customers = Customer::where(['user_id' => Auth::id(), 'status' => Customer::STATUS_ACTIVE])->select(['id','name', 'wechat_name'])->get();
         $products = Product::where(['user_id' => Auth::id(), 'status' => Product::STATUS_ACTIVE])->get();
         $rate = session('rate') ? session('rate') : 4.5;
+        $orderStatus = Order::ORDER_STATUS_LABELS;
 
         return view('admin.order.create', [
             'customers' => $customers,
             'currencies' => $this->currencies,
             'products' => $products,
-            'rate' => $rate
+            'rate' => $rate,
+            'orderStatus' => $orderStatus,
         ]);
     }
 
@@ -145,6 +154,9 @@ class OrdersController extends Controller
     {
         $order = Order::with(['products.detail', 'customer', 'address'])->where(['id' => $order->id])->first();
         $this->authorize('admin.order.show', $order);
+        $order->order_status_name = isset(Order::ORDER_STATUS_LABELS[$order->order_status]) ? Order::ORDER_STATUS_LABELS[$order->order_status] : '-';
+        $order->total_profit_in_rmb = round($order->profit_in_rmb + $order->profit_in_sgd * session('rate'),2);
+        $order->total_profit_in_sgd = round($order->profit_in_rmb / session('rate') + $order->profit_in_sgd,2);
 
         return view('admin.order.show', [
             'order' => $order
@@ -166,6 +178,7 @@ class OrdersController extends Controller
         $customers = Customer::where(['user_id' => Auth::id(), 'status' => Customer::STATUS_ACTIVE])->select(['id','name', 'wechat_name'])->get();
         $products = Product::where(['user_id' => Auth::id(), 'status' => Product::STATUS_ACTIVE])->get();
         $rate = session('rate') ? session('rate') : 4.5;
+        $orderStatus = Order::ORDER_STATUS_LABELS;
 
         return view('admin.order.edit', [
             'order' => $order,
@@ -173,7 +186,8 @@ class OrdersController extends Controller
             'products' => $products,
             'currencies' => $this->currencies,
             'addresses' => $addresses,
-            'rate' => $rate
+            'rate' => $rate,
+            'orderStatus' => $orderStatus,
         ]);
     }
 

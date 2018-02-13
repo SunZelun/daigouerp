@@ -28,7 +28,7 @@ class StoreCustomer extends FormRequest
             'wechat_name' => ['nullable', 'string'],
             'remarks' => ['nullable', 'string'],
             'status' => ['required', 'boolean'],
-            
+            'addresses' => ['nullable', 'array'],
         ];
     }
 }

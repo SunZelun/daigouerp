@@ -23,7 +23,7 @@ class IndexOrder extends FormRequest
     public function rules()
     {
         return [
-            'orderBy' => 'in:id,user_id,number_of_items_sold,customer_id,customer_address_id,cost_in_sgd,revenue_in_rmb,profit_currency,total_profit,remarks,status|nullable',
+            'orderBy' => 'in:id,user_id,number_of_items_sold,customer_id,customer_address_id,cost_in_sgd,revenue_in_rmb,order_status,total_profit,remarks,status|nullable',
             'orderDirection' => 'in:asc,desc|nullable',
             'search' => 'string|nullable',
             'page' => 'integer|nullable',
