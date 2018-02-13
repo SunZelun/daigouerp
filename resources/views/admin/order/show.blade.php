@@ -29,7 +29,7 @@
                     <div class="form-group row align-items-center">
                         <label for="customer_address_id" class="col-form-label text-md-right col-md-2">Customer Address</label>
                         <div class="col-md-9 col-xl-8">
-                            {{ $order->address->address.' '.$order->address->contact_person.' '.$order->address->contact_number }}
+                            {{ $order->address ? $order->address->address.' '.$order->address->contact_person.' '.$order->address->contact_number : '-' }}
                         </div>
                     </div>
 

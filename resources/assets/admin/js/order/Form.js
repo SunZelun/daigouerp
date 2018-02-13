@@ -27,7 +27,7 @@ Vue.component('order-form', {
                 order_status:  10,
                 products: [{
                     detail: '',
-                    quantity: '',
+                    quantity: 1,
                     buying_currency: 'SGD',
                     buying_price: '',
                     selling_currency: 'RMB',
@@ -125,7 +125,7 @@ Vue.component('order-form', {
         addRow: function() {
             this.form.products.push({
                 detail: '',
-                quantity: '',
+                quantity: 1,
                 buying_currency: 'SGD',
                 buying_price: '',
                 selling_currency: 'RMB',
