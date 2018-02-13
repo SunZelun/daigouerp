@@ -8,7 +8,7 @@ Vue.component('sys-code-form', {
                 code:  '' ,
                 type:  'brand' ,
                 name:  '' ,
-                status:  false ,
+                status:  true ,
                 
             }
         }

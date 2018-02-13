@@ -132,6 +132,18 @@ class CustomersController extends Controller
         // Update changed values Customer
         $customer->update($sanitized);
 
+        //set address model
+        if ($customer){
+            $customer->addresses()->delete();
+            
+            if($request->input('addresses') && !empty($request->input('addresses'))) {
+                foreach($request->input('addresses') as $address){
+                    $address['customer_id'] = $customer->id;
+                    CustomerAddress::create($address);
+                }
+            }
+        }
+
         if ($request->ajax()) {
             return ['redirect' => url('admin/customers'), 'message' => trans('brackets/admin-ui::admin.operation.succeeded')];
         }

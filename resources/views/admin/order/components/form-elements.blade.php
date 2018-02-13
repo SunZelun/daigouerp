@@ -4,7 +4,7 @@
     </div>
     <div class="card-block">
         <div class="form-group row align-items-center" :class="{'has-danger': errors.has('customer_id'), 'has-success': this.fields.customer_id && this.fields.customer_id.valid }">
-            <label for="customer_id" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-2'">{{ trans('admin.order.columns.customer_id') }}</label>
+            <label for="customer_id" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-2'">{{ trans('Customer Name') }}</label>
             <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-8'">
                 <select v-model="form.customer_id" id="customer_selection" name="customer_id" class="form-control">
                     <option>Select Customer</option>
@@ -56,28 +56,22 @@
                     <label class="control-label hidden-sms-up">Quantity</label>
                     <input v-model="product.quantity" type="number" class="form-control" placeholder="Quantity">
                 </div>
-                <div class="col-md-3 col-sm-12">
+                <div class="col-md-4 col-sm-12">
                     <label class="control-label hidden-sms-up col-sm-12">Buying Price</label>
                     <div class="row">
                         <div class="col-sm-6">
-                            <select v-model="product.buying_currency" class="form-control">
-                                <option value="SGD">SGD</option>
-                                <option value="RMB">RMB</option>
-                            </select>
+                            <multiselect :allow-empty="false" :show-labels="false" v-model="product.buying_currency" placeholder="Currency" :options="['SGD', 'RMB']" open-direction="bottom"></multiselect>
                         </div>
                         <div class="col-sm-6">
                             <input v-model="product.buying_price" class="form-control" placeholder="Buying Price" />
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3 col-sm-12">
+                <div class="col-md-4 col-sm-12">
                     <label class="control-label hidden-sms-up col-sm-12">Selling Price</label>
                     <div class="row">
                         <div class="col-sm-6">
-                            <select class="form-control" v-model="product.selling_currency">
-                                <option value="SGD">SGD</option>
-                                <option value="RMB">RMB</option>
-                            </select>
+                            <multiselect :allow-empty="false" :show-labels="false" v-model="product.selling_currency" placeholder="Currency" :options="['RMB', 'SGD']" open-direction="bottom"></multiselect>
                         </div>
                         <div class="col-sm-6">
                             <input v-model="product.selling_price" class="form-control" placeholder="Selling Price" />
