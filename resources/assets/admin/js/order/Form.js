@@ -141,8 +141,12 @@ Vue.component('order-form', {
         pushFields: function() {
             //this.form.products = this.products;
         },
-        nameOnly: function ({ name }) {
-            return `${name}`
+        nameOnly: function ({ name, brand }) {
+            if (brand != null || brand != undefined){
+                return `${brand.name}` + ' - ' + `${name}`
+            } else {
+                return `${name}`
+            }
         }
     }
 

@@ -135,7 +135,7 @@
                                     <div class="callout callout-primary">
                                         <small class="text-muted">No. of Products</small>
                                         <br>
-                                        <strong class="h4">{{ count($activeProducts) }}</strong>
+                                        <strong class="h4">{{ $totalNumberOfProducts }}</strong>
                                         <div class="chart-wrapper"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
                                             <canvas id="sparkline-chart-6" width="99" height="29" class="chartjs-render-monitor" style="display: block; width: 99px; height: 29px;"></canvas>
                                         </div>
@@ -163,53 +163,6 @@
                                 @endif
                             </ul>
                         </div>
-
-                        <div class="col-sm-6 col-lg-4">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="callout callout-warning">
-                                        <small class="text-muted">Placeholder</small>
-                                        <br>
-                                        <strong class="h4">0</strong>
-                                        <div class="chart-wrapper"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
-                                            <canvas id="sparkline-chart-3" width="99" height="29" class="chartjs-render-monitor" style="display: block; width: 99px; height: 29px;"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-6">
-                                    <div class="callout callout-success">
-                                        <small class="text-muted">Placeholder</small>
-                                        <br>
-                                        <strong class="h4">0</strong>
-                                        <div class="chart-wrapper"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
-                                            <canvas id="sparkline-chart-4" width="99" height="29" class="chartjs-render-monitor" style="display: block; width: 99px; height: 29px;"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <hr class="mt-0">
-                            <label style="color: black;">Product Stocks</label>
-                            <ul class="icons-list">
-                                @if(!empty($activeProducts))
-                                    @foreach($activeProducts as $product)
-                                        <li>
-                                            <i class="icon-present bg-primary"></i>
-                                            <div class="desc">
-                                                <div class="title">{{ $product['name'] }}</div>
-                                            </div>
-                                            <div class="value">
-                                                <div class="small text-muted">Stock</div>
-                                                <strong>{{ $product['quantity'] }}</strong>
-                                            </div>
-                                        </li>
-                                    @endforeach
-                                @endif
-                            </ul>
-                        </div>
-
                     </div>
                 </div>
             </div>

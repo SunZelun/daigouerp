@@ -87754,8 +87754,8 @@ Vue.component('product-form', {
                 brand_id: '',
                 brand: '',
                 remarks: '',
-                status: '',
-                quantity: ''
+                status: true,
+                quantity: 0
             }
         };
     },
@@ -87832,13 +87832,14 @@ Vue.component('order-form', {
                 dome_shipping_cost: '0',
                 sum_profit_in_rmb: '',
                 sum_profit_in_sgd: '',
+                order_date: '',
                 remarks: '',
                 number_of_items_sold: 0,
                 status: '',
                 order_status: 10,
                 products: [{
                     detail: '',
-                    quantity: '',
+                    quantity: 1,
                     buying_currency: 'SGD',
                     buying_price: '',
                     selling_currency: 'RMB',
@@ -87936,7 +87937,7 @@ Vue.component('order-form', {
         addRow: function addRow() {
             this.form.products.push({
                 detail: '',
-                quantity: '',
+                quantity: 1,
                 buying_currency: 'SGD',
                 buying_price: '',
                 selling_currency: 'RMB',
@@ -87953,9 +87954,14 @@ Vue.component('order-form', {
             //this.form.products = this.products;
         },
         nameOnly: function nameOnly(_ref) {
-            var name = _ref.name;
+            var name = _ref.name,
+                brand = _ref.brand;
 
-            return '' + name;
+            if (brand != null || brand != undefined) {
+                return '' + brand.name + ' - ' + ('' + name);
+            } else {
+                return '' + name;
+            }
         }
     }
 

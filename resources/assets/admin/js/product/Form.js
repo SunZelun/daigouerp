@@ -16,8 +16,8 @@ Vue.component('product-form', {
                 brand_id:  '' ,
                 brand:  '' ,
                 remarks:  '' ,
-                status:  '' ,
-                quantity:  ''
+                status:  true,
+                quantity:  0
             }
         }
     },

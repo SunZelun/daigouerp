@@ -108,6 +108,7 @@ class DashboardController extends Controller
             'total_cost_in_sgd' => round($totalCostInRmb / $rate + $totalCostInSgd, 2),
         ];
 
+        $totalNumberOfProducts = count($activeProducts);
         $salesBreakdown = collect($salesBreakdown)->sortBy('quantity')->reverse()->take(10)->toArray();
         $buyerBreakdown = collect($buyerBreakdown)->sortBy('total_revenue_in_rmb')->reverse()->take(10)->toArray();
         $activeProducts = collect($activeProducts)->sortBy('quantity')->reverse()->take(10)->toArray();
@@ -117,6 +118,7 @@ class DashboardController extends Controller
             'activeOrders' => $activeOrders,
             'activeCustomers' => $activeCustomers,
             'activeProducts' => $activeProducts,
+            'totalNumberOfProducts' => $totalNumberOfProducts,
             'salesBreakdown' => $salesBreakdown,
             'buyerBreakdown' => $buyerBreakdown,
             'salesByCategories' => $categories,

@@ -29,13 +29,13 @@ class OrdersController extends Controller
     public function index(IndexOrder $request)
     {
         // create and AdminListing instance for a specific model and
-        $data = AdminListing::create(Order::class)->modifyQuery(function($query){
+        $data = AdminListing::create(Order::class)->modifyQuery(function($query) use($request){
             $query->leftJoin('customers', 'orders.customer_id', '=', 'customers.id')
                 ->join('sys_codes', function ($join) {
                     $join->on('orders.order_status', '=', 'sys_codes.code')
                         ->where('sys_codes.type', '=', 'order_status');
                 })
-                ->where('orders.user_id', Auth::id())->orderBy('orders.updated_at','desc');
+                ->where('orders.user_id', Auth::id())->limit($request->per_page)->orderBy('orders.updated_at','desc');
         })->processRequestAndGet(
             // pass the request with params
             $request,
@@ -82,7 +82,7 @@ class OrdersController extends Controller
         $this->authorize('admin.order.create');
 
         $customers = Customer::where(['user_id' => Auth::id(), 'status' => Customer::STATUS_ACTIVE])->select(['id','name', 'wechat_name'])->get();
-        $products = Product::where(['user_id' => Auth::id(), 'status' => Product::STATUS_ACTIVE])->get();
+        $products = Product::with('brand')->where(['user_id' => Auth::id(), 'status' => Product::STATUS_ACTIVE])->get();
         $rate = session('rate') ? session('rate') : 4.5;
         $orderStatus = Order::ORDER_STATUS_LABELS;
 
@@ -171,12 +171,12 @@ class OrdersController extends Controller
      */
     public function edit(Order $order)
     {
-        $order = Order::with('products.detail')->where(['id' => $order->id])->first();
+        $order = Order::with('products.detail.brand')->where(['id' => $order->id])->first();
         $this->authorize('admin.order.edit', $order);
 
         $addresses = CustomerAddress::where(['customer_id' => $order->customer_id])->get();
         $customers = Customer::where(['user_id' => Auth::id(), 'status' => Customer::STATUS_ACTIVE])->select(['id','name', 'wechat_name'])->get();
-        $products = Product::where(['user_id' => Auth::id(), 'status' => Product::STATUS_ACTIVE])->get();
+        $products = Product::with('brand')->where(['user_id' => Auth::id(), 'status' => Product::STATUS_ACTIVE])->get();
         $rate = session('rate') ? session('rate') : 4.5;
         $orderStatus = Order::ORDER_STATUS_LABELS;
 
