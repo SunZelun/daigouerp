@@ -39,6 +39,7 @@ class Order extends Model
         'dome_shipping_cost',
         'number_of_items_sold',
         'order_status',
+        'order_date',
     ];
     
     protected $hidden = [

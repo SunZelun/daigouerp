@@ -35,13 +35,13 @@ class OrdersController extends Controller
                     $join->on('orders.order_status', '=', 'sys_codes.code')
                         ->where('sys_codes.type', '=', 'order_status');
                 })
-                ->where('orders.user_id', Auth::id());
+                ->where('orders.user_id', Auth::id())->orderBy('orders.updated_at','desc');
         })->processRequestAndGet(
             // pass the request with params
             $request,
 
             // set columns to query
-            ['id', 'number_of_items_sold', 'customer_id', 'customer_address_id', 'cost_in_rmb', 'cost_in_sgd', 'revenue_in_rmb', 'revenue_in_sgd', 'profit_in_rmb', 'profit_in_sgd', 'remarks', 'status', 'order_status'],
+            ['id', 'number_of_items_sold', 'order_date', 'customer_id', 'customer_address_id', 'cost_in_rmb', 'cost_in_sgd', 'revenue_in_rmb', 'revenue_in_sgd', 'profit_in_rmb', 'profit_in_sgd', 'remarks', 'status', 'order_status'],
 
             // set columns to searchIn
             ['id', 'remarks', 'customers.name', 'sys_codes.name']

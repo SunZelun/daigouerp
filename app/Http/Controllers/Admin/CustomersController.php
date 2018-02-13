@@ -25,7 +25,7 @@ class CustomersController extends Controller
     {
         // create and AdminListing instance for a specific model and
         $data = AdminListing::create(Customer::class)->modifyQuery(function($query){
-            $query->where('user_id', Auth::id());
+            $query->where('user_id', Auth::id())->orderBy('updated_at','desc');
         })->processRequestAndGet(
             // pass the request with params
             $request,

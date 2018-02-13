@@ -17,10 +17,12 @@ class CreateDeliveryOrderTable extends Migration
             $table->increments('id');
             $table->dateTime('ship_date');
             $table->integer('type');
-            $table->string('tracking_number');
+            $table->string('logistic_company_name')->nullable();
+            $table->string('tracking_number')->nullable();
+            $table->string('logistic_status')->nullable();
             $table->string('cost_currency');
             $table->double('cost');
-            $table->string('remarks');
+            $table->string('remarks')->nullable();
             $table->integer('shipment_status');
             $table->integer('status');
             $table->timestamps();
@@ -30,9 +32,13 @@ class CreateDeliveryOrderTable extends Migration
             $table->increments('id');
             $table->integer('shipment_id');
             $table->integer('order_id');
-            $table->string('remarks');
+            $table->string('remarks')->nullable();
             $table->integer('status');
             $table->timestamps();
+        });
+
+        Schema::table('orders', function (Blueprint $table) {
+            $table->timestamp('order_date')->useCurrent();
         });
     }
 
@@ -43,6 +49,10 @@ class CreateDeliveryOrderTable extends Migration
      */
     public function down()
     {
+        Schema::table('orders', function (Blueprint $table) {
+            $table->dropColumn('order_date');
+        });
+
         Schema::dropIfExists('shipment_orders');
         Schema::dropIfExists('shipments');
     }

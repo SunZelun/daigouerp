@@ -27,6 +27,7 @@ class UpdateOrder extends FormRequest
             'user_id' => ['sometimes', 'integer'],
             'customer_id' => ['sometimes', 'integer'],
             'customer_address_id' => ['nullable', 'integer'],
+            'order_date' => ['nullable', 'date'],
             'cost_in_rmb' => ['nullable', 'numeric'],
             'cost_in_sgd' => ['nullable', 'numeric'],
             'revenue_in_rmb' => ['nullable', 'numeric'],

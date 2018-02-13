@@ -20,6 +20,7 @@ Vue.component('order-form', {
                 dome_shipping_cost:  '0' ,
                 sum_profit_in_rmb:  '' ,
                 sum_profit_in_sgd:  '' ,
+                order_date:  '' ,
                 remarks:  '' ,
                 number_of_items_sold: 0,
                 status:  '' ,

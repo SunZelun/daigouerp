@@ -49,6 +49,7 @@
                                     <th is='sortable' :column="'cost_in_sgd'">{{ trans('Cost') }}</th>
                                     <th is='sortable' :column="'revenue_in_rmb'">{{ trans('Revenue') }}</th>
                                     <th is='sortable' :column="'profit_in_rmb'">{{ trans('Profit') }}</th>
+                                    <th is='sortable' :column="'order_date'">{{ trans('Order Date') }}</th>
                                     <th is='sortable' :column="'remarks'">{{ trans('admin.order.columns.remarks') }}</th>
                                     <th is='sortable' :column="'order_status'">{{ trans('Order Status') }}</th>
                                     <th></th>
@@ -62,6 +63,7 @@
                                     <td>RMB @{{ item.cost_in_rmb }} / SGD @{{ item.cost_in_sgd }}</td>
                                     <td>RMB @{{ item.revenue_in_rmb }} / SGD @{{ item.revenue_in_sgd }}</td>
                                     <td>RMB @{{ item.total_profit_in_rmb }} &asymp; SGD @{{ item.total_profit_in_sgd }}</td>
+                                    <td>@{{ item.order_date }}</td>
                                     <td>@{{ item.remarks }}</td>
                                     <td>@{{ item.order_status_name }}</td>
                                     <td>

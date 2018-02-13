@@ -30,6 +30,14 @@
             </div>
         </div>
 
+        <div class="form-group row align-items-center" :class="{'has-danger': errors.has('order_date'), 'has-success': this.fields.order_date && this.fields.order_date.valid }">
+            <label for="customer_address_id" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-2'">{{ trans('Order Date') }}</label>
+            <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-8'">
+                <datetime v-model="form.order_date" :config="datePickerConfig" class="flatpickr" placeholder="Select Date"></datetime>
+                <div v-if="errors.has('order_date')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('order_date') }}</div>
+            </div>
+        </div>
+
         <div class="form-group row align-items-center" :class="{'has-danger': errors.has('remarks'), 'has-success': this.fields.remarks && this.fields.remarks.valid }">
             <label for="remarks" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-2'">{{ trans('admin.order.columns.remarks') }}</label>
             <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-8'">

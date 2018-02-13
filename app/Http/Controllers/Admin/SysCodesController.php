@@ -23,7 +23,7 @@ class SysCodesController extends Controller
     {
         // create and AdminListing instance for a specific model and
         $data = AdminListing::create(SysCode::class)->modifyQuery(function($query){
-            $query->whereIn('type', ['category', 'brand']);
+            $query->whereIn('type', ['category', 'brand'])->orderBy('updated_at','desc');
         })->processRequestAndGet(
             // pass the request with params
             $request,

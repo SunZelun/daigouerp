@@ -34,6 +34,13 @@
                     </div>
 
                     <div class="form-group row align-items-center">
+                        <label for="order_date" class="col-form-label text-md-right col-md-2">Order Date</label>
+                        <div class="col-md-9 col-xl-8">
+                            {{ $order->order_date }}
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
                         <label for="status" class="col-form-label text-md-right col-md-2">Order Status</label>
                         <div class="col-md-9 col-xl-8">
                             {{ $order->order_status_name }}

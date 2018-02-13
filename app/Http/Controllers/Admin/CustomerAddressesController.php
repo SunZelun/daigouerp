@@ -25,7 +25,7 @@ class CustomerAddressesController extends Controller
     {
         // create and AdminListing instance for a specific model and
         $data = AdminListing::create(CustomerAddress::class)->modifyQuery(function($query){
-            $query->leftJoin('customers', 'customer_addresses.customer_id', '=', 'customers.id')->where('customers.user_id', Auth::id());
+            $query->leftJoin('customers', 'customer_addresses.customer_id', '=', 'customers.id')->where('customers.user_id', Auth::id())->orderBy('customer_addresses.updated_at','desc');
         })->processRequestAndGet(
             // pass the request with params
             $request,
