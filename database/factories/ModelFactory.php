@@ -131,3 +131,23 @@ $factory->define(App\Models\SysCode::class, function (Faker\Generator $faker) {
     ];
 });
 
+/** @var  \Illuminate\Database\Eloquent\Factory $factory */
+$factory->define(App\Models\Shipment::class, function (Faker\Generator $faker) {
+    return [
+        'ship_date' => $faker->dateTime,
+        'type' => $faker->randomNumber(5),
+        'logistic_company_name' => $faker->sentence,
+        'tracking_number' => $faker->sentence,
+        'logistic_status' => $faker->sentence,
+        'cost_currency' => $faker->sentence,
+        'cost' => $faker->randomFloat,
+        'remarks' => $faker->sentence,
+        'shipment_status' => $faker->randomNumber(5),
+        'status' => $faker->randomNumber(5),
+        'created_at' => $faker->dateTime,
+        'updated_at' => $faker->dateTime,
+        
+        
+    ];
+});
+

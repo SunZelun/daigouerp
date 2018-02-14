@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\OrderProduct;
 use App\Models\SysCode;
 use Illuminate\Http\Request;
 use \Illuminate\Http\Response;
@@ -124,6 +125,7 @@ class ProductsController extends Controller
     {
         $this->authorize('admin.product.edit', $product);
         $product = Product::with(['category', 'brand'])->where(['id' => $product->id])->first();
+        $priceHistory = $this->priceHistory($product->id);
 
         $codes = SysCode::whereIn('type', ['brand', 'category'])->where(['status' => SysCode::STATUS_ACTIVE])->get();
         $categories = [];
@@ -144,6 +146,7 @@ class ProductsController extends Controller
             'product' => $product,
             'brands' => $brands,
             'categories' => $categories,
+            'priceHistory' => $priceHistory,
         ]);
     }
 
@@ -201,5 +204,39 @@ class ProductsController extends Controller
             ->get();
 
         return $products;
+    }
+
+    /**
+     * Get price history of certain product
+     * @param $productId
+     * @return array|null
+     */
+    public function priceHistory($productId){
+        if (empty($productId)){
+            return null;
+        }
+
+        $orderProducts = OrderProduct::with('detail')->where(['status' => OrderProduct::STATUS_ACTIVE, 'product_id' => $productId])->get();
+
+        if (!$orderProducts || empty($orderProducts)){
+            return null;
+        }
+
+        $priceHistory = [];
+        foreach ($orderProducts as $product) {
+            $label = $product->selling_currency.$product->selling_price.$product->buying_currency.$product->buying_price;
+            $orderDate = !empty($product->detail->order_date) ? $product->detail->order_date : $product->detail->created_at;
+            if (!isset($priceHistory[$label])){
+                $priceHistory[$label] = [
+                    'selling_price' => $product->selling_currency.' '.$product->selling_price,
+                    'buying_price' => $product->buying_currency.' '.$product->buying_price,
+                    'order_date' => [$orderDate]
+                ];
+            } else {
+                $priceHistory[$label]['order_date'][] = $orderDate;
+            }
+        }
+
+        return array_values($priceHistory);
     }
 }

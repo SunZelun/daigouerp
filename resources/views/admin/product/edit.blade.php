@@ -23,6 +23,42 @@
 
                         @include('admin.product.components.form-elements')
 
+                        <div class="col-md-12">
+                            <div class="col-md-12">
+                                <label class="control-label">Price History</label>
+                            </div>
+                            <div class="col-md-8">
+                                <table class="table">
+                                    <col width="150">
+                                    <col width="130">
+                                    <col width="130">
+                                    <tr>
+                                        <th width="40">日期</th>
+                                        <th width="30">买价</th>
+                                        <th width="30">卖价</th>
+                                    </tr>
+                                    @if (!empty($priceHistory))
+                                        @foreach($priceHistory as $history)
+                                            <tr>
+                                                <td>
+                                                    @if(!empty($history['order_date']))
+                                                        @foreach($history['order_date'] as $date)
+                                                            {{ $date }}<br>
+                                                        @endforeach
+                                                    @endif
+                                                </td>
+                                                <td>{{ $history['buying_price'] }}</td>
+                                                <td>{{ $history['selling_price'] }}</td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr>
+                                            <td colspan="3">No history found.</td>
+                                        </tr>
+                                    @endif
+                                </table>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="card-footer">
