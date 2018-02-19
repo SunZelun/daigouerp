@@ -22,8 +22,8 @@
                     <i style="font-size: 30px;"><small>Cost</small></i>
                     <ul>
                         <li style="width: 100%; border-right: none;">
-                            <strong>RMB {{ $summary['total_cost_in_rmb'] }}</strong>
-                            <span>&asymp; SGD {{ $summary['total_cost_in_sgd'] }}</span>
+                            <b>RMB {{ $summary['cost_in_rmb'] }} / SGD {{ $summary['cost_in_sgd'] }}</b><br>
+                            <span>In Total RMB {{ $summary['total_cost_in_rmb'] }} &asymp; SGD {{ $summary['total_cost_in_sgd'] }}</span>
                         </li>
                     </ul>
                 </div>
@@ -34,8 +34,8 @@
                     <i style="font-size: 30px;"><small>Revenue</small></i>
                     <ul>
                         <li style="width: 100%; border-right: none;">
-                            <strong>RMB {{ $summary['total_revenue_in_rmb'] }}</strong>
-                            <span>&asymp; SGD {{ $summary['total_revenue_in_sgd'] }}</span>
+                            <b>RMB {{ $summary['revenue_in_rmb'] }} / SGD {{ $summary['revenue_in_sgd'] }}</b><br>
+                            <span>In Total RMB {{ $summary['total_revenue_in_rmb'] }} &asymp; SGD {{ $summary['total_revenue_in_sgd'] }}</span>
                         </li>
                     </ul>
                 </div>
@@ -46,8 +46,8 @@
                     <i style="font-size: 30px;"><small>Profit</small></i>
                     <ul>
                         <li style="width: 100%; border-right: none;">
-                            <strong>RMB {{ $summary['total_profit_in_rmb'] }}</strong>
-                            <span>&asymp; SGD {{ $summary['total_profit_in_sgd'] }}</span>
+                            <b>RMB {{ $summary['profit_in_rmb'] }} / SGD {{ $summary['profit_in_sgd'] }}</b><br>
+                            <span>In Total RMB {{ $summary['total_profit_in_rmb'] }} &asymp; SGD {{ $summary['total_profit_in_sgd'] }}</span>
                         </li>
                     </ul>
                 </div>

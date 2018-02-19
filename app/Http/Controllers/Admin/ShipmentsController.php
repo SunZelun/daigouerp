@@ -1,6 +1,8 @@
 <?php namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
+use App\Models\SysCode;
 use Illuminate\Http\Request;
 use \Illuminate\Http\Response;
 use App\Http\Requests\Admin\Shipment\IndexShipment;
@@ -9,6 +11,7 @@ use App\Http\Requests\Admin\Shipment\UpdateShipment;
 use App\Http\Requests\Admin\Shipment\DestroyShipment;
 use Brackets\AdminListing\Facades\AdminListing;
 use App\Models\Shipment;
+use Illuminate\Support\Facades\Auth;
 
 class ShipmentsController extends Controller
 {
@@ -49,8 +52,35 @@ class ShipmentsController extends Controller
     public function create()
     {
         $this->authorize('admin.shipment.create');
+        $shipmentCodes = SysCode::whereIn('type', ['shipment_type', 'shipment_status'])->where(['status' => SysCode::STATUS_ACTIVE])->get();
+        $overseaOrders = Order::with(['customer' => function($query){
+            $query->select(['name', 'wechat_name', 'id']);
+        }])->select(['id', 'customer_id', 'remarks'])->where(['status' => Order::STATUS_ACTIVE, 'user_id' => Auth::id(), 'order_status' => Order::PENDING_DELIVERY])->get();
+        $domeOrders = Order::with('customer')->where(['status' => Order::STATUS_ACTIVE, 'user_id' => Auth::id(), 'order_status' => Order::IN_WAREHOUSE])->get();
 
-        return view('admin.shipment.create');
+//        $refinedOverseaOrders = collect([]);
+//        if ($overseaOrders){
+//            foreach ($overseaOrders as $overseaOrder){
+//                $remarks = !empty($overseaOrder->remarks) ? ' - '.$overseaOrder->remarks : '';
+//                $refinedOverseaOrders[$overseaOrder->id] = $overseaOrder->customer->name.'('.$overseaOrder->customer->wechat_name.')'.$remarks;
+//            }
+//        }
+
+        $shipmentTypes = [];
+        $shipmentStatus = [];
+
+        if ($shipmentCodes){
+            foreach ($shipmentCodes as $code){
+                if ($code->type == 'shipment_type'){
+                    $shipmentTypes[$code->code] = $code->name;
+                } else {
+                    $shipmentStatus[$code->code] = $code->name;
+                }
+            }
+        }
+
+
+        return view('admin.shipment.create', ['shipmentType' => $shipmentTypes, 'shipmentStatus' => $shipmentStatus, 'overseaOrders' => $overseaOrders, 'domeOrders' => $domeOrders]);
     }
 
     /**
@@ -61,6 +91,7 @@ class ShipmentsController extends Controller
      */
     public function store(StoreShipment $request)
     {
+        return false;
         // Sanitize input
         $sanitized = $request->validated();
 
@@ -97,8 +128,27 @@ class ShipmentsController extends Controller
     {
         $this->authorize('admin.shipment.edit', $shipment);
 
+        $overseaOrders = Order::where(['status' => Order::STATUS_ACTIVE, 'user_id' => Auth::id(), 'order_status' => Order::PENDING_DELIVERY])->get();
+        $domeOrders = Order::where(['status' => Order::STATUS_ACTIVE, 'user_id' => Auth::id(), 'order_status' => Order::IN_WAREHOUSE])->get();
+        $shipmentCodes = SysCode::whereIn('type', ['shipment_type', 'shipment_status'])->where(['status' => SysCode::STATUS_ACTIVE])->get();
+
+        $shipmentTypes = [];
+        $shipmentStatus = [];
+
+        if ($shipmentCodes){
+            foreach ($shipmentCodes as $code){
+                if ($code->type == 'shipment_type'){
+                    $shipmentTypes[$code->code] = $code->name;
+                } else {
+                    $shipmentStatus[$code->code] = $code->name;
+                }
+            }
+        }
+
         return view('admin.shipment.edit', [
             'shipment' => $shipment,
+            'shipmentType' => $shipmentTypes,
+            'shipmentStatus' => $shipmentStatus
         ]);
     }
 

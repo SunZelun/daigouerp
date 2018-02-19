@@ -1,6 +1,6 @@
 @extends('brackets/admin-ui::admin.layout.default')
 
-@section('title', trans('admin.shipment.actions.create'))
+@section('title', trans('New Shipment'))
 
 @section('body')
 
@@ -16,7 +16,7 @@
                 <form class="form-horizontal form-create" method="post" @submit.prevent="onSubmit" :action="this.action" novalidate>
 
                     <div class="card-header">
-                        <i class="fa fa-plus"></i> {{ trans('admin.shipment.actions.create') }}
+                        <i class="fa fa-plus"></i> {{ trans('New Shipment') }}
                     </div>
 
                     <div class="card-block">
