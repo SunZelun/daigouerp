@@ -34,7 +34,7 @@ class StoreShipment extends FormRequest
             'remarks' => ['nullable', 'string'],
             'shipment_status' => ['required', 'integer'],
             'status' => ['required', 'integer'],
-            
+            'order_ids' => ['required', 'array'],
         ];
     }
 }

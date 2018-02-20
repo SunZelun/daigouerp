@@ -12,7 +12,7 @@
 <div class="form-group row align-items-center" :class="{'has-danger': errors.has('type'), 'has-success': this.fields.type && this.fields.type.valid }">
     <label for="type" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-2'">{{ trans('Type') }}</label>
         <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-8'">
-            <select :class="{'form-control-danger': errors.has('type'), 'form-control-success': this.fields.type && this.fields.type.valid}" v-model="form.type" @input="validate($event)" v-validate="'required|numeric'" name="type" class="form-control">
+            <select @change="updateOptions" :class="{'form-control-danger': errors.has('type'), 'form-control-success': this.fields.type && this.fields.type.valid}" v-model="form.type" @input="validate($event)" v-validate="'required|numeric'" name="type" class="form-control">
                 @foreach($shipmentType as $typeCode => $type)
                     <option value="{{ $typeCode }}">{{ $type }}</option>
                 @endforeach
@@ -56,16 +56,24 @@
 <div class="form-group row align-items-center" :class="{'has-danger': errors.has('cost_currency'), 'has-success': this.fields.cost_currency && this.fields.cost_currency.valid }">
     <label for="orders" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-2'">{{ trans('Orders') }}</label>
     <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-8'">
-        <multiselect :hide-selected="true" :close-on-select="false" :custom-label="orderDisplay" v-validate="'required'"
-                     :multiple="true"
-                     :class="{'form-control-danger': errors.has('orders'), 'form-control-success': this.fields.orders && this.fields.orders.valid}"
-                     id="orders" name="orders"
-                     v-model="form.orders"
-                     :options="{{ $overseaOrders->toJson() }}"
-                     :show-labels="false"
-                     open-direction="bottom">
+        <multiselect
+                :options="options"
+                track-by="id"
+                :hide-selected="true"
+                :close-on-select="false"
+                :custom-label="orderDisplay"
+                v-validate="'required'"
+                :multiple="true"
+                :class="{'form-control-danger': errors.has('orders'), 'form-control-success': this.fields.orders && this.fields.orders.valid}"
+                id="orders" name="orders"
+                v-model="form.orders"
+                :show-labels="false"
+                open-direction="bottom"
+                @select="updateOrders($event)"
+                @remove="removeOrder($event)"
+        >
         </multiselect>
-        <div v-if="errors.has('orders')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('orders') }}</div>
+        <div v-if="errors.has('order_ids')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('order_ids') }}</div>
     </div>
 </div>
 

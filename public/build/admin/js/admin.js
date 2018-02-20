@@ -88060,10 +88060,12 @@ Vue.component('shipment-form', {
                 remarks: '',
                 shipment_status: 10,
                 status: 1,
+                order_ids: [],
                 orders: []
             }
         };
     },
+    props: ['oorders', 'dorders', 'options'],
     methods: {
         orderDisplay: function orderDisplay(_ref) {
             var remarks = _ref.remarks,
@@ -88075,6 +88077,25 @@ Vue.component('shipment-form', {
             }
 
             return labelDisplay;
+        },
+        updateOrders: function updateOrders(value) {
+            this.form.order_ids.push(value.id);
+        },
+        removeOrder: function removeOrder(value) {
+            var index = this.form.order_ids.indexOf(value.id);
+            if (index !== -1) this.form.order_ids.splice(index, 1);
+        },
+        updateOptions: function updateOptions(value) {
+            if (value.target.value == 1) {
+                this.options = this.oorders;
+            } else {
+                this.options = this.dorders;
+            }
+            this.form.orders.length = 0;
+            this.form.order_ids.length = 0;
+
+            console.log(this.form.orders);
+            console.log(this.form.order_ids);
         }
     }
 });

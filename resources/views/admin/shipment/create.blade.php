@@ -10,7 +10,9 @@
 
             <shipment-form
                 :action="'{{ url('admin/shipments') }}'"
-                
+                :oorders="{{ $overseaOrders }}"
+                :dorders="{{ $domeOrders }}"
+                :options="{{ $overseaOrders }}"
                 inline-template>
 
                 <form class="form-horizontal form-create" method="post" @submit.prevent="onSubmit" :action="this.action" novalidate>

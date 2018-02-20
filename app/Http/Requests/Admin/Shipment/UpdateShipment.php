@@ -34,7 +34,7 @@ class UpdateShipment extends FormRequest
             'remarks' => ['nullable', 'string'],
             'shipment_status' => ['sometimes', 'integer'],
             'status' => ['sometimes', 'integer'],
-            
+            'order_ids' => ['sometimes', 'array'],
         ];
     }
 }
