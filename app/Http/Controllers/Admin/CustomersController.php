@@ -160,6 +160,7 @@ class CustomersController extends Controller
      */
     public function destroy(DestroyCustomer $request, Customer $customer)
     {
+        $customer->addresses()->delete();
         $customer->delete();
 
         if ($request->ajax()) {

@@ -4,8 +4,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Shipment extends Model
 {
-    
-    
+    const STATUS_ACTIVE = 1;
+    const STATUS_INACTIVE = 0;
+
+    const TYPE_INTER = 1;
+    const TYPE_DOME = 2;
+
+    const SHIPMENT_SHIPPED = 10;
+    const SHIPMENT_DELIVERED = 20;
+
     protected $fillable = [
         "ship_date",
         "type",
@@ -41,5 +48,19 @@ class Shipment extends Model
         return url('/admin/shipments/'.$this->getKey());
     }
 
-    
+    /**
+     * Get orders for the shipment.
+     */
+    public function orders()
+    {
+        return $this->belongsToMany('App\Models\Order', 'shipment_orders', 'shipment_id', 'order_id');
+    }
+
+    /**
+     * Get ship orders.
+     */
+    public function shipmentorder()
+    {
+        return $this->hasMany('App\Models\ShipmentOrder','shipment_id', 'id');
+    }
 }

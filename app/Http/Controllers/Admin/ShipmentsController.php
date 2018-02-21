@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\ShipmentOrder;
 use App\Models\SysCode;
 use Illuminate\Http\Request;
 use \Illuminate\Http\Response;
@@ -12,6 +13,7 @@ use App\Http\Requests\Admin\Shipment\DestroyShipment;
 use Brackets\AdminListing\Facades\AdminListing;
 use App\Models\Shipment;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ShipmentsController extends Controller
 {
@@ -36,11 +38,32 @@ class ShipmentsController extends Controller
             ['id', 'logistic_company_name', 'tracking_number', 'logistic_status', 'cost_currency', 'remarks']
         );
 
+        $shipmentCodes = SysCode::whereIn('type', ['shipment_type', 'shipment_status'])->where(['status' => SysCode::STATUS_ACTIVE])->get();
+        $shipmentTypes = [];
+        $shipmentStatus = [];
+
+        if ($shipmentCodes){
+            foreach ($shipmentCodes as $code){
+                if ($code->type == 'shipment_type'){
+                    $shipmentTypes[$code->code] = $code->name;
+                } else {
+                    $shipmentStatus[$code->code] = $code->name;
+                }
+            }
+        }
+
+        if (!empty($data)){
+            foreach($data as &$datum){
+                $datum['type_text'] = isset($shipmentTypes[$datum->type]) ? $shipmentTypes[$datum->type] : '-';
+                $datum['shipment_status_text'] = isset($shipmentStatus[$datum->shipment_status]) ? $shipmentStatus[$datum->shipment_status] : '-';
+            }
+        }
+
         if ($request->ajax()) {
             return ['data' => $data];
         }
 
-        return view('admin.shipment.index', ['data' => $data]);
+        return view('admin.shipment.index', ['data' => $data, 'shipmentType' => $shipmentTypes, 'shipmentStatus' => $shipmentStatus]);
 
     }
 
@@ -58,14 +81,6 @@ class ShipmentsController extends Controller
         }])->select(['id', 'customer_id', 'remarks'])->where(['status' => Order::STATUS_ACTIVE, 'user_id' => Auth::id(), 'order_status' => Order::PENDING_DELIVERY])->get();
         $domeOrders = Order::with('customer')->where(['status' => Order::STATUS_ACTIVE, 'user_id' => Auth::id(), 'order_status' => Order::IN_WAREHOUSE])->get();
 
-//        $refinedOverseaOrders = collect([]);
-//        if ($overseaOrders){
-//            foreach ($overseaOrders as $overseaOrder){
-//                $remarks = !empty($overseaOrder->remarks) ? ' - '.$overseaOrder->remarks : '';
-//                $refinedOverseaOrders[$overseaOrder->id] = $overseaOrder->customer->name.'('.$overseaOrder->customer->wechat_name.')'.$remarks;
-//            }
-//        }
-
         $shipmentTypes = [];
         $shipmentStatus = [];
 
@@ -79,7 +94,6 @@ class ShipmentsController extends Controller
             }
         }
 
-
         return view('admin.shipment.create', ['shipmentType' => $shipmentTypes, 'shipmentStatus' => $shipmentStatus, 'overseaOrders' => $overseaOrders, 'domeOrders' => $domeOrders]);
     }
 
@@ -91,12 +105,26 @@ class ShipmentsController extends Controller
      */
     public function store(StoreShipment $request)
     {
-        return false;
         // Sanitize input
         $sanitized = $request->validated();
 
         // Store the Shipment
         $shipment = Shipment::create($sanitized);
+        $orderStatus = $this->getOrderStatus($shipment->type, $shipment->shipment_status);
+
+        if ($shipment){
+            if (isset($sanitized['order_ids']) && !empty($sanitized['order_ids'])){
+                foreach ($sanitized['order_ids'] as $orderId){
+                    ShipmentOrder::create([
+                        'shipment_id' => $shipment->id,
+                        'order_id' => $orderId,
+                        'status' => ShipmentOrder::STATUS_ACTIVE
+                    ]);
+
+                    Order::updateStatus($orderId, $orderStatus);
+                }
+            }
+        }
 
         if ($request->ajax()) {
             return ['redirect' => url('admin/shipments'), 'message' => trans('brackets/admin-ui::admin.operation.succeeded')];
@@ -126,11 +154,21 @@ class ShipmentsController extends Controller
      */
     public function edit(Shipment $shipment)
     {
+        $shipment = Shipment::with('orders.customer')->where(['id' => $shipment->id])->first();
         $this->authorize('admin.shipment.edit', $shipment);
 
-        $overseaOrders = Order::where(['status' => Order::STATUS_ACTIVE, 'user_id' => Auth::id(), 'order_status' => Order::PENDING_DELIVERY])->get();
-        $domeOrders = Order::where(['status' => Order::STATUS_ACTIVE, 'user_id' => Auth::id(), 'order_status' => Order::IN_WAREHOUSE])->get();
+        $orderIds = [];
+        foreach ($shipment->orders as $shipOrder){
+            $orderIds[] = $shipOrder->id;
+        }
+
+        $shipment['order_ids'] = $orderIds;
+
         $shipmentCodes = SysCode::whereIn('type', ['shipment_type', 'shipment_status'])->where(['status' => SysCode::STATUS_ACTIVE])->get();
+        $overseaOrders = Order::with(['customer' => function($query){
+            $query->select(['name', 'wechat_name', 'id']);
+        }])->select(['id', 'customer_id', 'remarks'])->where(['status' => Order::STATUS_ACTIVE, 'user_id' => Auth::id(), 'order_status' => Order::PENDING_DELIVERY])->get();
+        $domeOrders = Order::with('customer')->where(['status' => Order::STATUS_ACTIVE, 'user_id' => Auth::id(), 'order_status' => Order::IN_WAREHOUSE])->get();
 
         $shipmentTypes = [];
         $shipmentStatus = [];
@@ -148,8 +186,36 @@ class ShipmentsController extends Controller
         return view('admin.shipment.edit', [
             'shipment' => $shipment,
             'shipmentType' => $shipmentTypes,
-            'shipmentStatus' => $shipmentStatus
+            'shipmentStatus' => $shipmentStatus,
+            'overseaOrders' => $overseaOrders,
+            'domeOrders' => $domeOrders
         ]);
+    }
+
+    /**
+     * Get order status based on shipment status
+     * @param $shipmentType
+     * @param $shipmentStatus
+     * @param $isReverse
+     * @return int
+     */
+    public function getOrderStatus($shipmentType, $shipmentStatus, $isReverse = false){
+        $status = 0;
+        if ($shipmentType == Shipment::TYPE_INTER){
+            if ($isReverse){
+                $status = Order::PENDING_DELIVERY;
+            } else {
+                $status = $shipmentStatus == Shipment::SHIPMENT_SHIPPED ? Order::INTERNATIONAL_SHIPPED : Order::IN_WAREHOUSE;
+            }
+        } else {
+            if ($isReverse){
+                $status = Order::IN_WAREHOUSE;
+            } else {
+                $status = $shipmentStatus == Shipment::SHIPMENT_SHIPPED ? Order::DOMESTIC_SHIPPED : Order::DELIVERED;
+            }
+        }
+
+        return $status;
     }
 
     /**
@@ -164,8 +230,37 @@ class ShipmentsController extends Controller
         // Sanitize input
         $sanitized = $request->validated();
 
+        DB::beginTransaction();
+
         // Update changed values Shipment
         $shipment->update($sanitized);
+        $orderStatus = $this->getOrderStatus($shipment->type, $shipment->shipment_status);
+        $revertOrderStatus = $this->getOrderStatus($shipment->type, $shipment->shipment_status,true);
+
+        if (isset($sanitized['order_ids']) && !empty($sanitized['order_ids'])){
+
+            //delete previous shipment orders
+            foreach ($shipment->shipmentorder as $item){
+                Order::updateStatus($item->order_id, $revertOrderStatus);
+                $item->delete();
+            }
+
+            foreach ($sanitized['order_ids'] as $orderId){
+                $saveOrder = ShipmentOrder::create([
+                    'shipment_id' => $shipment->id,
+                    'order_id' => $orderId,
+                    'status' => ShipmentOrder::STATUS_ACTIVE
+                ]);
+
+                if (!$saveOrder){
+                    DB::rollBack();
+                }
+
+                Order::updateStatus($orderId, $orderStatus);
+            }
+        }
+
+        DB::commit();
 
         if ($request->ajax()) {
             return ['redirect' => url('admin/shipments'), 'message' => trans('brackets/admin-ui::admin.operation.succeeded')];
@@ -183,6 +278,7 @@ class ShipmentsController extends Controller
      */
     public function destroy(DestroyShipment $request, Shipment $shipment)
     {
+        $shipment->shipmentorder()->delete();
         $shipment->delete();
 
         if ($request->ajax()) {

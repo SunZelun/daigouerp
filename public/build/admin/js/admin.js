@@ -88061,7 +88061,9 @@ Vue.component('shipment-form', {
                 shipment_status: 10,
                 status: 1,
                 order_ids: [],
-                orders: []
+                orders: [],
+                type_text: '',
+                shipment_status_text: ''
             }
         };
     },
@@ -88071,11 +88073,13 @@ Vue.component('shipment-form', {
             var remarks = _ref.remarks,
                 customer = _ref.customer;
 
-            var labelDisplay = '' + customer.name + ' (' + ('' + customer.wechat_name) + ')';
-            if (remarks != null || remarks != undefined) {
-                labelDisplay += ' - ' + ('' + remarks);
+            var labelDisplay = "-";
+            if (customer != undefined) {
+                labelDisplay = '' + customer.name + ' (' + ('' + customer.wechat_name) + ')';
+                if (remarks != null || remarks != undefined) {
+                    labelDisplay += ' - ' + ('' + remarks);
+                }
             }
-
             return labelDisplay;
         },
         updateOrders: function updateOrders(value) {
@@ -88091,11 +88095,8 @@ Vue.component('shipment-form', {
             } else {
                 this.options = this.dorders;
             }
-            this.form.orders.length = 0;
-            this.form.order_ids.length = 0;
-
-            console.log(this.form.orders);
-            console.log(this.form.order_ids);
+            this.form.orders = [];
+            this.form.order_ids = [];
         }
     }
 });

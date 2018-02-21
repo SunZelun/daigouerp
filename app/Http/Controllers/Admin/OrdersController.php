@@ -247,6 +247,7 @@ class OrdersController extends Controller
      */
     public function destroy(DestroyOrder $request, Order $order)
     {
+        $order->products()->delete();
         $order->delete();
 
         if ($request->ajax()) {

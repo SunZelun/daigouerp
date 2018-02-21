@@ -53,7 +53,7 @@
     </div>
 </div>
 
-<div class="form-group row align-items-center" :class="{'has-danger': errors.has('cost_currency'), 'has-success': this.fields.cost_currency && this.fields.cost_currency.valid }">
+<div class="form-group row align-items-center" :class="{'has-danger': errors.has('orders'), 'has-success': this.fields.orders && this.fields.orders.valid }">
     <label for="orders" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-2'">{{ trans('Orders') }}</label>
     <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-8'">
         <multiselect
@@ -64,6 +64,7 @@
                 :custom-label="orderDisplay"
                 v-validate="'required'"
                 :multiple="true"
+                :allow-empty="false"
                 :class="{'form-control-danger': errors.has('orders'), 'form-control-success': this.fields.orders && this.fields.orders.valid}"
                 id="orders" name="orders"
                 v-model="form.orders"
@@ -74,6 +75,7 @@
         >
         </multiselect>
         <div v-if="errors.has('order_ids')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('order_ids') }}</div>
+        <div v-if="errors.has('orders')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('orders') }}</div>
     </div>
 </div>
 

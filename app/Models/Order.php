@@ -61,6 +61,20 @@ class Order extends Model
     }
 
     /**
+     * Update order status
+     * @param $orderId
+     * @param $status
+     * @return mixed
+     */
+    public static function updateStatus($orderId, $status){
+        $order = Order::where(['id' => $orderId])->first();
+        $order->order_status = $status;
+        $order->update();
+
+        return $order;
+    }
+
+    /**
      * Get the products for the order.
      */
     public function products()

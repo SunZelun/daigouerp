@@ -11,6 +11,9 @@
             <shipment-form
                 :action="'{{ $shipment->resource_url }}'"
                 :data="{{ $shipment->toJson() }}"
+                :oorders="{{ $overseaOrders }}"
+                :dorders="{{ $domeOrders }}"
+                :options="{{ $shipment->type == \App\Models\Shipment::TYPE_INTER ? $overseaOrders : $domeOrders }}"
                 inline-template>
             
                 <form class="form-horizontal form-edit" method="post" @submit.prevent="onSubmit" :action="this.action" novalidate>

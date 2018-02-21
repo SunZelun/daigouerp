@@ -1,6 +1,6 @@
 @extends('brackets/admin-ui::admin.layout.default')
 
-@section('title', trans('admin.shipment.actions.index'))
+@section('title', trans('Shipments'))
 
 @section('body')
 
@@ -13,8 +13,8 @@
             <div class="col">
                 <div class="card">
                     <div class="card-header">
-                        <i class="fa fa-align-justify"></i> {{ trans('admin.shipment.actions.index') }}
-                        <a class="btn btn-primary btn-spinner btn-sm pull-right m-b-0" href="{{ url('admin/shipments/create') }}" role="button"><i class="fa fa-plus"></i>&nbsp; {{ trans('admin.shipment.actions.create') }}</a>
+                        <i class="fa fa-align-justify"></i> {{ trans('Shipments') }}
+                        <a class="btn btn-primary btn-spinner btn-sm pull-right m-b-0" href="{{ url('admin/shipments/create') }}" role="button"><i class="fa fa-plus"></i>&nbsp; {{ trans('New Shipment') }}</a>
                     </div>
                     <div class="card-block" v-cloak>
                         <form @submit.prevent="">
@@ -43,18 +43,14 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th is='sortable' :column="'id'">{{ trans('admin.shipment.columns.id') }}</th>
-                                    <th is='sortable' :column="'ship_date'">{{ trans('admin.shipment.columns.ship_date') }}</th>
-                                    <th is='sortable' :column="'type'">{{ trans('admin.shipment.columns.type') }}</th>
-                                    <th is='sortable' :column="'logistic_company_name'">{{ trans('admin.shipment.columns.logistic_company_name') }}</th>
-                                    <th is='sortable' :column="'tracking_number'">{{ trans('admin.shipment.columns.tracking_number') }}</th>
-                                    <th is='sortable' :column="'logistic_status'">{{ trans('admin.shipment.columns.logistic_status') }}</th>
-                                    <th is='sortable' :column="'cost_currency'">{{ trans('admin.shipment.columns.cost_currency') }}</th>
-                                    <th is='sortable' :column="'cost'">{{ trans('admin.shipment.columns.cost') }}</th>
-                                    <th is='sortable' :column="'remarks'">{{ trans('admin.shipment.columns.remarks') }}</th>
-                                    <th is='sortable' :column="'shipment_status'">{{ trans('admin.shipment.columns.shipment_status') }}</th>
-                                    <th is='sortable' :column="'status'">{{ trans('admin.shipment.columns.status') }}</th>
-                                    
+                                    <th is='sortable' :column="'id'">{{ trans('ID') }}</th>
+                                    <th is='sortable' :column="'ship_date'">{{ trans('Date') }}</th>
+                                    <th is='sortable' :column="'type'">{{ trans('Type') }}</th>
+                                    <th is='sortable' :column="'logistic_company_name'">{{ trans('Logistic Company') }}</th>
+                                    <th is='sortable' :column="'tracking_number'">{{ trans('Tracking Number') }}</th>
+                                    <th is='sortable' :column="'cost'">{{ trans('Shipping Fee') }}</th>
+                                    <th is='sortable' :column="'remarks'">{{ trans('Remarks') }}</th>
+                                    <th is='sortable' :column="'shipment_status'">{{ trans('Status') }}</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -62,16 +58,12 @@
                                 <tr v-for="(item, index) in collection">
                                     <td>@{{ item.id }}</td>
                                     <td>@{{ item.ship_date | datetime }}</td>
-                                    <td>@{{ item.type }}</td>
+                                    <td>@{{ item.type_text }}</td>
                                     <td>@{{ item.logistic_company_name }}</td>
                                     <td>@{{ item.tracking_number }}</td>
-                                    <td>@{{ item.logistic_status }}</td>
-                                    <td>@{{ item.cost_currency }}</td>
-                                    <td>@{{ item.cost }}</td>
+                                    <td>@{{ item.cost_currency + ' ' + item.cost }}</td>
                                     <td>@{{ item.remarks }}</td>
-                                    <td>@{{ item.shipment_status }}</td>
-                                    <td>@{{ item.status }}</td>
-                                    
+                                    <td>@{{ item.shipment_status_text }}</td>
                                     <td>
                                         <div class="row no-gutters">
                                             <div class="col-auto">
