@@ -109,8 +109,8 @@
                                                 <div class="title">{{ $buyer['name'] }}</div>
                                             </div>
                                             <div class="value">
-                                                <div class="small text-muted">&asymp; SGD {{ $buyer['total_revenue_in_sgd'] }}</div>
-                                                <strong>RMB {{ $buyer['total_revenue_in_rmb'] }}</strong>
+                                                <div class="small text-muted">SGD {{ $buyer['revenue_in_sgd'] }}</div>
+                                                <strong>RMB {{ $buyer['revenue_in_rmb'] }}</strong>
                                             </div>
                                         </li>
                                     @endforeach

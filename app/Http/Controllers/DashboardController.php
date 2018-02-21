@@ -85,12 +85,12 @@ class DashboardController extends Controller
             }
         }
 
-        if (!empty($buyerBreakdown)){
-            foreach ($buyerBreakdown as &$buyer){
-                $buyer['total_revenue_in_rmb'] = round($buyer['revenue_in_sgd'] * $rate + $buyer['revenue_in_rmb'],2);
-                $buyer['total_revenue_in_sgd'] = round($buyer['revenue_in_sgd'] + $buyer['revenue_in_rmb']/$rate,2);
-            }
-        }
+//        if (!empty($buyerBreakdown)){
+//            foreach ($buyerBreakdown as &$buyer){
+//                $buyer['total_revenue_in_rmb'] = round($buyer['revenue_in_rmb'],2);
+//                $buyer['total_revenue_in_sgd'] = round($buyer['revenue_in_sgd'],2);
+//            }
+//        }
 
         $summary = [
             'cost_in_rmb' => $totalCostInRmb,
@@ -110,7 +110,7 @@ class DashboardController extends Controller
 
         $totalNumberOfProducts = count($activeProducts);
         $salesBreakdown = collect($salesBreakdown)->sortBy('quantity')->reverse()->take(10)->toArray();
-        $buyerBreakdown = collect($buyerBreakdown)->sortBy('total_revenue_in_rmb')->reverse()->take(10)->toArray();
+        $buyerBreakdown = collect($buyerBreakdown)->sortBy('revenue_in_rmb')->reverse()->take(10)->toArray();
         $activeProducts = collect($activeProducts)->sortBy('quantity')->reverse()->take(10)->toArray();
 
         return view('admin.dashboard.home', [
