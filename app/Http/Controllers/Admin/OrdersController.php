@@ -28,6 +28,11 @@ class OrdersController extends Controller
      */
     public function index(IndexOrder $request)
     {
+        $data = $request->all();
+        $data['orderBy'] = !empty($data['orderBy']) ? $data['orderBy'] : 'orders.updated_at';
+        $data['orderDirection'] = !empty($data['orderDirection']) ? $data['orderDirection'] : 'desc';
+        $request->merge($data);
+
         // create and AdminListing instance for a specific model and
         $data = AdminListing::create(Order::class)->modifyQuery(function($query) use($request){
             $query->leftJoin('customers', 'orders.customer_id', '=', 'customers.id')
@@ -35,7 +40,7 @@ class OrdersController extends Controller
                     $join->on('orders.order_status', '=', 'sys_codes.code')
                         ->where('sys_codes.type', '=', 'order_status');
                 })
-                ->where('orders.user_id', Auth::id())->limit($request->per_page)->orderBy('orders.updated_at','desc');
+                ->where('orders.user_id', Auth::id())->limit($request->per_page);
         })->processRequestAndGet(
             // pass the request with params
             $request,

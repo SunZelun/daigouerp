@@ -21,9 +21,14 @@ class SysCodesController extends Controller
      */
     public function index(IndexSysCode $request)
     {
+        $data = $request->all();
+        $data['orderBy'] = !empty($data['orderBy']) ? $data['orderBy'] : 'updated_at';
+        $data['orderDirection'] = !empty($data['orderDirection']) ? $data['orderDirection'] : 'desc';
+        $request->merge($data);
+
         // create and AdminListing instance for a specific model and
         $data = AdminListing::create(SysCode::class)->modifyQuery(function($query){
-            $query->whereIn('type', ['category', 'brand'])->orderBy('updated_at','desc');
+            $query->whereIn('type', ['category', 'brand']);
         })->processRequestAndGet(
             // pass the request with params
             $request,

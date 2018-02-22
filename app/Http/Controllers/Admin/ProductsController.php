@@ -26,9 +26,13 @@ class ProductsController extends Controller
      */
     public function index(IndexProduct $request)
     {
+        $data = $request->all();
+        $data['orderBy'] = !empty($data['orderBy']) ? $data['orderBy'] : 'updated_at';
+        $data['orderDirection'] = !empty($data['orderDirection']) ? $data['orderDirection'] : 'desc';
+        $request->merge($data);
         // create and AdminListing instance for a specific model and
         $data = AdminListing::create(Product::class)->modifyQuery(function($query){
-            $query->where('user_id', Auth::id())->orderBy('updated_at','desc');
+            $query->where('user_id', Auth::id());
         })->processRequestAndGet(
             // pass the request with params
             $request,
@@ -112,15 +116,17 @@ class ProductsController extends Controller
      */
     public function show(Product $product)
     {
-        $product = Product::with(['orderproducts.order.shipments', 'orderproducts.order.customer', 'category', 'brand'])->where(['id' => $product->id])->first();
+        $product = Product::with(['category', 'brand'])->where(['id' => $product->id])->first();
         $this->authorize('admin.product.show', $product);
         $priceHistory = $this->priceHistory($product->id);
         $orderStatus = Order::ORDER_STATUS_LABELS;
+        $salesRecords = OrderProduct::with(['order.shipments', 'order.customer'])->where(['product_id' => $product->id, 'status' => OrderProduct::STATUS_ACTIVE])->orderBy('created_at',SORT_DESC)->simplePaginate(15);
 
         return view('admin.product.show', [
             'product' => $product,
             'priceHistory' => $priceHistory,
             'orderStatus' => $orderStatus,
+            'salesRecords' => $salesRecords,
         ]);
     }
 

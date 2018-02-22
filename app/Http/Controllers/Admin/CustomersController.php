@@ -23,9 +23,14 @@ class CustomersController extends Controller
      */
     public function index(IndexCustomer $request)
     {
+        $data = $request->all();
+        $data['orderBy'] = !empty($data['orderBy']) ? $data['orderBy'] : 'updated_at';
+        $data['orderDirection'] = !empty($data['orderDirection']) ? $data['orderDirection'] : 'desc';
+        $request->merge($data);
+
         // create and AdminListing instance for a specific model and
         $data = AdminListing::create(Customer::class)->modifyQuery(function($query){
-            $query->where('user_id', Auth::id())->orderBy('updated_at','desc');
+            $query->where('user_id', Auth::id());
         })->processRequestAndGet(
             // pass the request with params
             $request,

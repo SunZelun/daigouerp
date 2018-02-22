@@ -14,78 +14,78 @@
 
                 <div class="card-block">
                     <div class="form-group row align-items-center">
-                        <label for="category_id" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-2'">{{ trans('Category') }}</label>
-                        <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-8'">
+                        <label for="category_id" class="col-form-label text-md-right col-md-2 col-sm-12">{{ trans('Category') }}</label>
+                        <div class="col-md-10 col-sm-12">
                             {{ $product->category ? $product->category->name : '-' }}
                         </div>
                     </div>
 
                     <div class="form-group row align-items-center">
-                        <label for="brand_id" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-2'">{{ trans('Brand') }}</label>
-                        <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-8'">
+                        <label for="brand_id" class="col-form-label text-md-right col-md-2 col-sm-12">{{ trans('Brand') }}</label>
+                        <div class="col-md-10 col-sm-12">
                             {{ $product->brand ? $product->brand->name : '-' }}
                         </div>
                     </div>
 
                     <div class="form-group row align-items-center">
-                        <label for="name" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-2'">{{ trans('admin.product.columns.name') }}</label>
-                        <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-8'">
+                        <label for="name" class="col-form-label text-md-right col-md-2 col-sm-12">{{ trans('admin.product.columns.name') }}</label>
+                        <div class="col-md-10 col-sm-12">
                             {{ $product->name }}
                         </div>
                     </div>
 
                     <div class="form-group row align-items-center">
-                        <label for="description" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-2'">{{ trans('admin.product.columns.description') }}</label>
-                        <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-8'">
+                        <label for="description" class="col-form-label text-md-right col-md-2 col-sm-12">{{ trans('admin.product.columns.description') }}</label>
+                        <div class="col-md-10 col-sm-12">
                             {{ $product->remarks }}
                         </div>
                     </div>
 
                     <div class="form-group row align-items-center">
-                        <label for="quantity" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-2'">{{ trans('Quantity') }}</label>
-                        <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-8'">
+                        <label for="quantity" class="col-form-label text-md-right col-md-2 col-sm-12">{{ trans('Quantity') }}</label>
+                        <div class="col-md-10 col-sm-12">
                             {{ $product->quantity }}
                         </div>
                     </div>
 
                     <div class="form-group row align-items-center">
-                        <label for="selling_price_rmb" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-2'">{{ trans('admin.product.columns.selling_price_rmb') }}</label>
-                        <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-8'">
+                        <label for="selling_price_rmb" class="col-form-label text-md-right col-md-2 col-sm-12">{{ trans('admin.product.columns.selling_price_rmb') }}</label>
+                        <div class="col-md-10 col-sm-12">
                             {{ $product->selling_price_rmb }}
                         </div>
                     </div>
 
                     <div class="form-group row align-items-center">
-                        <label for="selling_price_sgd" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-2'">{{ trans('admin.product.columns.selling_price_sgd') }}</label>
-                        <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-8'">
+                        <label for="selling_price_sgd" class="col-form-label text-md-right col-md-2 col-sm-12">{{ trans('admin.product.columns.selling_price_sgd') }}</label>
+                        <div class="col-md-10 col-sm-12">
                             {{ $product->selling_price_sgd }}
                         </div>
                     </div>
 
                     <div class="form-group row align-items-center">
-                        <label for="buying_price_rmb" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-2'">{{ trans('admin.product.columns.buying_price_rmb') }}</label>
-                        <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-8'">
+                        <label for="buying_price_rmb" class="col-form-label text-md-right col-md-2 col-sm-12">{{ trans('admin.product.columns.buying_price_rmb') }}</label>
+                        <div class="col-md-10 col-sm-12">
                             {{ $product->buying_price_rmb }}
                         </div>
                     </div>
 
                     <div class="form-group row align-items-center">
-                        <label for="buying_price_sgd" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-2'">{{ trans('admin.product.columns.buying_price_sgd') }}</label>
-                        <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-8'">
+                        <label for="buying_price_sgd" class="col-form-label text-md-right col-md-2 col-sm-12">{{ trans('admin.product.columns.buying_price_sgd') }}</label>
+                        <div class="col-md-10 col-sm-12">
                             {{ $product->buying_price_sgd }}
                         </div>
                     </div>
 
                     <div class="form-group row align-items-center">
-                        <label for="remarks" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-2'">{{ trans('admin.product.columns.remarks') }}</label>
-                        <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-8'">
+                        <label for="remarks" class="col-form-label text-md-right col-md-2 col-sm-12">{{ trans('admin.product.columns.remarks') }}</label>
+                        <div class="col-md-10 col-sm-12">
                             {{ $product->remarks }}
                         </div>
                     </div>
 
                     <div class="form-group row align-items-center">
-                        <label for="selling_price_rmb" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-2'">{{ trans('Status') }}</label>
-                        <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-8'">
+                        <label class="col-form-label text-md-right col-md-2 col-sm-12">{{ trans('Status') }}</label>
+                        <div class="col-md-10 col-sm-12">
                             {{ $product->status == \App\Models\Product::STATUS_ACTIVE ? "Active" : "Inactive" }}
                         </div>
                     </div>
@@ -144,16 +144,20 @@
                         <table class="table">
                             <tr>
                                 <th>买家名字</th>
+                                <th>购买数量</th>
                                 <th>订单号/日期</th>
                                 <th>运单号/日期</th>
                                 <th></th>
                             </tr>
                             <tbody>
-                            @if(isset($product['orderproducts']) && !empty($product['orderproducts']))
-                                @foreach($product['orderproducts'] as $orderproduct)
+                            @if(isset($salesRecords) && !empty($salesRecords))
+                                @foreach($salesRecords as $orderproduct)
                                     <tr>
                                         <td>
                                             {{ isset($orderproduct['order']['customer']) && !empty($orderproduct['order']['customer']) ? $orderproduct['order']['customer']['name'].'-'.$orderproduct['order']['customer']['wechat_name'] : '-' }}
+                                        </td>
+                                        <td>
+                                            {{ $orderproduct->quantity }}
                                         </td>
                                         <td>
                                             @if(isset($orderproduct['order']) && !empty($orderproduct['order']))
@@ -186,10 +190,15 @@
                             </tbody>
                         </table>
                     </div>
+                    {{ $salesRecords->links() }}
                 </div>
             </div>
 
             <div class="clearfix"></div>
         </div>
     </div>
+@endsection
+
+@section('')
+
 @endsection
