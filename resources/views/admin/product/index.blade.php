@@ -55,9 +55,9 @@
                             </thead>
                             <tbody>
                                 <tr v-for="(item, index) in collection">
-                                    <td>@{{ item.id }}</td>
+                                    <td><a :href="item.resource_url + ''">@{{ item.id }}</a></td>
                                     <td>@{{ item.category_name }}/@{{ item.brand_name }}</td>
-                                    <td>@{{ item.name }}</td>
+                                    <td><a :href="item.resource_url + ''">@{{ item.name }}</a></td>
                                     <td>RMB @{{ item.selling_price_rmb }} / SGD @{{ item.selling_price_sgd }}</td>
                                     <td>RMB @{{ item.buying_price_rmb }} / SGD@{{ item.buying_price_sgd }}</td>
                                     <td>@{{ item.quantity }}</td>

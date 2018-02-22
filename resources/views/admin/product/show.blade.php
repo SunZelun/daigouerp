@@ -136,14 +136,14 @@
 
             <div class="card">
                 <div class="card-header">
-                    <i class="icon-wallet"></i> 千手观音们
+                    <i class="icon-wallet"></i> 销售记录
                 </div>
 
                 <div class="card-block">
                     <div class="col-sm-12 col-md-12 text-left">
                         <table class="table">
                             <tr>
-                                <th>名字</th>
+                                <th>买家名字</th>
                                 <th>订单号/日期</th>
                                 <th>运单号/日期</th>
                                 <th></th>
