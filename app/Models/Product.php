@@ -71,4 +71,12 @@ class Product extends Model
     {
         return $this->belongsTo('App\Models\SysCode','brand_id','id');
     }
+
+    /**
+     * Get the order product
+     */
+    public function orderproducts()
+    {
+        return $this->hasMany('App\Models\OrderProduct','product_id', 'id')->orderBy('created_at',SORT_DESC);
+    }
 }

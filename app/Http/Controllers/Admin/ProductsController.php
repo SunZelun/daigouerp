@@ -1,7 +1,9 @@
 <?php namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use App\Models\OrderProduct;
+use App\Models\Shipment;
 use App\Models\SysCode;
 use Illuminate\Http\Request;
 use \Illuminate\Http\Response;
@@ -35,7 +37,7 @@ class ProductsController extends Controller
             ['id', 'name', 'selling_price_rmb', 'selling_price_sgd', 'buying_price_rmb', 'buying_price_sgd', 'status', 'quantity', 'brand_id', 'category_id'],
 
             // set columns to searchIn
-            ['id', 'description', 'remarks']
+            ['id', 'description', 'remarks', 'name']
         );
 
         //append category and brand name to product
@@ -110,9 +112,16 @@ class ProductsController extends Controller
      */
     public function show(Product $product)
     {
+        $product = Product::with(['orderproducts.order.shipments', 'orderproducts.order.customer', 'category', 'brand'])->where(['id' => $product->id])->first();
         $this->authorize('admin.product.show', $product);
+        $priceHistory = $this->priceHistory($product->id);
+        $orderStatus = Order::ORDER_STATUS_LABELS;
 
-        // TODO your code goes here
+        return view('admin.product.show', [
+            'product' => $product,
+            'priceHistory' => $priceHistory,
+            'orderStatus' => $orderStatus,
+        ]);
     }
 
     /**

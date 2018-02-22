@@ -38,4 +38,12 @@ class OrderProduct extends Model
         return $this->belongsTo('App\Models\Product','product_id','id');
     }
 
+    /**
+     * Get the order detail
+     */
+    public function order()
+    {
+        return $this->belongsTo('App\Models\Order','order_id','id');
+    }
+
 }

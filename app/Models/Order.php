@@ -97,4 +97,12 @@ class Order extends Model
     {
         return $this->hasOne('App\Models\CustomerAddress','id', 'customer_address_id');
     }
+
+    /**
+     * Get orders for the shipment.
+     */
+    public function shipments()
+    {
+        return $this->belongsToMany('App\Models\Shipment', 'shipment_orders', 'order_id', 'shipment_id');
+    }
 }
