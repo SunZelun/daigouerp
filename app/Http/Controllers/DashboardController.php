@@ -114,6 +114,8 @@ class DashboardController extends Controller
         $activeProducts = collect($activeProducts)->sortBy('quantity')->reverse()->take(10)->toArray();
         arsort($categories);
         arsort($brands);
+        $categories = count($categories) >= 10 ? array_slice($categories, 0, 10) : $categories;
+        $brands = count($brands) >= 10 ? array_slice($brands, 0, 10) : $brands;
 
         return view('admin.dashboard.home', [
             'summary' => $summary,
