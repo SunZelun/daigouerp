@@ -112,6 +112,8 @@ class DashboardController extends Controller
         $salesBreakdown = collect($salesBreakdown)->sortBy('quantity')->reverse()->take(10)->toArray();
         $buyerBreakdown = collect($buyerBreakdown)->sortBy('revenue_in_rmb')->reverse()->take(10)->toArray();
         $activeProducts = collect($activeProducts)->sortBy('quantity')->reverse()->take(10)->toArray();
+        arsort($categories);
+        arsort($brands);
 
         return view('admin.dashboard.home', [
             'summary' => $summary,
