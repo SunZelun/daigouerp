@@ -38,7 +38,7 @@ Vue.component('shipment-form', {
             }
 
             if (products != undefined){
-                var productString = '\n\r ';
+                var productString = ' (';
                 for (var i = 0; i < products.length; i++) {
                     var productName = products[i].detail.name;
 
@@ -48,6 +48,7 @@ Vue.component('shipment-form', {
 
                     productString += productName + '/';
                 }
+                productString += ')';
             }
 
             labelDisplay += ' ' +productString;
