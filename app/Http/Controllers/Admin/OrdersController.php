@@ -262,11 +262,19 @@ class OrdersController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function addProduct(Request $request){
         $index = $request->get('index');
 
         return view('admin.order.components.order-product', [
             'index' => $index
         ]);
+    }
+
+    public function export(Request $request){
+        $orders = Order::where(['order_status' => Order::PENDING_DELIVERY])->all();
     }
 }
