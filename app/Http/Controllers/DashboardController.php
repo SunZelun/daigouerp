@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Shipment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use anlutro\cURL\cURL;
@@ -13,7 +14,9 @@ class DashboardController extends Controller
 {
     public function index(){
         $rate = $this->getCurrencyRate();
-        $activeOrders = Order::with(['products.detail.category'])->where(['user_id' => Auth::id(), 'status' => Order::STATUS_ACTIVE])->get();
+        $activeOrders = Order::with(['products.detail.category', 'shipments' => function($query){
+            $query->where(['shipments.status' => Shipment::STATUS_ACTIVE]);
+        }])->where(['user_id' => Auth::id(), 'status' => Order::STATUS_ACTIVE])->get();
         $activeCustomers = Customer::where(['status' => Customer::STATUS_ACTIVE, 'user_id' => Auth::id()])->count();
         $activeProducts = Product::with(['category', 'brand'])->where(['status' => Product::STATUS_ACTIVE, 'user_id' => Auth::id()])->get();
 
@@ -26,6 +29,7 @@ class DashboardController extends Controller
         $productsSold = 0;
         $categories = [];
         $brands = [];
+        $shipments = [];
 
         $salesBreakdown = null;
         $buyerBreakdown = null;
@@ -82,15 +86,35 @@ class DashboardController extends Controller
                     $buyerBreakdown[$activeOrder->customer_id]['revenue_in_rmb'] += $activeOrder->revenue_in_rmb;
                     $buyerBreakdown[$activeOrder->customer_id]['revenue_in_sgd'] += $activeOrder->revenue_in_sgd;
                 }
+
+                //retrieve shipments
+                if ($activeOrder->shipments){
+                    foreach ($activeOrder->shipments as $shipment){
+                        if (!isset($shipment[$shipment->id]) || empty($shipment[$shipment->id])){
+                            $shipments[$shipment->id] = $shipment;
+                        }
+                    }
+                }
             }
         }
 
-//        if (!empty($buyerBreakdown)){
-//            foreach ($buyerBreakdown as &$buyer){
-//                $buyer['total_revenue_in_rmb'] = round($buyer['revenue_in_rmb'],2);
-//                $buyer['total_revenue_in_sgd'] = round($buyer['revenue_in_sgd'],2);
-//            }
-//        }
+        $totalShipmentCostInSgd = 0;
+        $totalShipmentCostInRmb = 0;
+        if (!empty($shipments)){
+            foreach ($shipments as &$shipItem){
+                if ($shipItem->cost_currency == "SGD"){
+                    $totalShipmentCostInSgd += $shipItem->cost;
+                } else {
+                    $totalShipmentCostInRmb += $shipItem->cost;
+                }
+            }
+        }
+
+        //add in shipment cost to total cost
+        $totalCostInRmb += $totalShipmentCostInRmb;
+        $totalCostInSgd += $totalShipmentCostInSgd;
+        $totalProfitInRmb -= $totalShipmentCostInRmb;
+        $totalProfitInSgd -= $totalShipmentCostInSgd;
 
         $summary = [
             'cost_in_rmb' => $totalCostInRmb,
