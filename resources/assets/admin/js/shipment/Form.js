@@ -24,14 +24,33 @@ Vue.component('shipment-form', {
     },
     props: ['oorders', 'dorders', 'options'],
     methods:{
-        orderDisplay: function ({ remarks, customer }) {
+        orderDisplay: function ({ remarks, customer, order_date, products }) {
             var labelDisplay = "-";
             if (customer != undefined){
                 labelDisplay = `${customer.name}` + ' (' + `${customer.wechat_name}` + ')'
-                if (remarks != null || remarks != undefined){
+                if (remarks != null && remarks != undefined){
                     labelDisplay += ' - ' + `${remarks}`
                 }
+
+                // if (order_date != null && order_date != undefined){
+                //     labelDisplay += ' - ' + `${order_date}`
+                // }
             }
+
+            if (products != undefined){
+                var productString = '\n\r ';
+                for (var i = 0; i < products.length; i++) {
+                    var productName = products[i].detail.name;
+
+                    if (products[i].detail.brand != null && products[i].detail.brand != undefined){
+                        productName = products[i].detail.brand.name + productName;
+                    }
+
+                    productString += productName + '/';
+                }
+            }
+
+            labelDisplay += ' ' +productString;
             return labelDisplay;
         },
         updateOrders: function (value) {

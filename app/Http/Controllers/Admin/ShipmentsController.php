@@ -78,7 +78,7 @@ class ShipmentsController extends Controller
         $shipmentCodes = SysCode::whereIn('type', ['shipment_type', 'shipment_status'])->where(['status' => SysCode::STATUS_ACTIVE])->get();
         $overseaOrders = Order::with(['customer' => function($query){
             $query->select(['name', 'wechat_name', 'id']);
-        }])->select(['id', 'customer_id', 'remarks'])->where(['status' => Order::STATUS_ACTIVE, 'user_id' => Auth::id(), 'order_status' => Order::PENDING_DELIVERY])->get();
+        }, 'products.detail.brand'])->select(['id', 'customer_id', 'remarks', 'order_date'])->where(['status' => Order::STATUS_ACTIVE, 'user_id' => Auth::id(), 'order_status' => Order::PENDING_DELIVERY])->get();
         $domeOrders = Order::with('customer')->where(['status' => Order::STATUS_ACTIVE, 'user_id' => Auth::id(), 'order_status' => Order::IN_WAREHOUSE])->get();
 
         $shipmentTypes = [];
@@ -154,7 +154,7 @@ class ShipmentsController extends Controller
      */
     public function edit(Shipment $shipment)
     {
-        $shipment = Shipment::with('orders.customer')->where(['id' => $shipment->id])->first();
+        $shipment = Shipment::with(['orders.customer', 'orders.products.detail.brand'])->where(['id' => $shipment->id])->first();
         $this->authorize('admin.shipment.edit', $shipment);
 
         $orderIds = [];
@@ -167,7 +167,7 @@ class ShipmentsController extends Controller
         $shipmentCodes = SysCode::whereIn('type', ['shipment_type', 'shipment_status'])->where(['status' => SysCode::STATUS_ACTIVE])->get();
         $overseaOrders = Order::with(['customer' => function($query){
             $query->select(['name', 'wechat_name', 'id']);
-        }])->select(['id', 'customer_id', 'remarks'])->where(['status' => Order::STATUS_ACTIVE, 'user_id' => Auth::id(), 'order_status' => Order::PENDING_DELIVERY])->get();
+        }, 'products.detail.brand'])->select(['id', 'customer_id', 'remarks'])->where(['status' => Order::STATUS_ACTIVE, 'user_id' => Auth::id(), 'order_status' => Order::PENDING_DELIVERY])->get();
         $domeOrders = Order::with('customer')->where(['status' => Order::STATUS_ACTIVE, 'user_id' => Auth::id(), 'order_status' => Order::IN_WAREHOUSE])->get();
 
         $shipmentTypes = [];
