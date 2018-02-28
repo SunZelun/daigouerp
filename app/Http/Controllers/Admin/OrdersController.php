@@ -176,7 +176,7 @@ class OrdersController extends Controller
      */
     public function edit(Order $order)
     {
-        $order = Order::with('products.detail.brand')->where(['id' => $order->id])->first();
+        $order = Order::with(['customer', 'products.detail.brand'])->where(['id' => $order->id])->first();
         $this->authorize('admin.order.edit', $order);
 
         $addresses = CustomerAddress::where(['customer_id' => $order->customer_id])->get();

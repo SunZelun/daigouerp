@@ -33,7 +33,8 @@ Vue.component('order-form', {
                     selling_currency: 'RMB',
                     selling_price: '',
                     remarks: ''
-                }]
+                }],
+                customer: null
             }
         }
     },
@@ -147,7 +148,22 @@ Vue.component('order-form', {
             } else {
                 return `${name}`
             }
-        }
+        },
+        updateSelectedCustomer: function (value) {
+            if (value != null) {
+                this.form.customer_id = value.id;
+            } else {
+                this.form.customer_id = null;
+            }
+            $('#customer_selection').val(this.form.customer_id).change();
+        },
+        customerNameOnly: function ({ name, wechat_name }) {
+            if (wechat_name != null && wechat_name != undefined){
+                return `${name}` + ' - ' + `${wechat_name}`
+            } else {
+                return `${name}`
+            }
+        },
     }
 
 });

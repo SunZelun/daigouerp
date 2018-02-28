@@ -6,12 +6,8 @@
         <div class="form-group row align-items-center" :class="{'has-danger': errors.has('customer_id'), 'has-success': this.fields.customer_id && this.fields.customer_id.valid }">
             <label for="customer_id" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-2'">{{ trans('Customer Name') }}</label>
             <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-8'">
-                <select v-model="form.customer_id" id="customer_selection" name="customer_id" class="form-control">
-                    <option>Select Customer</option>
-                    @foreach($customers as $customer)
-                        <option value="{{ $customer->id }}">{{ $customer->name.' - '.$customer->wechat_name }}</option>
-                    @endforeach
-                </select>
+                <multiselect v-model="form.customer" placeholder="Customer Name" @input="updateSelectedCustomer" :custom-label="customerNameOnly" :options="{{ $customers->toJson() }}" open-direction="bottom" label="name" track-by="name"></multiselect>
+                <input type="hidden" v-model="form.customer_id" id="customer_selection" value="" />
                 <div v-if="errors.has('customer_id')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('customer_id') }}</div>
             </div>
         </div>

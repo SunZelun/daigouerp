@@ -87847,7 +87847,8 @@ Vue.component('order-form', {
                     selling_currency: 'RMB',
                     selling_price: '',
                     remarks: ''
-                }]
+                }],
+                customer: null
             }
         };
     },
@@ -87961,6 +87962,24 @@ Vue.component('order-form', {
 
             if (brand != null || brand != undefined) {
                 return '' + brand.name + ' - ' + ('' + name);
+            } else {
+                return '' + name;
+            }
+        },
+        updateSelectedCustomer: function updateSelectedCustomer(value) {
+            if (value != null) {
+                this.form.customer_id = value.id;
+            } else {
+                this.form.customer_id = null;
+            }
+            $('#customer_selection').val(this.form.customer_id).change();
+        },
+        customerNameOnly: function customerNameOnly(_ref2) {
+            var name = _ref2.name,
+                wechat_name = _ref2.wechat_name;
+
+            if (wechat_name != null && wechat_name != undefined) {
+                return '' + name + ' - ' + ('' + wechat_name);
             } else {
                 return '' + name;
             }
