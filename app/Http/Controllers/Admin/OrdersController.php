@@ -275,6 +275,9 @@ class OrdersController extends Controller
     }
 
     public function export(Request $request){
-        $orders = Order::where(['order_status' => Order::PENDING_DELIVERY])->all();
+        $orderStatus = $request->post('order_status',Order::PENDING_DELIVERY);
+        $orders = Order::where(['order_status' => $orderStatus, 'status' => Order::STATUS_ACTIVE])->get()->toArray();
+
+        return $orders;
     }
 }

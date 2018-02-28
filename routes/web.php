@@ -74,6 +74,7 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/orders',                                 'Admin\OrdersController@index');
     Route::get('/admin/orders/add-product',                     'Admin\OrdersController@addProduct');
     Route::get('/admin/orders/create',                          'Admin\OrdersController@create');
+    Route::get('/admin/orders/export',                          'Admin\OrdersController@export');
     Route::post('/admin/orders',                                'Admin\OrdersController@store');
     Route::get('/admin/orders/{order}/edit',                    'Admin\OrdersController@edit')->name('admin/orders/edit');
     Route::get('/admin/orders/{order}',                    'Admin\OrdersController@show');

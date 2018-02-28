@@ -8,6 +8,7 @@
         "php": ">=7.0.0",
         "algolia/algoliasearch-client-php": "^1.25",
         "anlutro/curl": "^1.4",
+        "barryvdh/laravel-dompdf": "^0.8.2",
         "brackets/craftable": "^2.0",
         "fideloper/proxy": "~3.3",
         "laravel/framework": "5.5.*",
