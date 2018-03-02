@@ -101,3 +101,9 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/admin/shipments/{shipment}',                  'Admin\ShipmentsController@update')->name('admin/shipments/update');
     Route::delete('/admin/shipments/{shipment}',                'Admin\ShipmentsController@destroy')->name('admin/shipments/destroy');
 });
+
+Route::middleware(['admin'])->group(function () {
+    Route::get('/admin/export',                              'Admin\ExportController@index');
+    Route::post('/admin/export',                              'Admin\ExportController@export');
+    Route::get('/admin/export/csv',                              'Admin\ExportController@exportToCsv');
+});

@@ -9,6 +9,7 @@
             <li class="nav-item"><a class="nav-link" href="{{ url('admin/orders') }}"><i class="icon-drop"></i> <span class="nav-link-text">{{ trans('admin.order.title') }}</span></a></li>
             <li class="nav-item"><a class="nav-link" href="{{ url('admin/sys-codes') }}"><i class="icon-graduation"></i> <span class="nav-link-text">{{ trans('System Codes') }}</span></a></li>
             <li class="nav-item"><a class="nav-link" href="{{ url('admin/shipments') }}"><i class="icon-plane"></i> <span class="nav-link-text">{{ trans('Shipment') }}</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url('admin/export') }}"><i class="icon-plane"></i> <span class="nav-link-text">{{ trans('Export') }}</span></a></li>
             {{-- Do not delete me :) I'm used for auto-generation menu items --}}
 
             {{--<li class="nav-title">E-shop</li>--}}

@@ -273,11 +273,4 @@ class OrdersController extends Controller
             'index' => $index
         ]);
     }
-
-    public function export(Request $request){
-        $orderStatus = $request->post('order_status',Order::PENDING_DELIVERY);
-        $orders = Order::where(['order_status' => $orderStatus, 'status' => Order::STATUS_ACTIVE])->get()->toArray();
-
-        return $orders;
-    }
 }
