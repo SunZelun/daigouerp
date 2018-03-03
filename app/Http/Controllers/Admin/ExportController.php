@@ -33,8 +33,8 @@ class ExportController extends Controller
                 ->join('customers', 'orders.customer_id', '=', 'customers.id')
                 ->where(['orders.order_status' => $orderStatus, 'orders.status' => Order::STATUS_ACTIVE])
                 ->orderBy('customers.name',SORT_ASC)
-                ->get()
-                ->toArray();
+                ->get();
+            $orders = $orders->sortBy('customer.name')->toArray();
             return view('admin.export.components.order_table', ['orders' => $orders]);
         }
 
