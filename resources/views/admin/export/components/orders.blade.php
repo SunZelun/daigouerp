@@ -1,7 +1,16 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+</head>
+
+<body>
+
 <table class="table">
     <tr>
         <th>S/N</th>
-        <th>客户姓名</th>
+        <th>{{ '客户姓名' }}</th>
         <th>微信</th>
         <th>订单详情</th>
         <th>邮寄地址</th>
@@ -29,3 +38,6 @@
     @endif
     </tbody>
 </table>
+</body>
+
+</html>
