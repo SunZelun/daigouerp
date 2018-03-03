@@ -122,6 +122,39 @@ class CustomersController extends Controller
     }
 
     /**
+     * Reuse address key
+     * @param $customer
+     * @param $addresses
+     * @return bool
+     */
+    private function handleAddresses($customer, $addresses){
+        if (!$customer){
+            return false;
+        }
+
+        $currentAddresses = $customer->addresses;
+
+        if (!empty($currentAddresses)){
+            foreach ($currentAddresses as $key => $ca){
+                if (isset($addresses[$key])){
+                    $addresses[$key]['customer_id'] = $customer->id;
+                    $ca->update($addresses[$key]);
+                    unset($addresses[$key]);
+                }
+            }
+        }
+
+        if (!empty($addresses)){
+            foreach ($addresses as $address){
+                $address['customer_id'] = $customer->id;
+                CustomerAddress::create($address);
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  UpdateCustomer $request
@@ -139,14 +172,7 @@ class CustomersController extends Controller
 
         //set address model
         if ($customer){
-            $customer->addresses()->delete();
-            
-            if($request->input('addresses') && !empty($request->input('addresses'))) {
-                foreach($request->input('addresses') as $address){
-                    $address['customer_id'] = $customer->id;
-                    CustomerAddress::create($address);
-                }
-            }
+            $this->handleAddresses($customer, $request->input('addresses'));
         }
 
         if ($request->ajax()) {
