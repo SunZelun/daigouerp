@@ -28,9 +28,10 @@
     </tr>
     <tbody>
     @if(!empty($orders))
-        @foreach($orders as $key => $order)
+        <?php $key = 1; ?>
+        @foreach($orders as $order)
             <tr>
-                <td>{{ ++$key }}</td>
+                <td>{{ $key }}</td>
                 <td>{{ isset($order['customer']['name']) ? $order['customer']['name'] : '-' }}</td>
                 <td>{{ isset($order['customer']['wechat_name']) ? $order['customer']['wechat_name'] : '-' }}</td>
                 <td>
@@ -45,6 +46,7 @@
                     {{ isset($order['address']) && !empty($order['address']) ? $order['address']['address'].' '.$order['address']['contact_person'].' '.$order['address']['contact_number'].' '.$order['address']['remarks'] : '-' }}
                 </td>
             </tr>
+            <?php $key++; ?>
         @endforeach
     @endif
     </tbody>

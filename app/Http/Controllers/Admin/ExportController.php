@@ -69,8 +69,9 @@ class ExportController extends Controller
                         ));
 
                         if (!empty($orders)){
-                            foreach ($orders as $key => $order){
-                                $index = 2 + $key;
+                            $key = 1;
+                            foreach ($orders as $order){
+                                $index = 1 + $key;
                                 $customerName = $order->customer ? $order->customer->name : '-';
                                 $wechatName = $order->customer ? $order->customer->wechat_name : '-';
                                 $productString = '';
@@ -84,8 +85,9 @@ class ExportController extends Controller
                                 $address = $order->address ? $order->address->address.' '.$order->address->contact_person.' '.$order->address->contact_number : '-';
                                 $contactRemarks = $order->address && !empty($order->address->remarks) ? '('.$order->address->remarks.')' : '';
                                 $sheet->row($index, array(
-                                    ++$key, $customerName, $wechatName, $productString, $address.$contactRemarks
+                                    $key, $customerName, $wechatName, $productString, $address.$contactRemarks
                                 ));
+                                $key++;
                             }
                         }
                     });
