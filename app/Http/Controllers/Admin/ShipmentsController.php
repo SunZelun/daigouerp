@@ -79,7 +79,9 @@ class ShipmentsController extends Controller
         $overseaOrders = Order::with(['customer' => function($query){
             $query->select(['name', 'wechat_name', 'id']);
         }, 'products.detail.brand'])->select(['id', 'customer_id', 'remarks', 'order_date'])->where(['status' => Order::STATUS_ACTIVE, 'user_id' => Auth::id(), 'order_status' => Order::PENDING_DELIVERY])->get();
-        $domeOrders = Order::with('customer')->where(['status' => Order::STATUS_ACTIVE, 'user_id' => Auth::id(), 'order_status' => Order::IN_WAREHOUSE])->get();
+        $domeOrders = Order::with(['customer' => function($query){
+            $query->select(['name', 'wechat_name', 'id']);
+        }, 'products.detail.brand'])->where(['status' => Order::STATUS_ACTIVE, 'user_id' => Auth::id(), 'order_status' => Order::IN_WAREHOUSE])->get();
 
         $shipmentTypes = [];
         $shipmentStatus = [];
@@ -168,7 +170,9 @@ class ShipmentsController extends Controller
         $overseaOrders = Order::with(['customer' => function($query){
             $query->select(['name', 'wechat_name', 'id']);
         }, 'products.detail.brand'])->select(['id', 'customer_id', 'remarks'])->where(['status' => Order::STATUS_ACTIVE, 'user_id' => Auth::id(), 'order_status' => Order::PENDING_DELIVERY])->get();
-        $domeOrders = Order::with('customer')->where(['status' => Order::STATUS_ACTIVE, 'user_id' => Auth::id(), 'order_status' => Order::IN_WAREHOUSE])->get();
+        $domeOrders = Order::with(['customer' => function($query){
+            $query->select(['name', 'wechat_name', 'id']);
+        }, 'products.detail.brand'])->where(['status' => Order::STATUS_ACTIVE, 'user_id' => Auth::id(), 'order_status' => Order::IN_WAREHOUSE])->get();
 
         $shipmentTypes = [];
         $shipmentStatus = [];
