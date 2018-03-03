@@ -29,7 +29,12 @@ class ExportController extends Controller
 
         if ($type == 'order'){
             $orderStatus = $request->post('order_status',Order::PENDING_DELIVERY);
-            $orders = Order::with(['products.detail', 'customer', 'address'])->where(['order_status' => $orderStatus, 'status' => Order::STATUS_ACTIVE])->get()->toArray();
+            $orders = Order::with(['products.detail', 'customer', 'address'])
+                ->join('customers', 'orders.customer_id', '=', 'customers.id')
+                ->where(['orders.order_status' => $orderStatus, 'orders.status' => Order::STATUS_ACTIVE])
+                ->orderBy('customers.name',SORT_ASC)
+                ->get()
+                ->toArray();
             return view('admin.export.components.order_table', ['orders' => $orders]);
         }
 
@@ -47,7 +52,11 @@ class ExportController extends Controller
 
         if ($type == 'order'){
             $orderStatus = $request->get('order_status',Order::PENDING_DELIVERY);
-            $orders = Order::with(['products.detail', 'customer', 'address'])->where(['order_status' => $orderStatus, 'status' => Order::STATUS_ACTIVE])->get();
+            $orders = Order::with(['products.detail', 'customer', 'address'])
+                ->join('customers', 'orders.customer_id', '=', 'customers.id')
+                ->where(['orders.order_status' => $orderStatus, 'orders.status' => Order::STATUS_ACTIVE])
+                ->orderBy('customers.name',SORT_ASC)
+                ->get();
 
             if ($exportType == 'csv'){
                 return Excel::create('orders', function($excel) use ($orders) {
