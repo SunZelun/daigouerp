@@ -7,7 +7,7 @@ require_once "vendor/autoload.php";
 //    If you have modified your font directory set this
 //    variable appropriately.
 //$fontDir = "lib/fonts";
-//$fontDir = "storage/fonts";
+$fontDir = "storage/fonts";
 
 
 // *** DO NOT MODIFY BELOW THIS POINT ***

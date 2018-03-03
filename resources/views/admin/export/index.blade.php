@@ -53,7 +53,8 @@
                             <h2>Results</h2>
                         </div>
                         <div class="col-md-6">
-                            <a href="javascript:;" id="export-to-csv" class="btn btn-sm btn-primary pull-right">Export as Excel</a>
+                            <a href="javascript:;" id="export-to-csv" class="btn btn-sm btn-primary pull-right">Excel</a>
+                            <a href="javascript:;" id="export-to-pdf" class="btn btn-sm btn-warning pull-right">PDF</a>
                         </div>
                     </div>
                 </div>
@@ -89,6 +90,11 @@
 
         $('#export-to-csv').click(function () {
             window.open('/admin/export/csv?'+'type='+$('#type-selection').val()+'&order_status='+$('#order-status').val(), '_blank');
+            return false;
+        });
+
+        $('#export-to-pdf').click(function () {
+            window.open('/admin/export/csv?'+'type='+$('#type-selection').val()+'&order_status='+$('#order-status').val()+'&export_type=pdf', '_blank');
             return false;
         });
     </script>

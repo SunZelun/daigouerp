@@ -72,12 +72,21 @@
     'normal' => $rootDir . '/lib/fonts/DejaVuSansMono',
   ),
   'dejavu serif' => array(
-    'bold' => $rootDir . '/lib/fonts/Msyh',
-    'bold_italic' => $rootDir . '/lib/fonts/Msyh',
-    'italic' => $rootDir . '/lib/fonts/Msyh',
-    'normal' => $rootDir . '/lib/fonts/Msyh',
+    'bold' => $rootDir . '/lib/fonts/DejaVuSerif-Bold',
+    'bold_italic' => $rootDir . '/lib/fonts/DejaVuSerif-BoldItalic',
+    'italic' => $rootDir . '/lib/fonts/DejaVuSerif-Italic',
+    'normal' => $rootDir . '/lib/fonts/DejaVuSerif',
+  ),
+  'droid' => array(
+    'normal' => $rootDir . '/lib/fonts/DroidSansFallback',
+    'bold' => $rootDir . '/lib/fonts/DroidSansFallback',
+    'italic' => $rootDir . '/lib/fonts/DroidSansFallback',
+    'bold_italic' => $rootDir . '/lib/fonts/DroidSansFallback',
   ),
   'simhei' => array(
-    'normal' => $fontDir . '/9fa6e8f798ae6bfeafd7b8404dcfb2ba',
+    'normal' => $fontDir . '/simhei',
+    'bold' => $fontDir . '/simhei',
+    'italic' => $fontDir . '/simhei',
+    'bold_italic' => $fontDir . '/simhei',
   ),
 ) ?>
