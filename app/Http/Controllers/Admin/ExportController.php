@@ -30,9 +30,7 @@ class ExportController extends Controller
         if ($type == 'order'){
             $orderStatus = $request->post('order_status',Order::PENDING_DELIVERY);
             $orders = Order::with(['products.detail', 'customer', 'address'])
-                ->join('customers', 'orders.customer_id', '=', 'customers.id')
                 ->where(['orders.order_status' => $orderStatus, 'orders.status' => Order::STATUS_ACTIVE])
-                ->orderBy('customers.name',SORT_ASC)
                 ->get();
             $orders = $orders->sortBy('customer.name')->toArray();
             return view('admin.export.components.order_table', ['orders' => $orders]);
