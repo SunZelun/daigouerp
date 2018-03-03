@@ -7,6 +7,11 @@
         table {
             font-family:  'simhei';
             font-size:  12px;
+            border-collapse: collapse;
+        }
+
+        table, td, th {
+            border: 1px solid gainsboro;
         }
     </style>
 </head>
