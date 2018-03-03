@@ -3,7 +3,12 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-    <style>body { font-family:  'simhei'; } </style>
+    <style>
+        table {
+            font-family:  'simhei';
+            font-size:  12px;
+        }
+    </style>
 </head>
 
 <body>
