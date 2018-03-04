@@ -107,3 +107,13 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/admin/export',                              'Admin\ExportController@export');
     Route::get('/admin/export/csv',                              'Admin\ExportController@exportToCsv');
 });
+
+/* Auto-generated admin routes */
+Route::middleware(['admin'])->group(function () {
+    Route::get('/admin/miscs',                                  'Admin\MiscsController@index');
+    Route::get('/admin/miscs/create',                           'Admin\MiscsController@create');
+    Route::post('/admin/miscs',                                 'Admin\MiscsController@store');
+    Route::get('/admin/miscs/{misc}/edit',                      'Admin\MiscsController@edit')->name('admin/miscs/edit');
+    Route::post('/admin/miscs/{misc}',                          'Admin\MiscsController@update')->name('admin/miscs/update');
+    Route::delete('/admin/miscs/{misc}',                        'Admin\MiscsController@destroy')->name('admin/miscs/destroy');
+});

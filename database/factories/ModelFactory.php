@@ -151,3 +151,21 @@ $factory->define(App\Models\Shipment::class, function (Faker\Generator $faker) {
     ];
 });
 
+/** @var  \Illuminate\Database\Eloquent\Factory $factory */
+$factory->define(App\Models\Misc::class, function (Faker\Generator $faker) {
+    return [
+        'type' => $faker->randomNumber(5),
+        'date' => $faker->date(),
+        'cost_in_rmb' => $faker->sentence,
+        'cost_in_sgd' => $faker->sentence,
+        'income_in_rmb' => $faker->sentence,
+        'income_in_sgd' => $faker->sentence,
+        'remarks' => $faker->text(),
+        'status' => $faker->boolean(),
+        'created_at' => $faker->dateTime,
+        'updated_at' => $faker->dateTime,
+        
+        
+    ];
+});
+

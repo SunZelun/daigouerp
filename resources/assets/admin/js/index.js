@@ -7,3 +7,4 @@ import './product';
 import './order';
 import './sys-code';
 import './shipment';
+import './misc';

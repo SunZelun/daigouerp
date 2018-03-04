@@ -158,5 +158,28 @@ return [
         ],
     ],
 
+    'misc' => [
+        'title' => 'Miscs',
+
+        'actions' => [
+            'index' => 'Miscs',
+            'create' => 'New Misc',
+            'edit' => 'Edit :name',
+        ],
+
+        'columns' => [
+            'id' => "ID",
+            'type' => "Type",
+            'date' => "Date",
+            'cost_in_rmb' => "Cost in rmb",
+            'cost_in_sgd' => "Cost in sgd",
+            'income_in_rmb' => "Income in rmb",
+            'income_in_sgd' => "Income in sgd",
+            'remarks' => "Remarks",
+            'status' => "Status",
+            
+        ],
+    ],
+
     // Do not delete me :) I'm used for auto-generation
 ];

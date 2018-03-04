@@ -9,6 +9,10 @@ class Shipment extends Model
 
     const TYPE_INTER = 1;
     const TYPE_DOME = 2;
+    const TYPE_LABELS = [
+        self::TYPE_INTER => "国际运输",
+        self::TYPE_DOME => "国内运输"
+    ];
 
     const SHIPMENT_SHIPPED = 10;
     const SHIPMENT_DELIVERED = 20;
