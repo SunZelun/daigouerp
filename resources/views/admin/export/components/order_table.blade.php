@@ -1,4 +1,4 @@
-<table class="table">
+<table class="table text-left">
     <tr>
         <th>S/N</th>
         <th>{{ '客户姓名' }}</th>

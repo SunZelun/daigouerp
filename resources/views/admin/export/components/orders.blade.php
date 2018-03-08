@@ -6,7 +6,7 @@
     <style>
         table {
             font-family:  'simhei';
-            font-size:  12px;
+            font-size:  10px;
             border-collapse: collapse;
         }
 
