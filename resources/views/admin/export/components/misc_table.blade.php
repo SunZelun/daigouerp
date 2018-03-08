@@ -8,6 +8,7 @@
         <th>收入(RMB)</th>
         <th>收入(SGD)</th>
         <th>备注</th>
+        <th></th>
     </tr>
     <tbody>
     @if(!empty($miscs))
@@ -21,6 +22,7 @@
                 <td>{{ $misc['income_in_rmb'] }}</td>
                 <td>{{ $misc['income_in_sgd'] }}</td>
                 <td>{{ $misc['remarks'] }}</td>
+                <td></td>
             </tr>
         @endforeach
     @endif
