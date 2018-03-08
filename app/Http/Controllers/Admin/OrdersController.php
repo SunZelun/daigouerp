@@ -159,9 +159,10 @@ class OrdersController extends Controller
     {
         $order = Order::with(['products.detail', 'customer', 'address'])->where(['id' => $order->id])->first();
         $this->authorize('admin.order.show', $order);
+        $rate = session('rate') ? session('rate') : 4.5;
         $order->order_status_name = isset(Order::ORDER_STATUS_LABELS[$order->order_status]) ? Order::ORDER_STATUS_LABELS[$order->order_status] : '-';
-        $order->total_profit_in_rmb = round($order->profit_in_rmb + $order->profit_in_sgd * session('rate'),2);
-        $order->total_profit_in_sgd = round($order->profit_in_rmb / session('rate') + $order->profit_in_sgd,2);
+        $order->total_profit_in_rmb = round($order->profit_in_rmb + $order->profit_in_sgd * $rate,2);
+        $order->total_profit_in_sgd = round($order->profit_in_rmb / $rate + $order->profit_in_sgd,2);
 
         return view('admin.order.show', [
             'order' => $order
