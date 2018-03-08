@@ -5,6 +5,7 @@
         <th>微信</th>
         <th>订单详情</th>
         <th>邮寄地址</th>
+        <th></th>
     </tr>
     <tbody>
     @if(!empty($orders))
@@ -24,6 +25,7 @@
                 <td>
                     {{ isset($order['address']) && !empty($order['address']) ? $order['address']['address'].' '.$order['address']['contact_person'].' '.$order['address']['contact_number'].' '.$order['address']['remarks'] : '-' }}
                 </td>
+                <td></td>
             </tr>
         @endforeach
     @endif
