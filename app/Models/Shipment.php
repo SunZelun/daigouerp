@@ -17,6 +17,11 @@ class Shipment extends Model
     const SHIPMENT_SHIPPED = 10;
     const SHIPMENT_DELIVERED = 20;
 
+    const SHIPMENT_STATUS_LABELS = [
+        self::SHIPMENT_SHIPPED => "已发货",
+        self::SHIPMENT_DELIVERED => "已送达"
+    ];
+
     protected $fillable = [
         "ship_date",
         "type",
@@ -28,7 +33,7 @@ class Shipment extends Model
         "remarks",
         "shipment_status",
         "status",
-    
+        "user_id",
     ];
     
     protected $hidden = [

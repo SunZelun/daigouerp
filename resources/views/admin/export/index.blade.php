@@ -101,12 +101,12 @@
         });
 
         $('#export-to-csv').click(function () {
-            window.open('/admin/export/csv?'+'type='+$('#type-selection').val()+'&order_status='+$('#order-status').val(), '_blank');
+            window.open('/admin/export/csv?'+'type='+$('#type-selection').val()+'&order_status='+$('#order-status').val()+'&shipment_type='+$('#shipment-status').val(), '_blank');
             return false;
         });
 
         $('#export-to-pdf').click(function () {
-            window.open('/admin/export/csv?'+'type='+$('#type-selection').val()+'&order_status='+$('#order-status').val()+'&export_type=pdf', '_blank');
+            window.open('/admin/export/csv?'+'type='+$('#type-selection').val()+'&order_status='+$('#order-status').val()+'&shipment_type='+$('#shipment-status').val()+'&export_type=pdf', '_blank');
             return false;
         });
 

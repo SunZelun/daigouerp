@@ -27,7 +27,9 @@ class ShipmentsController extends Controller
     public function index(IndexShipment $request)
     {
         // create and AdminListing instance for a specific model and
-        $data = AdminListing::create(Shipment::class)->processRequestAndGet(
+        $data = AdminListing::create(Shipment::class)->modifyQuery(function($query) use($request){
+            $query->where('user_id', Auth::id());
+        })->processRequestAndGet(
             // pass the request with params
             $request,
 
@@ -109,6 +111,7 @@ class ShipmentsController extends Controller
     {
         // Sanitize input
         $sanitized = $request->validated();
+        $sanitized['user_id'] = Auth::id();
 
         // Store the Shipment
         $shipment = Shipment::create($sanitized);
@@ -156,7 +159,7 @@ class ShipmentsController extends Controller
      */
     public function edit(Shipment $shipment)
     {
-        $shipment = Shipment::with(['orders.customer', 'orders.products.detail.brand'])->where(['id' => $shipment->id])->first();
+        $shipment = Shipment::with(['orders.customer', 'orders.products.detail.brand'])->where(['id' => $shipment->id, 'user_id' => Auth::id()])->first();
         $this->authorize('admin.shipment.edit', $shipment);
 
         $orderIds = [];
@@ -233,6 +236,7 @@ class ShipmentsController extends Controller
     {
         // Sanitize input
         $sanitized = $request->validated();
+        $sanitized['user_id'] = Auth::id();
 
         DB::beginTransaction();
 
