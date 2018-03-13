@@ -22,6 +22,11 @@ class MiscsController extends Controller
      */
     public function index(IndexMisc $request)
     {
+        $data = $request->all();
+        $data['orderBy'] = !empty($data['orderBy']) ? $data['orderBy'] : 'miscs.updated_at';
+        $data['orderDirection'] = !empty($data['orderDirection']) ? $data['orderDirection'] : 'desc';
+        $request->merge($data);
+
         // create and AdminListing instance for a specific model and
         $data = AdminListing::create(Misc::class)->modifyQuery(function($query) use($request){
             $query->join('sys_codes', function ($join) {

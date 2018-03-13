@@ -7,17 +7,6 @@
     <div class="container-xl">
         <div class="row col-md-12">
             <div class="col-sm-6 col-lg-3">
-                <div class="social-box twitter">
-                    <i style="font-size: 30px;"><small>No. of Orders</small></i>
-                    <ul>
-                        <li style="width: 100%; border-right: none;">
-                            <strong>{{ count($activeOrders) }}</strong>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="col-sm-6 col-lg-3">
                 <div class="social-box linkedin">
                     <i style="font-size: 30px;"><small>Cost</small></i>
                     <ul>
@@ -52,6 +41,18 @@
                     </ul>
                 </div>
             </div>
+
+            <div class="col-sm-6 col-lg-3">
+                <div class="social-box facebook">
+                    <i style="font-size: 30px;"><small>Profit(With Misc)</small></i>
+                    <ul>
+                        <li style="width: 100%; border-right: none;">
+                            <b>RMB {{ $summary['rmbInHand'] }} / SGD {{ $summary['sgdInHand'] }}</b><br>
+                            <span>In Total RMB {{ $summary['total_rmb_in_hand'] }} &asymp; SGD {{ $summary['total_sgd_in_hand'] }}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
 
         <div class="row col-md-12">
@@ -65,12 +66,24 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-lg-4 col-sm-6">
                 <div class="card">
                     <div class="card-body text-center">
                         <div class="text-muted small text-uppercase font-weight-bold">Sales Distribution By Brand</div>
                         <div class="chart-wrapper">
                             <canvas id="brandChart" width="100" height="50"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-sm-6">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <div class="text-muted small text-uppercase font-weight-bold">Sales Trend for Past 15 Days</div>
+                        <div class="chart-wrapper">
+                            <canvas id="lineChart" width="100" height="50"></canvas>
                         </div>
                     </div>
                 </div>
@@ -163,6 +176,21 @@
                                 @endif
                             </ul>
                         </div>
+
+                        <div class="col-sm-6 col-lg-4">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="callout callout-danger">
+                                        <small class="text-muted">Total Orders</small>
+                                        <br>
+                                        <strong class="h4">{{ count($activeOrders) }}</strong>
+                                        <div class="chart-wrapper"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                                            <canvas id="sparkline-chart-2" width="99" height="29" class="chartjs-render-monitor" style="display: block; width: 99px; height: 29px;"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -171,7 +199,8 @@
 @endsection
 
 @section('bottom-scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    <script src="js/moment.js"></script>
+    <script src="js/chart.min.js"></script>
     <script>
         var default_colors = [
             '#ff6384',
@@ -279,5 +308,47 @@
         var categoryChart = new Chart(ctx, pieConfig);
         var barChart = new Chart(bar, barConfig);
 
+        dates = [];
+        for (var i = 0; i < 15; i++){
+            dates.push(moment().subtract(i, 'd').toDate().toDateString());
+        }
+
+        var config = {
+            type: 'line',
+            data: {
+                labels: dates,
+                datasets: [{
+                    fill: false,
+                    data: {!! json_encode($salesByDates) !!},
+                    label: 'No. of Orders',
+                    borderColor: "rgba(220,20,20,1)",
+                    backgroundColor: "rgba(220,20,20,0.5)",
+                    lineTension: 0
+                }]
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                        type: "time",
+                        autoSkip: false,
+                        time: {
+                            unit: 'day',
+                            round: 'day',
+                            displayFormats: {
+                                day: 'YYYY-MM-DD'
+                            }
+                        }
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        }
+
+        var lineChart = document.getElementById("lineChart").getContext("2d");
+        window.myLine = new Chart(lineChart, config);
     </script>
 @endsection

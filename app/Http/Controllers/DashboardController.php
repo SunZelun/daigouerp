@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\Misc;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Shipment;
@@ -19,6 +20,13 @@ class DashboardController extends Controller
         }])->where(['user_id' => Auth::id(), 'status' => Order::STATUS_ACTIVE])->get();
         $activeCustomers = Customer::where(['status' => Customer::STATUS_ACTIVE, 'user_id' => Auth::id()])->count();
         $activeProducts = Product::with(['category', 'brand'])->where(['status' => Product::STATUS_ACTIVE, 'user_id' => Auth::id()])->get();
+        $misc = Misc::where(['status' => Misc::STATUS_ACTIVE])->get();
+
+        //past 30 days
+        $dates = [];
+        for($i = 0; $i < 15; $i++){
+            $dates[date("Y-m-d", strtotime('-'. $i .' days'))] = 0;
+        }
 
         $totalCostInRmb = 0;
         $totalCostInSgd = 0;
@@ -42,6 +50,12 @@ class DashboardController extends Controller
                 $totalRevInSgd += doubleval($activeOrder->revenue_in_sgd);
                 $totalProfitInRmb += doubleval($activeOrder->profit_in_rmb);
                 $totalProfitInSgd += doubleval($activeOrder->profit_in_sgd);
+                $orderDate = date("Y-m-d", strtotime($activeOrder->order_date));
+
+                //group order by date
+                if (isset($dates[$orderDate])){
+                    $dates[$orderDate]++;
+                }
 
                 if ($activeOrder->products){
                     foreach ($activeOrder->products as $product){
@@ -116,6 +130,19 @@ class DashboardController extends Controller
         $totalProfitInRmb -= $totalShipmentCostInRmb;
         $totalProfitInSgd -= $totalShipmentCostInSgd;
 
+        //summarise misc
+        $rmbInHand = $totalProfitInRmb;
+        $sgdInHand = $totalProfitInSgd;
+
+        if ($misc && !empty($misc)){
+            foreach ($misc as $m){
+                $rmbInHand += $m->income_in_rmb;
+                $rmbInHand -= $m->cost_in_rmb;
+                $sgdInHand += $m->income_in_sgd;
+                $sgdInHand -= $m->cost_in_sgd;
+            }
+        }
+
         $summary = [
             'cost_in_rmb' => $totalCostInRmb,
             'cost_in_sgd' => $totalCostInSgd,
@@ -124,12 +151,16 @@ class DashboardController extends Controller
             'profit_in_rmb' => $totalProfitInRmb,
             'profit_in_sgd' => $totalProfitInSgd,
             'products_sold' => $productsSold,
+            'rmbInHand' => $rmbInHand,
+            'sgdInHand' => $sgdInHand,
             'total_revenue_in_rmb' => round($totalRevInRmb + $totalRevInSgd * $rate, 2),
             'total_revenue_in_sgd' => round($totalRevInRmb / $rate + $totalRevInSgd, 2),
             'total_profit_in_rmb' => round($totalProfitInRmb + $totalProfitInSgd * $rate, 2),
             'total_profit_in_sgd' => round($totalProfitInRmb / $rate + $totalProfitInSgd, 2),
             'total_cost_in_rmb' => round($totalCostInRmb + $totalCostInSgd * $rate, 2),
             'total_cost_in_sgd' => round($totalCostInRmb / $rate + $totalCostInSgd, 2),
+            'total_rmb_in_hand' => round($sgdInHand * $rate + $rmbInHand, 2),
+            'total_sgd_in_hand' => round($rmbInHand / $rate + $sgdInHand, 2),
         ];
 
         $totalNumberOfProducts = count($activeProducts);
@@ -151,6 +182,7 @@ class DashboardController extends Controller
             'buyerBreakdown' => $buyerBreakdown,
             'salesByCategories' => $categories,
             'salesByBrands' => $brands,
+            'salesByDates' => array_values($dates),
         ]);
     }
 
