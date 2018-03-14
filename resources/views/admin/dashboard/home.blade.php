@@ -114,23 +114,24 @@
                             <hr class="mt-0">
                             <label style="color: black;">Top Buyers</label>
                             <ul class="icons-list">
+                                <?php $buyerBreakdown = array_values($buyerBreakdown); ?>
                                 @if(!empty($buyerBreakdown))
                                     @foreach($buyerBreakdown as $buyerKey => $buyer)
                                         <li>
                                             @switch($buyerKey)
-                                                @case("1")
+                                                @case(0)
                                                     <?php $className = "bg-danger" ?>
                                                     @break
-                                                @case("2")
+                                                @case(1)
                                                     <?php $className = "bg-warning" ?>
                                                     @break
-                                                @case("3")
+                                                @case(2)
                                                     <?php $className = "bg-success" ?>
                                                     @break
                                                 @default
                                                     <?php $className = "bg-primary" ?>
                                             @endswitch
-                                            <i class="{{ $className }}">{{ $buyerKey }}</i>
+                                            <i class="{{ $className }}">{{ ++$buyerKey }}</i>
                                             <div class="desc">
                                                 <div class="title">{{ $buyer['name'] }}</div>
                                             </div>
