@@ -114,7 +114,6 @@
                             <hr class="mt-0">
                             <label style="color: black;">Top Buyers</label>
                             <ul class="icons-list">
-                                <?php $buyerBreakdown = array_map('array_values', $buyerBreakdown); ?>
                                 @if(!empty($buyerBreakdown))
                                     @foreach($buyerBreakdown as $buyerKey => $buyer)
                                         <li>
