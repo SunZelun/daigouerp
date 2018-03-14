@@ -115,9 +115,22 @@
                             <label style="color: black;">Top Buyers</label>
                             <ul class="icons-list">
                                 @if(!empty($buyerBreakdown))
-                                    @foreach($buyerBreakdown as $buyer)
+                                    @foreach($buyerBreakdown as $buyerKey => $buyer)
                                         <li>
-                                            <i class="icon-present bg-primary"></i>
+                                            @switch($buyerKey)
+                                                @case("1")
+                                                    <?php $className = "bg-danger" ?>
+                                                    @break
+                                                @case("2")
+                                                    <?php $className = "bg-warning" ?>
+                                                    @break
+                                                @case("3")
+                                                    <?php $className = "bg-success" ?>
+                                                    @break
+                                                @default
+                                                    <?php $className = "bg-primary" ?>
+                                            @endswitch
+                                            <i class="{{ $className }}">{{ $buyerKey }}</i>
                                             <div class="desc">
                                                 <div class="title">{{ $buyer['name'] }}</div>
                                             </div>
