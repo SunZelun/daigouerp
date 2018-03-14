@@ -199,8 +199,8 @@
 @endsection
 
 @section('bottom-scripts')
-    <script src="js/moment.js"></script>
-    <script src="js/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js"></script>
     <script>
         var default_colors = [
             '#ff6384',
