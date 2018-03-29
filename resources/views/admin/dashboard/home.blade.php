@@ -200,6 +200,39 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <hr class="mt-0">
+                            <label style="color: black;">Top 5 Buyers ({{ $currentQuarterStart.' to '.$currentQuarterEnd }})</label>
+                            <ul class="icons-list">
+                                <?php $currentQuarterBuyerBreakDown = array_values($currentQuarterBuyerBreakDown); ?>
+                                @if(!empty($currentQuarterBuyerBreakDown))
+                                    @foreach($currentQuarterBuyerBreakDown as $buyerKeyTM => $buyerTM)
+                                        <li>
+                                            @switch($buyerKeyTM)
+                                                @case(0)
+                                                <?php $className = "bg-danger" ?>
+                                                @break
+                                                @case(1)
+                                                <?php $className = "bg-warning" ?>
+                                                @break
+                                                @case(2)
+                                                <?php $className = "bg-success" ?>
+                                                @break
+                                                @default
+                                                <?php $className = "bg-primary" ?>
+                                            @endswitch
+                                            <i class="{{ $className }}">{{ ++$buyerKeyTM }}</i>
+                                            <div class="desc">
+                                                <div class="title">{{ $buyerTM['name'] }}</div>
+                                            </div>
+                                            <div class="value">
+                                                <div class="small text-muted">SGD {{ $buyerTM['revenue_in_sgd'] }}</div>
+                                                <strong>RMB {{ $buyerTM['revenue_in_rmb'] }}</strong>
+                                            </div>
+                                        </li>
+                                    @endforeach
+                                @endif
+                            </ul>
                         </div>
                     </div>
                 </div>

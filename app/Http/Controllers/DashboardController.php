@@ -7,6 +7,7 @@ use App\Models\Misc;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Shipment;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use anlutro\cURL\cURL;
@@ -22,7 +23,11 @@ class DashboardController extends Controller
         $activeProducts = Product::with(['category', 'brand'])->where(['status' => Product::STATUS_ACTIVE, 'user_id' => Auth::id()])->get();
         $misc = Misc::where(['status' => Misc::STATUS_ACTIVE])->get();
 
-        //past 30 days
+        $thisQuarterBuyerBreakDown = [];
+        $currentQuarterStart = $this->GetDateOfQuarter()['start']->format('Y-m-d');
+        $currentQuarterEnd = $this->GetDateOfQuarter()['end']->format('Y-m-d');
+
+        //past 15 days
         $dates = [];
         for($i = 0; $i < 15; $i++){
             $dates[date("Y-m-d", strtotime('-'. $i .' days'))] = 0;
@@ -101,6 +106,20 @@ class DashboardController extends Controller
                     $buyerBreakdown[$activeOrder->customer_id]['revenue_in_sgd'] += $activeOrder->revenue_in_sgd;
                 }
 
+                if ($orderDate >= $currentQuarterStart && $orderDate <= $currentQuarterEnd){
+                    //group sales based on customer
+                    if (empty($thisQuarterBuyerBreakDown) || !in_array($activeOrder->customer_id, array_keys($thisQuarterBuyerBreakDown))){
+                        $thisQuarterBuyerBreakDown[$activeOrder->customer_id] = [
+                            'name' => $activeOrder->customer->name,
+                            'revenue_in_rmb' => $activeOrder->revenue_in_rmb,
+                            'revenue_in_sgd' => $activeOrder->revenue_in_sgd
+                        ];
+                    } else {
+                        $thisQuarterBuyerBreakDown[$activeOrder->customer_id]['revenue_in_rmb'] += $activeOrder->revenue_in_rmb;
+                        $thisQuarterBuyerBreakDown[$activeOrder->customer_id]['revenue_in_sgd'] += $activeOrder->revenue_in_sgd;
+                    }
+                }
+
                 //retrieve shipments
                 if ($activeOrder->shipments){
                     foreach ($activeOrder->shipments as $shipment){
@@ -166,11 +185,14 @@ class DashboardController extends Controller
         $totalNumberOfProducts = count($activeProducts);
         $salesBreakdown = collect($salesBreakdown)->sortBy('quantity')->reverse()->take(10)->toArray();
         $buyerBreakdown = collect($buyerBreakdown)->sortBy('revenue_in_rmb')->reverse()->take(10)->toArray();
+        $thisQuarterBuyerBreakDown = collect($thisQuarterBuyerBreakDown)->sortBy('revenue_in_rmb')->reverse()->take(5)->toArray();
         $activeProducts = collect($activeProducts)->sortBy('quantity')->reverse()->take(10)->toArray();
         arsort($categories);
         arsort($brands);
         $categories = count($categories) >= 5 ? array_slice($categories, 0, 5) : $categories;
         $brands = count($brands) >= 5 ? array_slice($brands, 0, 5) : $brands;
+        $currentQuarterStart = $this->GetDateOfQuarter()['start']->format('m/d');
+        $currentQuarterEnd = $this->GetDateOfQuarter()['end']->format('m/d');
 
         return view('admin.dashboard.home', [
             'summary' => $summary,
@@ -180,6 +202,9 @@ class DashboardController extends Controller
             'totalNumberOfProducts' => $totalNumberOfProducts,
             'salesBreakdown' => $salesBreakdown,
             'buyerBreakdown' => $buyerBreakdown,
+            'currentQuarterBuyerBreakDown' => $thisQuarterBuyerBreakDown,
+            'currentQuarterStart' => $currentQuarterStart,
+            'currentQuarterEnd' => $currentQuarterEnd,
             'salesByCategories' => $categories,
             'salesByBrands' => $brands,
             'salesByDates' => array_values($dates),
@@ -200,5 +225,69 @@ class DashboardController extends Controller
         }
 
         return session('rate');
+    }
+
+
+    /**
+     * Compute the start and end date of some fixed o relative quarter in a specific year.
+     * @param mixed $quarter  Integer from 1 to 4 or relative string value:
+     *                        'this', 'current', 'previous', 'first' or 'last'.
+     *                        'this' is equivalent to 'current'. Any other value
+     *                        will be ignored and instead current quarter will be used.
+     *                        Default value 'current'. Particulary, 'previous' value
+     *                        only make sense with current year so if you use it with
+     *                        other year like: get_dates_of_quarter('previous', 1990)
+     *                        the year will be ignored and instead the current year
+     *                        will be used.
+     * @param int $year       Year of the quarter. Any wrong value will be ignored and
+     *                        instead the current year will be used.
+     *                        Default value null (current year).
+     * @param string $format  String to format returned dates
+     * @return array          Array with two elements (keys): start and end date.
+     */
+    public function GetDateOfQuarter($quarter = 'current', $year = null, $format = null)
+    {
+        if ( !is_int($year) ) {
+            $year = (new DateTime)->format('Y');
+        }
+        $current_quarter = ceil((new DateTime)->format('n') / 3);
+        switch (  strtolower($quarter) ) {
+            case 'this':
+            case 'current':
+                $quarter = ceil((new DateTime)->format('n') / 3);
+                break;
+
+            case 'previous':
+                $year = (new DateTime)->format('Y');
+                if ($current_quarter == 1) {
+                    $quarter = 4;
+                    $year--;
+                } else {
+                    $quarter =  $current_quarter - 1;
+                }
+                break;
+
+            case 'first':
+                $quarter = 1;
+                break;
+
+            case 'last':
+                $quarter = 4;
+                break;
+
+            default:
+                $quarter = (!is_int($quarter) || $quarter < 1 || $quarter > 4) ? $current_quarter : $quarter;
+                break;
+        }
+        if ( $quarter === 'this' ) {
+            $quarter = ceil((new DateTime)->format('n') / 3);
+        }
+        $start = new DateTime($year.'-'.(3*$quarter-2).'-1 00:00:00');
+        $end = new DateTime($year.'-'.(3*$quarter).'-'.($quarter == 1 || $quarter == 4 ? 31 : 30) .' 23:59:59');
+
+        return array(
+            'start' => $format ? $start->format($format) : $start,
+            'end' => $format ? $end->format($format) : $end,
+        );
     }
 }
