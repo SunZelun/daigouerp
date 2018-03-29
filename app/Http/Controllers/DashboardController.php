@@ -27,6 +27,11 @@ class DashboardController extends Controller
         $currentQuarterStart = $this->GetDateOfQuarter()['start']->format('Y-m-d');
         $currentQuarterEnd = $this->GetDateOfQuarter()['end']->format('Y-m-d');
 
+        $currentMonth = date("n", time());
+        $currentHalfYearBuyerBreakDown = [];
+        $currentHalfYearStart = $currentMonth >= 7 ? date("Y-m-d", strtotime('July 1')) : date("Y-m-d", strtotime('Jan 1'));
+        $currentHalfYearEnd = $currentMonth >= 7 ? date("Y-m-d", strtotime('Dec 31')) : date("Y-m-d", strtotime('Jun 30'));
+
         //past 15 days
         $dates = [];
         for($i = 0; $i < 15; $i++){
@@ -120,6 +125,20 @@ class DashboardController extends Controller
                     }
                 }
 
+                if ($orderDate >= $currentHalfYearStart && $orderDate <= $currentQuarterEnd){
+                    //group sales based on customer
+                    if (empty($currentHalfYearBuyerBreakDown) || !in_array($activeOrder->customer_id, array_keys($currentHalfYearBuyerBreakDown))){
+                        $currentHalfYearBuyerBreakDown[$activeOrder->customer_id] = [
+                            'name' => $activeOrder->customer->name,
+                            'revenue_in_rmb' => $activeOrder->revenue_in_rmb,
+                            'revenue_in_sgd' => $activeOrder->revenue_in_sgd
+                        ];
+                    } else {
+                        $currentHalfYearBuyerBreakDown[$activeOrder->customer_id]['revenue_in_rmb'] += $activeOrder->revenue_in_rmb;
+                        $currentHalfYearBuyerBreakDown[$activeOrder->customer_id]['revenue_in_sgd'] += $activeOrder->revenue_in_sgd;
+                    }
+                }
+
                 //retrieve shipments
                 if ($activeOrder->shipments){
                     foreach ($activeOrder->shipments as $shipment){
@@ -186,6 +205,7 @@ class DashboardController extends Controller
         $salesBreakdown = collect($salesBreakdown)->sortBy('quantity')->reverse()->take(10)->toArray();
         $buyerBreakdown = collect($buyerBreakdown)->sortBy('revenue_in_rmb')->reverse()->take(10)->toArray();
         $thisQuarterBuyerBreakDown = collect($thisQuarterBuyerBreakDown)->sortBy('revenue_in_rmb')->reverse()->take(5)->toArray();
+        $currentHalfYearBuyerBreakDown = collect($currentHalfYearBuyerBreakDown)->sortBy('revenue_in_rmb')->reverse()->take(5)->toArray();
         $activeProducts = collect($activeProducts)->sortBy('quantity')->reverse()->take(10)->toArray();
         arsort($categories);
         arsort($brands);
@@ -193,6 +213,8 @@ class DashboardController extends Controller
         $brands = count($brands) >= 5 ? array_slice($brands, 0, 5) : $brands;
         $currentQuarterStart = $this->GetDateOfQuarter()['start']->format('m/d');
         $currentQuarterEnd = $this->GetDateOfQuarter()['end']->format('m/d');
+        $currentHalfYearStart = date("m/d", strtotime($currentHalfYearStart));
+        $currentHalfYearEnd = date("m/d", strtotime($currentHalfYearEnd));
 
         return view('admin.dashboard.home', [
             'summary' => $summary,
@@ -203,8 +225,11 @@ class DashboardController extends Controller
             'salesBreakdown' => $salesBreakdown,
             'buyerBreakdown' => $buyerBreakdown,
             'currentQuarterBuyerBreakDown' => $thisQuarterBuyerBreakDown,
+            'currentHalfYearBuyerBreakDown' => $currentHalfYearBuyerBreakDown,
             'currentQuarterStart' => $currentQuarterStart,
             'currentQuarterEnd' => $currentQuarterEnd,
+            'currentHalfYearStart' => $currentHalfYearStart,
+            'currentHalfYearEnd' => $currentHalfYearEnd,
             'salesByCategories' => $categories,
             'salesByBrands' => $brands,
             'salesByDates' => array_values($dates),
