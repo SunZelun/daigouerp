@@ -12,7 +12,6 @@
                     <ul>
                         <li style="width: 100%; border-right: none;">
                             <b>RMB {{ $summary['cost_in_rmb'] }} / SGD {{ $summary['cost_in_sgd'] }}</b><br>
-                            <span>In Total RMB {{ $summary['total_cost_in_rmb'] }} &asymp; SGD {{ $summary['total_cost_in_sgd'] }}</span>
                         </li>
                     </ul>
                 </div>
@@ -24,7 +23,6 @@
                     <ul>
                         <li style="width: 100%; border-right: none;">
                             <b>RMB {{ $summary['revenue_in_rmb'] }} / SGD {{ $summary['revenue_in_sgd'] }}</b><br>
-                            <span>In Total RMB {{ $summary['total_revenue_in_rmb'] }} &asymp; SGD {{ $summary['total_revenue_in_sgd'] }}</span>
                         </li>
                     </ul>
                 </div>
@@ -36,7 +34,6 @@
                     <ul>
                         <li style="width: 100%; border-right: none;">
                             <b>RMB {{ $summary['profit_in_rmb'] }} / SGD {{ $summary['profit_in_sgd'] }}</b><br>
-                            <span>In Total RMB {{ $summary['total_profit_in_rmb'] }} &asymp; SGD {{ $summary['total_profit_in_sgd'] }}</span>
                         </li>
                     </ul>
                 </div>
@@ -48,7 +45,6 @@
                     <ul>
                         <li style="width: 100%; border-right: none;">
                             <b>RMB {{ $summary['rmbInHand'] }} / SGD {{ $summary['sgdInHand'] }}</b><br>
-                            <span>In Total RMB {{ $summary['total_rmb_in_hand'] }} &asymp; SGD {{ $summary['total_sgd_in_hand'] }}</span>
                         </li>
                     </ul>
                 </div>
