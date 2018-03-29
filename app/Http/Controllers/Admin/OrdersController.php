@@ -49,7 +49,7 @@ class OrdersController extends Controller
             ['id', 'number_of_items_sold', 'order_date', 'customer_id', 'customer_address_id', 'cost_in_rmb', 'cost_in_sgd', 'revenue_in_rmb', 'revenue_in_sgd', 'profit_in_rmb', 'profit_in_sgd', 'remarks', 'status', 'order_status'],
 
             // set columns to searchIn
-            ['id', 'remarks', 'customers.name', 'sys_codes.name']
+            ['id', 'remarks', 'customers.name', 'customers.wechat_name', 'sys_codes.name']
         );
 
         $status = Order::ORDER_STATUS_LABELS;
@@ -58,7 +58,7 @@ class OrdersController extends Controller
         //append customer name to order
         if (!empty($data->items())){
             foreach($data->items() as &$order){
-                $order->customer_name = $order->customer ? $order->customer->name : '-';
+                $order->customer_name = $order->customer ? $order->customer->name.'-'.$order->customer->wechat_name : '-';
                 $order->total_cost_in_rmb = round($order->cost_in_rmb + $order->cost_in_sgd * $rate,2);
                 $order->total_cost_in_sgd = round($order->cost_in_rmb / $rate + $order->cost_in_sgd,2);
                 $order->total_rev_in_rmb = round($order->revenue_in_rmb + $order->revenue_in_sgd * $rate,2);
