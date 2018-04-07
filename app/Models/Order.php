@@ -12,6 +12,7 @@ class Order extends Model
     const IN_WAREHOUSE = 30;
     const DOMESTIC_SHIPPED = 40;
     const DELIVERED = 50;
+    const NO_STOCK = 60;
 
     const ORDER_STATUS_LABELS = [
         self::PENDING_DELIVERY => '待发货',
@@ -19,6 +20,7 @@ class Order extends Model
         self::IN_WAREHOUSE => '已入库',
         self::DOMESTIC_SHIPPED => '国内已发货',
         self::DELIVERED => '已送达',
+        self::NO_STOCK => '等待采购',
     ];
 
     protected $fillable = [
