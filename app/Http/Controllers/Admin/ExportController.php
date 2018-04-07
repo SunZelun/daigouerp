@@ -32,14 +32,15 @@ class ExportController extends Controller
 
         if ($type == 'order'){
             $orderStatus = $request->post('order_status',Order::PENDING_DELIVERY);
-            $orders = Order::with(['products.detail', 'customer', 'address'])
+            $orders = Order::with(['products.detail.brand', 'customer', 'address'])
                 ->where(['orders.order_status' => $orderStatus, 'orders.status' => Order::STATUS_ACTIVE, 'user_id' => Auth::id()])
                 ->get();
             $orders = $orders->sortBy('customer.name')->toArray();
+
             return view('admin.export.components.order_table', ['orders' => $orders]);
         } elseif ($type == 'shipment') {
             $shipmentType = $request->get('shipment_type',Shipment::TYPE_INTER);
-            $shipments = Shipment::with(['orders.products.detail', 'orders.customer'])
+            $shipments = Shipment::with(['orders.products.detail.brand', 'orders.customer'])
                 ->where(['type' => $shipmentType, 'status' => Shipment::STATUS_ACTIVE, 'user_id' => Auth::id()])
                 ->orderBy('ship_date',SORT_ASC)
                 ->get();
@@ -59,7 +60,8 @@ class ExportController extends Controller
                             $productString = '';
                             if ($order->products && !empty($order->products)){
                                 foreach ($order->products as $product){
-                                    $productName = $product->detail ? $product->detail->name : '-';
+                                    $brandStr = $product->detail && $product->detail->brand ? $product->detail->brand->name.' ' : "";
+                                    $productName = $product->detail ? $brandStr.$product->detail->name : '-';
                                     $productString .= $product->quantity.' x '.$productName."\r\n";
                                 }
                             }
@@ -111,7 +113,7 @@ class ExportController extends Controller
 
         if ($type == 'order'){
             $orderStatus = $request->get('order_status',Order::PENDING_DELIVERY);
-            $orders = Order::with(['products.detail', 'customer', 'address'])
+            $orders = Order::with(['products.detail.brand', 'customer', 'address'])
                 ->where(['orders.order_status' => $orderStatus, 'orders.status' => Order::STATUS_ACTIVE, 'user_id' => Auth::id()])
                 ->get();
 
@@ -136,7 +138,8 @@ class ExportController extends Controller
                                 $productString = '';
                                 if ($order->products && !empty($order->products)){
                                     foreach ($order->products as $product){
-                                        $productName = $product->detail ? $product->detail->name : '-';
+                                        $brandStr = $product->detail && $product->detail->brand ? $product->detail->brand->name.' ' : '';
+                                        $productName = $product->detail ? $brandStr.$product->detail->name : '-';
                                         $remark = !empty($product->remarks) ? '('.$product->remarks.')' : '';
                                         $productString .= $product->quantity.' x '.$productName.$remark."\r\n";
                                     }
@@ -157,7 +160,7 @@ class ExportController extends Controller
             }
         } elseif($type == 'shipment') {
             $shipmentType = $request->get('shipment_type',Shipment::TYPE_INTER);
-            $shipments = Shipment::with(['orders.products.detail', 'orders.customer'])
+            $shipments = Shipment::with(['orders.products.detail.brand', 'orders.customer'])
                 ->where(['type' => $shipmentType, 'status' => Shipment::STATUS_ACTIVE, 'user_id' => Auth::id()])
                 ->orderBy('ship_date',SORT_ASC)
                 ->get();
@@ -188,7 +191,8 @@ class ExportController extends Controller
                                         $productString = '';
                                         if ($order->products && !empty($order->products)){
                                             foreach ($order->products as $product){
-                                                $productName = $product->detail ? $product->detail->name : '-';
+                                                $brandStr = $product->detail && $product->detail->brand ? $product->detail->brand->name.' ' : '';
+                                                $productName = $product->detail ? $brandStr.$product->detail->name : '-';
                                                 $productString .= $product->quantity.' x '.$productName."\r\n";
                                             }
                                         }
@@ -229,7 +233,8 @@ class ExportController extends Controller
                                 $productString = '';
                                 if ($order->products && !empty($order->products)){
                                     foreach ($order->products as $product){
-                                        $productName = $product->detail ? $product->detail->name : '-';
+                                        $brandStr = $product->detail && $product->detail->brand ? $product->detail->brand->name.' ' : '';
+                                        $productName = $product->detail ? $brandStr.$product->detail->name : '-';
                                         $productString .= $product->quantity.' x '.$productName."\r\n";
                                     }
                                 }

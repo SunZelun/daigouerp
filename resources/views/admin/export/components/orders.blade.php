@@ -37,7 +37,7 @@
                 <td>
                     @if(isset($order['products']) && !empty($order['products']))
                         @foreach($order['products'] as $product)
-                            <span>{{ $product['quantity'] }} x {{ isset($product['detail']['name']) ? $product['detail']['name'] : '-' }} @if(!empty($product['remarks'])) {{ '('.$product['remarks'].')' }} @endif</span>
+                            <span>{{ $product['quantity'] }} x {{ isset($product['detail']['brand']['name']) ? $product['detail']['brand']['name'].' ' : '' }} {{ isset($product['detail']['name']) ? $product['detail']['name'] : '-' }} @if(!empty($product['remarks'])) {{ '('.$product['remarks'].')' }} @endif</span>
                             <br/>
                         @endforeach
                     @endif
