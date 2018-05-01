@@ -50,6 +50,7 @@
                                     <th is='sortable' :column="'cost_in_sgd'">{{ trans('admin.misc.columns.cost_in_sgd') }}</th>
                                     <th is='sortable' :column="'income_in_rmb'">{{ trans('admin.misc.columns.income_in_rmb') }}</th>
                                     <th is='sortable' :column="'income_in_sgd'">{{ trans('admin.misc.columns.income_in_sgd') }}</th>
+                                    <th is='sortable' :column="'income_in_sgd'">{{ 'Remarks' }}</th>
                                     <th is='sortable' :column="'status'">{{ trans('admin.misc.columns.status') }}</th>
                                     
                                     <th></th>
@@ -64,6 +65,7 @@
                                     <td>@{{ item.cost_in_sgd }}</td>
                                     <td>@{{ item.income_in_rmb }}</td>
                                     <td>@{{ item.income_in_sgd }}</td>
+                                    <td>@{{ item.remarks }}</td>
                                     <td>@{{ item.status_name }}</td>
                                     
                                     <td>

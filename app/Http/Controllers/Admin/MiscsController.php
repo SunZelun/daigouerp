@@ -39,7 +39,7 @@ class MiscsController extends Controller
             $request,
 
             // set columns to query
-            ['id', 'type', 'date', 'cost_in_rmb', 'cost_in_sgd', 'income_in_rmb', 'income_in_sgd', 'status'],
+            ['id', 'type', 'date', 'cost_in_rmb', 'cost_in_sgd', 'income_in_rmb', 'income_in_sgd', 'status', 'remarks'],
 
             // set columns to searchIn
             ['id', 'cost_in_rmb', 'cost_in_sgd', 'income_in_rmb', 'income_in_sgd', 'remarks', 'sys_codes.name']
