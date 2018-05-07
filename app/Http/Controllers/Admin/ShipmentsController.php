@@ -26,6 +26,11 @@ class ShipmentsController extends Controller
      */
     public function index(IndexShipment $request)
     {
+        $rawData = $request->all();
+        $rawData['orderBy'] = !empty($rawData['orderBy']) ? $rawData['orderBy'] : 'updated_at';
+        $rawData['orderDirection'] = !empty($rawData['orderDirection']) ? $rawData['orderDirection'] : 'desc';
+        $request->merge($rawData);
+
         // create and AdminListing instance for a specific model and
         $data = AdminListing::create(Shipment::class)->modifyQuery(function($query) use($request){
             $query->where('user_id', Auth::id());
