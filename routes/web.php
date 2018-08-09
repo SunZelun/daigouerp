@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/home', function () {
+    return view('/frontend/welcome');
+});
+
 /* Auto-generated admin routes */
 Route::middleware(['admin'])->group(function () {
     Route::get('/admin',                                  'DashboardController@index');
