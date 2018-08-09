@@ -27,12 +27,14 @@ class ProductsController extends Controller
     public function index(IndexProduct $request)
     {
         $data = $request->all();
-        $data['orderBy'] = !empty($data['orderBy']) ? $data['orderBy'] : 'updated_at';
+        $data['orderBy'] = !empty($data['orderBy']) ? $data['orderBy'] : 'products.updated_at';
         $data['orderDirection'] = !empty($data['orderDirection']) ? $data['orderDirection'] : 'desc';
         $request->merge($data);
         // create and AdminListing instance for a specific model and
         $data = AdminListing::create(Product::class)->modifyQuery(function($query){
-            $query->where('user_id', Auth::id());
+            $query->leftjoin('sys_codes', function ($join) {
+                $join->on('brand_id', '=', 'sys_codes.id')->select('sys_codes.id', 'sys_codes.name');
+            })->where('user_id', Auth::id());
         })->processRequestAndGet(
             // pass the request with params
             $request,
@@ -41,7 +43,7 @@ class ProductsController extends Controller
             ['id', 'name', 'selling_price_rmb', 'selling_price_sgd', 'buying_price_rmb', 'buying_price_sgd', 'status', 'quantity', 'brand_id', 'category_id'],
 
             // set columns to searchIn
-            ['id', 'description', 'remarks', 'name']
+            ['id', 'description', 'remarks', 'name', 'sys_codes.name']
         );
 
         //append category and brand name to product
