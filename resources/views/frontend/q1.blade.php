@@ -14,7 +14,7 @@
 <body>
 <div class="container pt-2">
     <div class="col-12" id="desc-div">
-        <h1>下面有三道 -送-命 题</h1>
+        <h1>下面有三道问答题</h1>
         <h3>答对有奖哦</h3>
         <br>
         <h3>准备好了开始答题！</h3>
