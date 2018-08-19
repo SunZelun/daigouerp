@@ -17,8 +17,7 @@
         <h1>下面有三道问答题</h1>
         <h3>答对有奖哦</h3>
         <br>
-        <h3>准备好了开始答题！</h3>
-        <button class="btn btn-outline-primary" id="start-btn">KSDT</button>
+        <button class="btn btn-outline-primary" id="start-btn">准备好了开始答题！</button>
     </div>
 
     <div class="col-12" id="question-div" style="display: none;">
