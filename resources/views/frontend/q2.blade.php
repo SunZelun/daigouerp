@@ -29,7 +29,7 @@
             </label>
         </div>
         <br>
-        <button class="btn btn-outline-success" id="submit-btn">wxhl</button>
+        <button class="btn btn-outline-success" id="submit-btn">我选好了！</button>
     </div>
 
     <div class="col-12 ad" id="answer-div" style="display: none;">
