@@ -14,7 +14,7 @@
 <body>
 <div class="container pt-2">
     <div class="col-12" id="question-div">
-        <h3>zuihouyt lg z n xinmuzhong xingx shi?</h3>
+        <h3>最后一题 老公在你心目中的形象是？</h3>
         <br>
         <div class="form-check">
             <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="1">
@@ -30,22 +30,22 @@
         </div>
 
         <br>
-        <button class="btn btn-outline-success" id="submit-btn">wxhl</button>
+        <button class="btn btn-outline-success" id="submit-btn">我想好了</button>
     </div>
 
     <div class="col-12 ad" id="answer-div" style="display: none;">
         <hr>
 
         <div class="col-12 ad" id="q1div" style="display: none;">
-            <label>ccs zui da de xz</label>
+            <label>储藏室最大的箱子</label>
         </div>
 
         <div class="col-12 ad" id="q2div" style="display: none;">
-            <label>ccs zui da de xz</label>
+            <label>储藏室最大的箱子</label>
         </div>
 
         <div class="col-12 ad" id="q3div" style="display: none;">
-            <label>ccs zui da de xz</label>
+            <label>储藏室最大的箱子</label>
         </div>
     </div>
 </div>
@@ -53,7 +53,7 @@
 <script>
     $('#submit-btn').click(function () {
         if (!$("input[name='exampleRadios']:checked").val()) {
-            alert("bixuhuid");
+            alert("必须回答！");
             return false;
         }
 
@@ -71,7 +71,7 @@
             $('#answer-div').show();
             $('#q3div').show();
         } else {
-            alert("bixuhuid");
+            alert("必须回答！");
         }
     });
 </script>

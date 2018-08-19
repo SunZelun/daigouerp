@@ -50,15 +50,15 @@
         <hr>
 
         <div class="col-12 ad" id="q1div" style="display: none;">
-            <button class="hide-answer">LGw c le chong x</button>
+            <button class="hide-answer">老公我错了，再给我一次机会吧！</button>
         </div>
 
         <div class="col-12 ad" id="q2div" style="display: none;">
-            <button class="hide-answer">LGw c le chong x</button>
+            <button class="hide-answer">老公我错了，再给我一次机会吧！</button>
         </div>
 
         <div class="col-12 ad" id="q3div" style="display: none;">
-            chuangxia de chou di
+            床下的抽屉
         </div>
     </div>
 </div>
@@ -71,7 +71,7 @@
 
     $('#submit-btn').click(function () {
         if (!$("input[name='exampleRadios']:checked").val()) {
-            alert("bixuhuid");
+            alert("必须回答！");
             return false;
         }
 
@@ -89,7 +89,7 @@
             $('#answer-div').show();
             $('#q3div').show();
         } else {
-            alert("bixuhuid");
+            alert("必须回答！");
         }
     });
 

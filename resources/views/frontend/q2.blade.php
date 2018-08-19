@@ -29,7 +29,7 @@
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="3" disabled="disabled">
+            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="3">
             <label class="form-check-label" for="exampleRadios3">
                 b lg f sk s yq jiu shang l
             </label>
@@ -42,15 +42,15 @@
         <hr>
 
         <div class="col-12 ad" id="q1div" style="display: none;">
-            <button class="hide-answer">LGw c le chong x</button>
+            <button class="hide-answer">老公我错了，再给我一次机会吧！</button>
         </div>
 
         <div class="col-12 ad" id="q2div" style="display: none;">
-            <button class="hide-answer">LGw c le chong x</button>
+            <button class="hide-answer">老公我错了，再给我一次机会吧！</button>
         </div>
 
         <div class="col-12 ad" id="q3div" style="display: none;">
-            <label for="">shu z ta gz</label>
+            <label for="">梳妆台抽屉</label>
         </div>
     </div>
 </div>
@@ -58,7 +58,7 @@
 <script>
     $('#submit-btn').click(function () {
         if (!$("input[name='exampleRadios']:checked").val()) {
-            alert("bixuhuid");
+            alert("必须回答！");
             return false;
         }
 
@@ -76,7 +76,7 @@
             $('#answer-div').show();
             $('#q3div').show();
         } else {
-            alert("bixuhuid");
+            alert("必须回答！");
         }
     });
 
