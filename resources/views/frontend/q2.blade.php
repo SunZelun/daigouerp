@@ -14,24 +14,18 @@
 <body>
 <div class="container pt-2">
     <div class="col-12" id="question-div">
-        <h3>ruguo sk d sh l zen me b</h3>
+        <h3>如果SK2跟老公掉水里了，你会救谁？</h3>
         <br>
         <div class="form-check">
             <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="1" disabled="disabled">
             <label class="form-check-label" for="exampleRadios1">
-                jiu sk
+               救SK2
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="2" disabled="disabled">
+            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="2">
             <label class="form-check-label" for="exampleRadios2">
-                jiu lg
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="3">
-            <label class="form-check-label" for="exampleRadios3">
-                b lg f sk s yq jiu shang l
+                当然救老公啊！
             </label>
         </div>
         <br>
@@ -70,9 +64,6 @@
             $('#answer-div').show();
             $('#q1div').show();
         } else if(answer == "2") {
-            $('#answer-div').show();
-            $('#q2div').show();
-        } else if(answer == "3") {
             $('#answer-div').show();
             $('#q3div').show();
         } else {

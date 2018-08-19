@@ -14,10 +14,10 @@
 <body>
 <div class="container pt-2">
     <div class="col-12" id="desc-div">
-        <h1>Test Header</h1>
-        <h3>This is description.</h3>
+        <h1>下面有三道 -送-命 题</h1>
+        <h3>答对有奖哦</h3>
         <br>
-        <h3>ZBHL,KSDT</h3>
+        <h3>准备好了开始答题！</h3>
         <button class="btn btn-outline-primary" id="start-btn">KSDT</button>
     </div>
 
