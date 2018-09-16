@@ -237,16 +237,20 @@ class DashboardController extends Controller
     }
 
     public function getCurrencyRate(){
-        $rate = session('rate');
+//        $rate = session('rate');
+//
+//        if (empty($rate)){
+//            $curl = new cURL();
+//
+//            $response = $curl->get('https://api.fixer.io/latest?base=SGD&symbols=CNY');
+//            $response = json_decode($response->body,true);
+//            $rate = isset($response['rates']['CNY']) ? $response['rates']['CNY'] : 5;
+//
+//            session(['rate' => $rate]);
+//        }
 
-        if (empty($rate)){
-            $curl = new cURL();
-
-            $response = $curl->get('https://api.fixer.io/latest?base=SGD&symbols=CNY');
-            $response = json_decode($response->body,true);
-            $rate = isset($response['rates']['CNY']) ? $response['rates']['CNY'] : 4.5;
-
-            session(['rate' => $rate]);
+        if (!session('rate')){
+            session(['rate' => 5]);
         }
 
         return session('rate');

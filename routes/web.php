@@ -19,18 +19,6 @@ Route::get('/home', function () {
     return view('/frontend/welcome');
 });
 
-Route::get('/q1', function () {
-    return view('/frontend/q1');
-});
-
-Route::get('/q2', function () {
-    return view('/frontend/q2');
-});
-
-Route::get('/q3', function () {
-    return view('/frontend/q3');
-});
-
 /* Auto-generated admin routes */
 Route::middleware(['admin'])->group(function () {
     Route::get('/admin',                                  'DashboardController@index');
