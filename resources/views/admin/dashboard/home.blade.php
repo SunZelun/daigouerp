@@ -89,6 +89,56 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
+                    Latest Orders
+                </div>
+                <div class="card-body">
+                    @if($latestOrders)
+                        <table class="table table-hover table-responsive">
+                            <tr>
+                                <th>Order Id</th>
+                                <th>顾客姓名</th>
+                                <th>Order Date</th>
+                                <th>最后一次修改时间</th>
+                                <th>订单状态</th>
+                                <th></th>
+                            </tr>
+                            <tbody id="latest-order-body">
+                        @foreach($latestOrders as $inOrder)
+                            <tr class="order">
+                                <td><a href="/admin/orders/{{ $inOrder->id }}" target="_blank">{{ $inOrder->id }}</a></td>
+                                <td>{{ $inOrder->customer->name }} ({{ $inOrder->customer->wechat_name }})</td>
+                                <td>{{ date('Y-m-d', strtotime($inOrder->order_date)) }}</td>
+                                <td>{{ $inOrder->updated_at }}</td>
+                                <td>
+                                    <span class="badge {{ $inOrder->status_color }}">{{ $inOrder->order_status_text }}</span>
+                                </td>
+                                <td>
+                                    <div class="col-auto">
+                                        <a class="btn btn-sm btn-spinner btn-info" target="_blank" href="/admin/orders/{{ $inOrder->id }}/edit" title="{{ trans('brackets/admin-ui::admin.btn.edit') }}" role="button"><i class="fa fa-edit"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                            <tr id="btn-row">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <a id="load-more-btn" href="#" class="btn btn-dark">加载更多</a>
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    @endif
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
                     Sales
                 </div>
                 <div class="card-body">
@@ -278,6 +328,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js"></script>
     <script>
+        $('#load-more-btn').click(function () {
+            let offset = $('.order').length;
+
+            $.ajax({
+                method: "GET",
+                url: "/admin/latest-orders",
+                data: { offset: offset },
+                success: function(response) {
+                    $(response).insertBefore($('#btn-row'));
+                }
+            });
+        });
+
         var default_colors = [
             '#ff6384',
             '#ffcd56',
@@ -426,5 +489,7 @@
 
         var lineChart = document.getElementById("lineChart").getContext("2d");
         window.myLine = new Chart(lineChart, config);
+
+
     </script>
 @endsection

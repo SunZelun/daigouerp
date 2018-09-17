@@ -216,9 +216,23 @@ class DashboardController extends Controller
         $currentHalfYearStart = date("m/d", strtotime($currentHalfYearStart));
         $currentHalfYearEnd = date("m/d", strtotime($currentHalfYearEnd));
 
+        $latestOrders = Order::with(['customer'])
+            ->where(['user_id' => Auth::id(), 'status' => Order::STATUS_ACTIVE])
+            ->where('order_status', '!=', Order::DELIVERED)
+            ->orderBy('updated_at', 'DESC')
+            ->take(5)->get();
+
+        if ($latestOrders) {
+            foreach ($latestOrders as $order) {
+                $order['status_color'] = Order::ORDER_STATUS_COLORS[$order->order_status];
+                $order['order_status_text'] = Order::ORDER_STATUS_LABELS[$order->order_status];
+            }
+        }
+
         return view('admin.dashboard.home', [
             'summary' => $summary,
             'activeOrders' => $activeOrders,
+            'latestOrders' => $latestOrders,
             'activeCustomers' => $activeCustomers,
             'activeProducts' => $activeProducts,
             'totalNumberOfProducts' => $totalNumberOfProducts,
@@ -234,6 +248,25 @@ class DashboardController extends Controller
             'salesByBrands' => $brands,
             'salesByDates' => array_values($dates),
         ]);
+    }
+
+    public function loadLatestOrders(Request $request){
+        $latestOrders = Order::with(['customer'])
+            ->where(['user_id' => Auth::id(), 'status' => Order::STATUS_ACTIVE])
+            ->where('order_status', '!=', Order::DELIVERED)
+            ->orderBy('updated_at', 'DESC')
+            ->offset($request->get('offset',0))
+            ->take($request->get('limit',5))
+            ->get();
+
+        if ($latestOrders) {
+            foreach ($latestOrders as $order) {
+                $order['status_color'] = Order::ORDER_STATUS_COLORS[$order->order_status];
+                $order['order_status_text'] = Order::ORDER_STATUS_LABELS[$order->order_status];
+            }
+        }
+
+        return view('admin.dashboard.order', ['latestOrders' => $latestOrders]);
     }
 
     public function getCurrencyRate(){

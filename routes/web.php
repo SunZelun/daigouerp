@@ -22,7 +22,8 @@ Route::get('/home', function () {
 /* Auto-generated admin routes */
 Route::middleware(['admin'])->group(function () {
     Route::get('/admin',                                  'DashboardController@index');
-    Route::get('/admin/dashboard',                                  'DashboardController@index');
+    Route::get('/admin/dashboard',                              'DashboardController@index');
+    Route::get('/admin/latest-orders',                          'DashboardController@loadLatestOrders');
     Route::get('/admin/users',                                  'Admin\UsersController@index');
     Route::get('/admin/users/create',                           'Admin\UsersController@create');
     Route::post('/admin/users',                                 'Admin\UsersController@store');

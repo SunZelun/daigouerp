@@ -23,6 +23,15 @@ class Order extends Model
         self::NO_STOCK => '等待采购',
     ];
 
+    const ORDER_STATUS_COLORS = [
+        self::PENDING_DELIVERY => 'badge-warning',
+        self::INTERNATIONAL_SHIPPED => 'badge-secondary',
+        self::IN_WAREHOUSE => 'badge-primary',
+        self::DOMESTIC_SHIPPED => 'badge-dark',
+        self::DELIVERED => 'badge-success',
+        self::NO_STOCK => 'badge-danger',
+    ];
+
     protected $fillable = [
         "user_id",
         "customer_id",
