@@ -219,7 +219,7 @@ class DashboardController extends Controller
         $latestOrders = Order::with(['customer'])
             ->where(['user_id' => Auth::id(), 'status' => Order::STATUS_ACTIVE])
             ->where('order_status', '!=', Order::DELIVERED)
-            ->orderBy('updated_at', 'DESC')
+            ->orderBy('order_date', 'DESC')
             ->take(5)->get();
 
         if ($latestOrders) {
@@ -254,7 +254,7 @@ class DashboardController extends Controller
         $latestOrders = Order::with(['customer'])
             ->where(['user_id' => Auth::id(), 'status' => Order::STATUS_ACTIVE])
             ->where('order_status', '!=', Order::DELIVERED)
-            ->orderBy('updated_at', 'DESC')
+            ->orderBy('order_date', 'DESC')
             ->offset($request->get('offset',0))
             ->take($request->get('limit',5))
             ->get();
