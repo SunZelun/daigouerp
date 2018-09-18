@@ -124,7 +124,7 @@
                                 <td></td>
                                 <td></td>
                                 <td>
-                                    <a id="load-more-btn" href="#" class="btn btn-dark">加载更多</a>
+                                    <a id="load-more-btn" href="#" class="btn btn-outline-dark">加载更多</a>
                                 </td>
                                 <td></td>
                                 <td></td>
