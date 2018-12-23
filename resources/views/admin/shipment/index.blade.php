@@ -58,13 +58,13 @@
                                 <tr v-for="(item, index) in collection">
                                     <td>@{{ item.id }}</td>
                                     <td>@{{ item.ship_date | datetime }}</td>
-                                    <td>@{{ item.type_text }}</td>
+                                    <td><span class="badge text-white" :class="item.type_color">@{{ item.type_text }}</span></td>
                                     <td>@{{ item.logistic_company_name }}</td>
                                     <td>@{{ item.tracking_number }}</td>
                                     <td>@{{ item.cost_currency + ' ' + item.cost }}</td>
                                     <td>@{{ item.remarks }}</td>
                                     <td>
-                                        <span class="badge @{{ item->status_color }}">@{{ item.shipment_status_text }}</span>
+                                        <span class="badge" :class="item.status_color">@{{ item.shipment_status_text }}</span>
                                     </td>
                                     <td>
                                         <div class="row no-gutters">

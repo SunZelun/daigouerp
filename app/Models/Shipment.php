@@ -14,6 +14,11 @@ class Shipment extends Model
         self::TYPE_DOME => "国内运输"
     ];
 
+    const TYPE_LABELS_COLORS = [
+        self::TYPE_INTER => "badge-info",
+        self::TYPE_DOME => "badge-danger"
+    ];
+
     const SHIPMENT_SHIPPED = 10;
     const SHIPMENT_DELIVERED = 20;
 

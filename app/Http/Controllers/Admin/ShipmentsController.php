@@ -64,6 +64,7 @@ class ShipmentsController extends Controller
                 $datum['type_text'] = isset($shipmentTypes[$datum->type]) ? $shipmentTypes[$datum->type] : '-';
                 $datum['shipment_status_text'] = isset($shipmentStatus[$datum->shipment_status]) ? $shipmentStatus[$datum->shipment_status] : '-';
                 $datum['status_color'] = Shipment::SHIPMENT_STATUS_COLORS[$datum->shipment_status];
+                $datum['type_color'] = Shipment::TYPE_LABELS_COLORS[$datum->type];
             }
         }
 
