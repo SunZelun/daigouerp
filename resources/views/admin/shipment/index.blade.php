@@ -63,7 +63,9 @@
                                     <td>@{{ item.tracking_number }}</td>
                                     <td>@{{ item.cost_currency + ' ' + item.cost }}</td>
                                     <td>@{{ item.remarks }}</td>
-                                    <td>@{{ item.shipment_status_text }}</td>
+                                    <td>
+                                        <span class="badge @{{ item->status_color }}">@{{ item.shipment_status_text }}</span>
+                                    </td>
                                     <td>
                                         <div class="row no-gutters">
                                             <div class="col-auto">

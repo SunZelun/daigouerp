@@ -22,6 +22,11 @@ class Shipment extends Model
         self::SHIPMENT_DELIVERED => "已送达"
     ];
 
+    const SHIPMENT_STATUS_COLORS = [
+        self::SHIPMENT_SHIPPED => 'badge-warning',
+        self::SHIPMENT_DELIVERED => 'badge-success'
+    ];
+
     protected $fillable = [
         "ship_date",
         "type",
