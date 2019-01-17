@@ -8,6 +8,52 @@
         <div class="row col-md-12">
             <div class="col-sm-6 col-lg-3">
                 <div class="social-box linkedin">
+                    <i style="font-size: 30px;"><small>Current Year Cost</small></i>
+                    <ul>
+                        <li style="width: 100%; border-right: none;">
+                            <b>RMB {{ $currentYearSummary['cost_in_rmb'] }} / SGD {{ $currentYearSummary['cost_in_sgd'] }}</b><br>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-lg-3">
+                <div class="social-box google-plus">
+                    <i style="font-size: 30px;"><small>Current Year Revenue</small></i>
+                    <ul>
+                        <li style="width: 100%; border-right: none;">
+                            <b>RMB {{ $currentYearSummary['revenue_in_rmb'] }} / SGD {{ $currentYearSummary['revenue_in_sgd'] }}</b><br>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-lg-3">
+                <div class="social-box facebook">
+                    <i style="font-size: 30px;"><small>Current Year Profit</small></i>
+                    <ul>
+                        <li style="width: 100%; border-right: none;">
+                            <b>RMB {{ $currentYearSummary['profit_in_rmb'] }} / SGD {{ $currentYearSummary['profit_in_sgd'] }}</b><br>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-lg-3">
+                <div class="social-box facebook">
+                    <i style="font-size: 20px;"><small>Current Year Profit(With Misc)</small></i>
+                    <ul>
+                        <li style="width: 100%; border-right: none;">
+                            <b>RMB {{ $currentYearSummary['rmbInHand'] }} / SGD {{ $currentYearSummary['sgdInHand'] }}</b><br>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row col-md-12">
+            <div class="col-sm-6 col-lg-3">
+                <div class="social-box linkedin">
                     <i style="font-size: 30px;"><small>Cost</small></i>
                     <ul>
                         <li style="width: 100%; border-right: none;">
