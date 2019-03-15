@@ -102,7 +102,7 @@ class DashboardController extends Controller
                 //group sales based on customer
                 if (empty($buyerBreakdown) || !in_array($activeOrder->customer_id, array_keys($buyerBreakdown))){
                     $buyerBreakdown[$activeOrder->customer_id] = [
-                        'name' => $activeOrder->customer->name,
+                        'name' => $activeOrder->customer ? $activeOrder->customer->name : "",
                         'revenue_in_rmb' => $activeOrder->revenue_in_rmb,
                         'revenue_in_sgd' => $activeOrder->revenue_in_sgd
                     ];
