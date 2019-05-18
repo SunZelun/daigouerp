@@ -43,7 +43,7 @@
                     @endif
                 </td>
                 <td>
-                    {{ isset($order['address']) && !empty($order['address']) ? $order['address']['address'].' '.$order['address']['contact_person'].' '.$order['address']['contact_number'].' '.$order['address']['remarks'] : '-' }}
+                    {{ isset($order['address']) && !empty($order['address']) ? $order['address']['contact_person'].' '.$order['address']['address'].' '.$order['address']['contact_number'].' '.$order['address']['remarks'] : '-' }}
                 </td>
             </tr>
             <?php $key++; ?>

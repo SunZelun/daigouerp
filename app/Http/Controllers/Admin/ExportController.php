@@ -144,7 +144,7 @@ class ExportController extends Controller
                                         $productString .= $product->quantity.' x '.$productName.$remark."\r\n";
                                     }
                                 }
-                                $address = $order->address ? $order->address->address.' '.$order->address->contact_person.' '.$order->address->contact_number : '-';
+                                $address = $order->address ? $order->address->contact_person.' '.$order->address->address.' '.$order->address->contact_number : '-';
                                 $contactRemarks = $order->address && !empty($order->address->remarks) ? '('.$order->address->remarks.')' : '';
                                 $sheet->row($index, array(
                                     $key, $customerName, $wechatName, $productString, $address.$contactRemarks
