@@ -50,10 +50,32 @@ class Product extends Model
      */
     public static function updateStock($productId, $quantity){
         $product = Product::where(['id' => $productId])->first();
-        $product->quantity = $product->quantity - $quantity;
-        $product->update();
+//        $product->quantity = $product->quantity - $quantity;
+//        $product->update();
 
         return $product;
+    }
+
+    /**
+     * Get product sales
+     * @param $productId
+     * @return mixed
+     */
+    public static function productSales($productId){
+        $productSales = 0;
+        $productSaleRecords = OrderProduct::where([
+            ['product_id', '=',$productId],
+            ['status', '=', OrderProduct::STATUS_ACTIVE]
+        ])->get();
+
+        if (count($productSaleRecords) > 0) {
+            foreach ($productSaleRecords as $record) {
+                $productSales += $record->quantity;
+            }
+        }
+
+
+        return $productSales;
     }
 
     /**

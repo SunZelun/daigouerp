@@ -51,6 +51,7 @@ class ProductsController extends Controller
             foreach($data->items() as &$product){
                 $product->brand_name = $product->brand ? $product->brand->name : '-';
                 $product->category_name = $product->category ? $product->category->name : '-';
+                $product['sales'] = Product::productSales($product->id);
             }
         }
 
@@ -119,6 +120,7 @@ class ProductsController extends Controller
     public function show(Product $product)
     {
         $product = Product::with(['category', 'brand'])->where(['id' => $product->id])->first();
+        $product['sales'] = Product::productSales($product->id);
         $this->authorize('admin.product.show', $product);
         $priceHistory = $this->priceHistory($product->id);
         $orderStatus = Order::ORDER_STATUS_LABELS;
@@ -142,6 +144,7 @@ class ProductsController extends Controller
     {
         $this->authorize('admin.product.edit', $product);
         $product = Product::with(['category', 'brand'])->where(['id' => $product->id])->first();
+        $product['sales'] = Product::productSales($product->id);
         $priceHistory = $this->priceHistory($product->id);
 
         $codes = SysCode::whereIn('type', ['brand', 'category'])->where(['status' => SysCode::STATUS_ACTIVE])->get();
@@ -255,5 +258,44 @@ class ProductsController extends Controller
         }
 
         return array_values($priceHistory);
+    }
+
+    public function stock(IndexProduct $request) {
+        $data = $request->all();
+        $data['orderBy'] = !empty($data['orderBy']) ? $data['orderBy'] : 'products.updated_at';
+        $data['orderDirection'] = !empty($data['orderDirection']) ? $data['orderDirection'] : 'desc';
+        $request->merge($data);
+        // create and AdminListing instance for a specific model and
+        $data = AdminListing::create(Product::class)->modifyQuery(function($query){
+            $query->leftjoin('sys_codes', function ($join) {
+                $join->on('brand_id', '=', 'sys_codes.id')->select('sys_codes.id', 'sys_codes.name');
+            })->where([
+                ['user_id', '=', Auth::id()],
+                ['quantity', '>', 0]
+            ]);
+        })->processRequestAndGet(
+        // pass the request with params
+            $request,
+
+            // set columns to query
+            ['id', 'name', 'selling_price_rmb', 'selling_price_sgd', 'buying_price_rmb', 'buying_price_sgd', 'status', 'quantity', 'brand_id', 'category_id'],
+
+            // set columns to searchIn
+            ['id', 'description', 'remarks', 'name', 'sys_codes.name']
+        );
+
+        //append category and brand name to product
+        if (!empty($data->items())){
+            foreach($data->items() as &$product){
+                $product->brand_name = $product->brand ? $product->brand->name : '-';
+                $product->category_name = $product->category ? $product->category->name : '-';
+            }
+        }
+
+        if ($request->ajax()) {
+            return ['data' => $data];
+        }
+
+        return view('admin.product.stock', ['data' => $data]);
     }
 }

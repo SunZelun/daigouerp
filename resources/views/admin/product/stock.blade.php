@@ -46,11 +46,8 @@
                                     <th is='sortable' :column="'id'">{{ trans('admin.product.columns.id') }}</th>
                                     <th is='sortable' :column="'brand_id'">{{ trans('Category/Brand') }}</th>
                                     <th is='sortable' :column="'name'">{{ trans('admin.product.columns.name') }}</th>
-                                    <th is='sortable' :column="'selling_price_rmb'">{{ trans('Selling Price') }}</th>
-                                    <th is='sortable' :column="'buying_price_sgd'">{{ trans('Buying Price') }}</th>
                                     <th is='sortable' :column="'quantity'">{{ trans('Quantity') }}</th>
-                                    <th is='sortable'>{{ trans('已卖出') }}</th>
-                                    <th is='sortable' :column="'status'">{{ trans('admin.product.columns.status') }}</th>
+                                    <th is='sortable' :column="'buying_price_sgd'">{{ trans('Buying Price') }}</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -59,20 +56,14 @@
                                     <td><a :href="item.resource_url + ''">@{{ item.id }}</a></td>
                                     <td>@{{ item.category_name }}/@{{ item.brand_name }}</td>
                                     <td><a :href="item.resource_url + ''">@{{ item.name }}</a></td>
-                                    <td>RMB @{{ item.selling_price_rmb }} / SGD @{{ item.selling_price_sgd }}</td>
-                                    <td>RMB @{{ item.buying_price_rmb }} / SGD@{{ item.buying_price_sgd }}</td>
                                     <td>@{{ item.quantity }}</td>
-                                    <td>@{{ item.sales }}</td>
-                                    <td>@{{ item.status }}</td>
+                                    <td>RMB @{{ item.buying_price_rmb }} / SGD@{{ item.buying_price_sgd }}</td>
                                     
                                     <td>
                                         <div class="row no-gutters">
                                             <div class="col-auto">
                                                 <a class="btn btn-sm btn-spinner btn-info" :href="item.resource_url + '/edit'" title="{{ trans('brackets/admin-ui::admin.btn.edit') }}" role="button"><i class="fa fa-edit"></i></a>
                                             </div>
-                                            <form class="col" @submit.prevent="deleteItem(item.resource_url)">
-                                                <button type="submit" class="btn btn-sm btn-danger" title="{{ trans('brackets/admin-ui::admin.btn.delete') }}"><i class="fa fa-trash-o"></i></button>
-                                            </form>
                                         </div>
                                     </td>
                                 </tr>

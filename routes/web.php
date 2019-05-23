@@ -19,11 +19,15 @@ Route::get('/home', function () {
     return view('/frontend/welcome');
 });
 
+Route::get('/range', 'DashboardController@customerRankingByDateRange');
+Route::post('/range', 'DashboardController@customerRankingByDateRange');
+
 /* Auto-generated admin routes */
 Route::middleware(['admin'])->group(function () {
     Route::get('/admin',                                  'DashboardController@index');
     Route::get('/admin/dashboard',                              'DashboardController@index');
     Route::get('/admin/latest-orders',                          'DashboardController@loadLatestOrders');
+    Route::post('/admin/customer-rank',                          'DashboardController@customerRankingByDateRange');
     Route::get('/admin/users',                                  'Admin\UsersController@index');
     Route::get('/admin/users/create',                           'Admin\UsersController@create');
     Route::post('/admin/users',                                 'Admin\UsersController@store');
@@ -65,6 +69,7 @@ Route::middleware(['admin'])->group(function () {
 /* Auto-generated admin routes */
 Route::middleware(['admin'])->group(function () {
     Route::get('/admin/products',                               'Admin\ProductsController@index');
+    Route::get('/admin/stock',                               'Admin\ProductsController@stock');
     Route::get('/admin/products/create',                        'Admin\ProductsController@create');
     Route::post('/admin/products',                              'Admin\ProductsController@store');
     Route::get('/admin/products/{product}',                     'Admin\ProductsController@show');

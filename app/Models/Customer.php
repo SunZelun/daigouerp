@@ -51,4 +51,12 @@ class Customer extends Model
     {
         return $this->hasMany('App\Models\CustomerAddress','customer_id', 'id')->where(['status' => CustomerAddress::STATUS_ACTIVE]);
     }
+
+    /**
+     * Get the address for the customer.
+     */
+    public function orders()
+    {
+        return $this->hasMany('App\Models\Order','customer_id', 'id');
+    }
 }

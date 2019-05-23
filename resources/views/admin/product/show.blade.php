@@ -49,6 +49,13 @@
                     </div>
 
                     <div class="form-group row align-items-center">
+                        <label for="quantity" class="col-form-label text-md-right col-md-2 col-sm-12">{{ trans('已卖出') }}</label>
+                        <div class="col-md-10 col-sm-12">
+                            {{ $product->sales }}
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
                         <label for="selling_price_rmb" class="col-form-label text-md-right col-md-2 col-sm-12">{{ trans('admin.product.columns.selling_price_rmb') }}</label>
                         <div class="col-md-10 col-sm-12">
                             {{ $product->selling_price_rmb }}

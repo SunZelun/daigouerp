@@ -283,7 +283,7 @@
                             </ul>
                         </div>
 
-                        <div class="col-sm-6 col-lg-4">
+                        <div class="col-sm-6 col-lg-4 customer-rank">
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="callout callout-danger">
@@ -300,6 +300,17 @@
                             <hr class="mt-0">
                             <label style="color: black;">Top 5 Buyers ({{ $currentQuarterStart.' to '.$currentQuarterEnd }})</label>
                             <ul class="icons-list">
+{{--                                <li v-for="customer, index in this.customers">--}}
+{{--                                    1111--}}
+{{--                                    <i >@{{ ++index }}</i>--}}
+{{--                                    <div class="desc">--}}
+{{--                                        <div class="title">@{{ customer.name }}</div>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="value">--}}
+{{--                                        <div class="small text-muted">SGD @{{ customer.sgd }}</div>--}}
+{{--                                        <strong>RMB @{{ customer.rmb }}</strong>--}}
+{{--                                    </div>--}}
+{{--                                </li>--}}
                                 <?php $currentQuarterBuyerBreakDown = array_values($currentQuarterBuyerBreakDown); ?>
                                 @if(!empty($currentQuarterBuyerBreakDown))
                                     @foreach($currentQuarterBuyerBreakDown as $buyerKeyTM => $buyerTM)
@@ -373,7 +384,36 @@
 @section('bottom-scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js"></script>
+{{--    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>--}}
+
     <script>
+        {{--var dashboard = new Vue({--}}
+        {{--    el: '.customer-rank',--}}
+        {{--    data: {--}}
+        {{--        a: 1,--}}
+        {{--        customers: []--}}
+        {{--    },--}}
+        {{--    mounted: function () {--}}
+        {{--        var this_ = this;--}}
+        {{--        fetch('/range', {--}}
+        {{--            method: "POST", // *GET, POST, PUT, DELETE, etc.--}}
+        {{--            // mode: "cors", // no-cors, cors, *same-origin--}}
+        {{--            // cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached--}}
+        {{--            // credentials: "same-origin", // include, *same-origin, omit--}}
+        {{--            headers: {--}}
+        {{--                "Content-Type": "application/json",--}}
+        {{--            },--}}
+        {{--            body: JSON.stringify({start: '2019-04-01', end: '2019-04-30', _token: "{{ csrf_token() }}" }), // body data type must match "Content-Type" header--}}
+        {{--        })--}}
+        {{--            .then(function (response) {--}}
+        {{--                return response.json();--}}
+        {{--            }).then(function (result) {--}}
+        {{--            this_.customers = result;--}}
+        {{--            console.log(this_.customers);--}}
+        {{--        });--}}
+        {{--    }--}}
+        {{--})--}}
+
         $('#load-more-btn').click(function () {
             let offset = $('.order').length;
 

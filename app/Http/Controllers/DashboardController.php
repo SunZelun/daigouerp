@@ -7,10 +7,13 @@ use App\Models\Misc;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Shipment;
+use DateInterval;
 use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use anlutro\cURL\cURL;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -489,7 +492,6 @@ class DashboardController extends Controller
         ];
     }
 
-
     /**
      * Compute the start and end date of some fixed o relative quarter in a specific year.
      * @param mixed $quarter  Integer from 1 to 4 or relative string value:
@@ -551,5 +553,23 @@ class DashboardController extends Controller
             'start' => $format ? $start->format($format) : $start,
             'end' => $format ? $end->format($format) : $end,
         );
+    }
+
+    // get customer spending by date
+    public function customerRankingByDateRange(Request $request){
+        DB::connection()->enableQueryLog();
+        $now = new DateTime();
+        $startDate = $request->get('start', $now->sub(new DateInterval('P1D'))->format('Y-m-d'));
+        $endDate = $request->get('end', $now->add(new DateInterval('P2D'))->format('Y-m-d'));
+        $customers = DB::table('customers as c')
+            ->select('c.id as customer_id', 'c.name', DB::raw('SUM(o.revenue_in_rmb) as rmb'), DB::raw('SUM(o.revenue_in_sgd) as sgd'))
+            ->where(['c.user_id' => Auth::id(), 'c.status' => Customer::STATUS_ACTIVE])
+            ->join('orders as o', function($query) use ($startDate, $endDate){
+            $query->on('c.id', '=', 'o.customer_id')->where(['o.user_id' => Auth::id(), 'o.status' => Order::STATUS_ACTIVE])->whereBetween('order_date', [$startDate, $endDate]);
+        })->groupBy('customer_id')
+            ->get();
+
+
+        return json_encode($customers);
     }
 }
