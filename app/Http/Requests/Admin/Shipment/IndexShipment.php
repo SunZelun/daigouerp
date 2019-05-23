@@ -23,7 +23,7 @@ class IndexShipment extends FormRequest
     public function rules()
     {
         return [
-            'orderBy' => 'in:id,ship_date,type,logistic_company_name,tracking_number,logistic_status,cost_currency,cost,remarks,shipment_status,status|nullable',
+            'orderBy' => 'in:id,ship_date,type,logistic_company_name,tracking_number,logistic_status,cost_currency,cost,remarks,shipment_status,status,updated_at|nullable',
             'orderDirection' => 'in:asc,desc|nullable',
             'search' => 'string|nullable',
             'page' => 'integer|nullable',

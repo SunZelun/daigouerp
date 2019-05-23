@@ -23,7 +23,7 @@ class IndexProduct extends FormRequest
     public function rules()
     {
         return [
-            'orderBy' => 'in:id,name,selling_price_rmb,selling_price_sgd,buying_price_rmb,buying_price_sgd,status,brand_id,quantity,updated_at|nullable',
+            'orderBy' => 'in:id,name,selling_price_rmb,selling_price_sgd,buying_price_rmb,buying_price_sgd,status,brand_id,quantity,products.updated_at|nullable',
             'orderDirection' => 'in:asc,desc|nullable',
             'search' => 'string|nullable',
             'page' => 'integer|nullable',

@@ -29,8 +29,8 @@ class OrdersController extends Controller
     public function index(IndexOrder $request)
     {
         $data = $request->all();
-        $data['orderBy'] = !empty($data['orderBy']) ? $data['orderBy'] : 'orders.updated_at';
         $data['orderDirection'] = !empty($data['orderDirection']) ? $data['orderDirection'] : 'desc';
+        $data['orderBy'] = !empty($data['orderBy']) ? $data['orderBy'] : 'orders.updated_at';
         $request->merge($data);
 
         // create and AdminListing instance for a specific model and

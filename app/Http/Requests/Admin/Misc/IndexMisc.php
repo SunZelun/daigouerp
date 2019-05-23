@@ -23,7 +23,7 @@ class IndexMisc extends FormRequest
     public function rules()
     {
         return [
-            'orderBy' => 'in:id,type,date,cost_in_rmb,cost_in_sgd,income_in_rmb,income_in_sgd,status|nullable',
+            'orderBy' => 'in:id,type,date,cost_in_rmb,cost_in_sgd,income_in_rmb,income_in_sgd,status,miscs.updated_at|nullable',
             'orderDirection' => 'in:asc,desc|nullable',
             'search' => 'string|nullable',
             'page' => 'integer|nullable',

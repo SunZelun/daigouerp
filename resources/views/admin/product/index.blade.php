@@ -49,7 +49,7 @@
                                     <th is='sortable' :column="'selling_price_rmb'">{{ trans('Selling Price') }}</th>
                                     <th is='sortable' :column="'buying_price_sgd'">{{ trans('Buying Price') }}</th>
                                     <th is='sortable' :column="'quantity'">{{ trans('Quantity') }}</th>
-                                    <th is='sortable'>{{ trans('已卖出') }}</th>
+                                    <th is='sortable' :column="'quantity'">{{ trans('已卖出') }}</th>
                                     <th is='sortable' :column="'status'">{{ trans('admin.product.columns.status') }}</th>
                                     <th></th>
                                 </tr>

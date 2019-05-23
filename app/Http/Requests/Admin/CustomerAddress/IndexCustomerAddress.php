@@ -23,7 +23,7 @@ class IndexCustomerAddress extends FormRequest
     public function rules()
     {
         return [
-            'orderBy' => 'in:id,customer_id,address,contact_person,contact_number,remarks,status|nullable',
+            'orderBy' => 'in:id,customer_id,address,contact_person,contact_number,remarks,status,customer_addresses.updated_at|nullable',
             'orderDirection' => 'in:asc,desc|nullable',
             'search' => 'string|nullable',
             'page' => 'integer|nullable',

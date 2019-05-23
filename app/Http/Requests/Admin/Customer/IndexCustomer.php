@@ -23,7 +23,7 @@ class IndexCustomer extends FormRequest
     public function rules()
     {
         return [
-            'orderBy' => 'in:id,user_id,name,wechat_name,remarks,status|nullable',
+            'orderBy' => 'in:id,user_id,name,wechat_name,remarks,status,updated_at|nullable',
             'orderDirection' => 'in:asc,desc|nullable',
             'search' => 'string|nullable',
             'page' => 'integer|nullable',

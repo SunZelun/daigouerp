@@ -23,7 +23,7 @@ class IndexSysCode extends FormRequest
     public function rules()
     {
         return [
-            'orderBy' => 'in:id,code,type,name,status|nullable',
+            'orderBy' => 'in:id,code,type,name,status,updated_at|nullable',
             'orderDirection' => 'in:asc,desc|nullable',
             'search' => 'string|nullable',
             'page' => 'integer|nullable',
