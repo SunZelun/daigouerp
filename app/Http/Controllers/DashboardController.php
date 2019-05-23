@@ -21,7 +21,7 @@ class DashboardController extends Controller
         $rate = $this->getCurrencyRate();
         $activeOrders = Order::with(['products.detail.category', 'shipments' => function($query){
             $query->where(['shipments.status' => Shipment::STATUS_ACTIVE]);
-        }])->where(['user_id' => Auth::id(), 'status' => Order::STATUS_ACTIVE])->whereYear('order_date', '2018')->get();
+        }])->where(['user_id' => Auth::id(), 'status' => Order::STATUS_ACTIVE])->get();
         $activeCustomers = Customer::where(['status' => Customer::STATUS_ACTIVE, 'user_id' => Auth::id()])->count();
         $activeProducts = Product::with(['category', 'brand'])->where(['status' => Product::STATUS_ACTIVE, 'user_id' => Auth::id()])->get();
         $misc = Misc::where(['status' => Misc::STATUS_ACTIVE])->get();
