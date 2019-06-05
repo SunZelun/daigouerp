@@ -79,10 +79,14 @@ class Order extends Model
      */
     public static function updateStatus($orderId, $status){
         $order = Order::where(['id' => $orderId])->first();
-        $order->order_status = $status;
-        $order->update();
+        if ($order) {
+            $order->order_status = $status;
+            $order->update();
 
-        return $order;
+            return $order;
+        }
+
+        return true;
     }
 
     /**
