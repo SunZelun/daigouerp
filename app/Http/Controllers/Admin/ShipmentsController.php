@@ -256,8 +256,10 @@ class ShipmentsController extends Controller
 
             //delete previous shipment orders
             foreach ($shipment->shipmentorder as $item){
-                Order::updateStatus($item->order_id, $revertOrderStatus);
-                $item->delete();
+                if ($item && !empty($item->order_id)) {
+                    Order::updateStatus($item->order_id, $revertOrderStatus);
+                    $item->delete();
+                }
             }
 
             foreach ($sanitized['order_ids'] as $orderId){
