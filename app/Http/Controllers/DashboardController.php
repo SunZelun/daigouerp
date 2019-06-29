@@ -384,7 +384,7 @@ class DashboardController extends Controller
                 //group sales based on customer
                 if (empty($buyerBreakdown) || !in_array($activeOrder->customer_id, array_keys($buyerBreakdown))){
                     $buyerBreakdown[$activeOrder->customer_id] = [
-                        'name' => $activeOrder->customer->name,
+                        'name' => $activeOrder->customer ? $activeOrder->customer->name : '已删除',
                         'revenue_in_rmb' => $activeOrder->revenue_in_rmb,
                         'revenue_in_sgd' => $activeOrder->revenue_in_sgd
                     ];
@@ -397,7 +397,7 @@ class DashboardController extends Controller
                     //group sales based on customer
                     if (empty($thisQuarterBuyerBreakDown) || !in_array($activeOrder->customer_id, array_keys($thisQuarterBuyerBreakDown))){
                         $thisQuarterBuyerBreakDown[$activeOrder->customer_id] = [
-                            'name' => $activeOrder->customer->name,
+                            'name' => $activeOrder->customer ? $activeOrder->customer->name : '已删除',
                             'revenue_in_rmb' => $activeOrder->revenue_in_rmb,
                             'revenue_in_sgd' => $activeOrder->revenue_in_sgd
                         ];
@@ -411,7 +411,7 @@ class DashboardController extends Controller
                     //group sales based on customer
                     if (empty($currentHalfYearBuyerBreakDown) || !in_array($activeOrder->customer_id, array_keys($currentHalfYearBuyerBreakDown))){
                         $currentHalfYearBuyerBreakDown[$activeOrder->customer_id] = [
-                            'name' => $activeOrder->customer->name,
+                            'name' => $activeOrder->customer ? $activeOrder->customer->name : '已删除',
                             'revenue_in_rmb' => $activeOrder->revenue_in_rmb,
                             'revenue_in_sgd' => $activeOrder->revenue_in_sgd
                         ];
