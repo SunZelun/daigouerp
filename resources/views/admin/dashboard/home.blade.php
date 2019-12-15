@@ -267,9 +267,22 @@
                             <label style="color: black;">Top Seller</label>
                             <ul class="icons-list">
                                 @if(!empty($salesBreakdown))
-                                    @foreach($salesBreakdown as $item)
+                                    @foreach($salesBreakdown as $itemKey => $item)
+                                        @switch($itemKey)
+                                            @case(1)
+                                            <?php $className = "bg-danger" ?>
+                                            @break
+                                            @case(2)
+                                            <?php $className = "bg-warning" ?>
+                                            @break
+                                            @case(3)
+                                            <?php $className = "bg-success" ?>
+                                            @break
+                                            @default
+                                            <?php $className = "bg-primary" ?>
+                                        @endswitch
                                         <li>
-                                            <i class="icon-present bg-primary"></i>
+                                            <i class="{{ $className }}">{{ $itemKey }}</i>
                                             <div class="desc">
                                                 <div class="title">{{ $item['name'] }}</div>
                                             </div>
@@ -298,7 +311,7 @@
                             </div>
 
                             <hr class="mt-0">
-                            <label style="color: black;">Top 5 Buyers ({{ $currentQuarterStart.' to '.$currentQuarterEnd }})</label>
+                            <label style="color: black;">Top 5 Buyers ({{ $currentYearStart.' to '.$currentYearEnd }})</label>
                             <ul class="icons-list">
 {{--                                <li v-for="customer, index in this.customers">--}}
 {{--                                    1111--}}
@@ -311,9 +324,9 @@
 {{--                                        <strong>RMB @{{ customer.rmb }}</strong>--}}
 {{--                                    </div>--}}
 {{--                                </li>--}}
-                                <?php $currentQuarterBuyerBreakDown = array_values($currentQuarterBuyerBreakDown); ?>
-                                @if(!empty($currentQuarterBuyerBreakDown))
-                                    @foreach($currentQuarterBuyerBreakDown as $buyerKeyTM => $buyerTM)
+                                <?php $currentYearBuyers = array_values($currentYearBuyers); ?>
+                                @if(!empty($currentYearBuyers))
+                                    @foreach($currentYearBuyers as $buyerKeyTM => $buyerTM)
                                         <li>
                                             @switch($buyerKeyTM)
                                                 @case(0)
@@ -342,11 +355,11 @@
                             </ul>
 
                             <hr class="mt-0">
-                            <label style="color: black;">Top 5 Buyers ({{ $currentHalfYearStart.' to '.$currentHalfYearEnd }})</label>
+                            <label style="color: black;">Top 5 Buyers ({{ $lastYearStart.' to '.$lastYearEnd }})</label>
                             <ul class="icons-list">
-                                <?php $currentHalfYearBuyerBreakDown = array_values($currentHalfYearBuyerBreakDown); ?>
-                                @if(!empty($currentHalfYearBuyerBreakDown))
-                                    @foreach($currentHalfYearBuyerBreakDown as $buyerKeyHK => $buyerH)
+                                <?php $lastYearBuyers = array_values($lastYearBuyers); ?>
+                                @if(!empty($lastYearBuyers))
+                                    @foreach($lastYearBuyers as $buyerKeyHK => $buyerH)
                                         <li>
                                             @switch($buyerKeyHK)
                                                 @case(0)

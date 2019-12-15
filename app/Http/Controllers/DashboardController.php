@@ -31,6 +31,15 @@ class DashboardController extends Controller
         $currentQuarterEnd = $this->GetDateOfQuarter()['end']->format('Y-m-d');
 
         $currentMonth = date("n", time());
+
+        // get current year and last year
+        $currentYearStart = date("Y-m-d", strtotime('first day of january this year'));
+        $currentYearEnd = date("Y-m-d", strtotime('last day of december this year'));
+        $lastYearStart = date("Y-m-d", strtotime('first day of january last year'));
+        $lastYearEnd = date("Y-m-d", strtotime('last day of december last year'));
+        $currentYearBuyers = [];
+        $lastYearBuyers = [];
+
         $currentHalfYearBuyerBreakDown = [];
         $currentHalfYearStart = $currentMonth >= 7 ? date("Y-m-d", strtotime('July 1')) : date("Y-m-d", strtotime('Jan 1'));
         $currentHalfYearEnd = $currentMonth >= 7 ? date("Y-m-d", strtotime('Dec 31')) : date("Y-m-d", strtotime('Jun 30'));
@@ -114,33 +123,63 @@ class DashboardController extends Controller
                     $buyerBreakdown[$activeOrder->customer_id]['revenue_in_sgd'] += $activeOrder->revenue_in_sgd;
                 }
 
-                if ($orderDate >= $currentQuarterStart && $orderDate <= $currentQuarterEnd){
+                // get current year buyers
+                if ($orderDate >= $currentHalfYearStart && $orderDate <= $currentYearEnd){
                     //group sales based on customer
-                    if (empty($thisQuarterBuyerBreakDown) || !in_array($activeOrder->customer_id, array_keys($thisQuarterBuyerBreakDown))){
-                        $thisQuarterBuyerBreakDown[$activeOrder->customer_id] = [
+                    if (empty($currentYearBuyers) || !in_array($activeOrder->customer_id, array_keys($currentYearBuyers))){
+                        $currentYearBuyers[$activeOrder->customer_id] = [
                             'name' => $activeOrder->customer ? $activeOrder->customer->name : '已删除',
                             'revenue_in_rmb' => $activeOrder->revenue_in_rmb,
                             'revenue_in_sgd' => $activeOrder->revenue_in_sgd
                         ];
                     } else {
-                        $thisQuarterBuyerBreakDown[$activeOrder->customer_id]['revenue_in_rmb'] += $activeOrder->revenue_in_rmb;
-                        $thisQuarterBuyerBreakDown[$activeOrder->customer_id]['revenue_in_sgd'] += $activeOrder->revenue_in_sgd;
+                        $currentYearBuyers[$activeOrder->customer_id]['revenue_in_rmb'] += $activeOrder->revenue_in_rmb;
+                        $currentYearBuyers[$activeOrder->customer_id]['revenue_in_sgd'] += $activeOrder->revenue_in_sgd;
                     }
                 }
 
-                if ($orderDate >= $currentHalfYearStart && $orderDate <= $currentQuarterEnd){
+                // get last year buyers
+                if ($orderDate >= $lastYearStart && $orderDate <= $lastYearEnd){
                     //group sales based on customer
-                    if (empty($currentHalfYearBuyerBreakDown) || !in_array($activeOrder->customer_id, array_keys($currentHalfYearBuyerBreakDown))){
-                        $currentHalfYearBuyerBreakDown[$activeOrder->customer_id] = [
+                    if (empty($lastYearBuyers) || !in_array($activeOrder->customer_id, array_keys($lastYearBuyers))){
+                        $lastYearBuyers[$activeOrder->customer_id] = [
                             'name' => $activeOrder->customer ? $activeOrder->customer->name : '已删除',
                             'revenue_in_rmb' => $activeOrder->revenue_in_rmb,
                             'revenue_in_sgd' => $activeOrder->revenue_in_sgd
                         ];
                     } else {
-                        $currentHalfYearBuyerBreakDown[$activeOrder->customer_id]['revenue_in_rmb'] += $activeOrder->revenue_in_rmb;
-                        $currentHalfYearBuyerBreakDown[$activeOrder->customer_id]['revenue_in_sgd'] += $activeOrder->revenue_in_sgd;
+                        $lastYearBuyers[$activeOrder->customer_id]['revenue_in_rmb'] += $activeOrder->revenue_in_rmb;
+                        $lastYearBuyers[$activeOrder->customer_id]['revenue_in_sgd'] += $activeOrder->revenue_in_sgd;
                     }
                 }
+
+//                if ($orderDate >= $currentQuarterStart && $orderDate <= $currentQuarterEnd){
+//                    //group sales based on customer
+//                    if (empty($thisQuarterBuyerBreakDown) || !in_array($activeOrder->customer_id, array_keys($thisQuarterBuyerBreakDown))){
+//                        $thisQuarterBuyerBreakDown[$activeOrder->customer_id] = [
+//                            'name' => $activeOrder->customer ? $activeOrder->customer->name : '已删除',
+//                            'revenue_in_rmb' => $activeOrder->revenue_in_rmb,
+//                            'revenue_in_sgd' => $activeOrder->revenue_in_sgd
+//                        ];
+//                    } else {
+//                        $thisQuarterBuyerBreakDown[$activeOrder->customer_id]['revenue_in_rmb'] += $activeOrder->revenue_in_rmb;
+//                        $thisQuarterBuyerBreakDown[$activeOrder->customer_id]['revenue_in_sgd'] += $activeOrder->revenue_in_sgd;
+//                    }
+//                }
+//
+//                if ($orderDate >= $currentHalfYearStart && $orderDate <= $currentQuarterEnd){
+//                    //group sales based on customer
+//                    if (empty($currentHalfYearBuyerBreakDown) || !in_array($activeOrder->customer_id, array_keys($currentHalfYearBuyerBreakDown))){
+//                        $currentHalfYearBuyerBreakDown[$activeOrder->customer_id] = [
+//                            'name' => $activeOrder->customer ? $activeOrder->customer->name : '已删除',
+//                            'revenue_in_rmb' => $activeOrder->revenue_in_rmb,
+//                            'revenue_in_sgd' => $activeOrder->revenue_in_sgd
+//                        ];
+//                    } else {
+//                        $currentHalfYearBuyerBreakDown[$activeOrder->customer_id]['revenue_in_rmb'] += $activeOrder->revenue_in_rmb;
+//                        $currentHalfYearBuyerBreakDown[$activeOrder->customer_id]['revenue_in_sgd'] += $activeOrder->revenue_in_sgd;
+//                    }
+//                }
 
                 //retrieve shipments
                 if ($activeOrder->shipments){
@@ -207,8 +246,8 @@ class DashboardController extends Controller
         $totalNumberOfProducts = count($activeProducts);
         $salesBreakdown = collect($salesBreakdown)->sortBy('quantity')->reverse()->take(10)->toArray();
         $buyerBreakdown = collect($buyerBreakdown)->sortBy('revenue_in_rmb')->reverse()->take(10)->toArray();
-        $thisQuarterBuyerBreakDown = collect($thisQuarterBuyerBreakDown)->sortBy('revenue_in_rmb')->reverse()->take(5)->toArray();
-        $currentHalfYearBuyerBreakDown = collect($currentHalfYearBuyerBreakDown)->sortBy('revenue_in_rmb')->reverse()->take(5)->toArray();
+        $currentYearBuyers = collect($currentYearBuyers)->sortBy('revenue_in_rmb')->reverse()->take(5)->toArray();
+        $lastYearBuyers = collect($lastYearBuyers)->sortBy('revenue_in_rmb')->reverse()->take(5)->toArray();
         $activeProducts = collect($activeProducts)->sortBy('quantity')->reverse()->take(10)->toArray();
         arsort($categories);
         arsort($brands);
@@ -246,12 +285,12 @@ class DashboardController extends Controller
             'totalNumberOfProducts' => $totalNumberOfProducts,
             'salesBreakdown' => $salesBreakdown,
             'buyerBreakdown' => $buyerBreakdown,
-            'currentQuarterBuyerBreakDown' => $thisQuarterBuyerBreakDown,
-            'currentHalfYearBuyerBreakDown' => $currentHalfYearBuyerBreakDown,
-            'currentQuarterStart' => $currentQuarterStart,
-            'currentQuarterEnd' => $currentQuarterEnd,
-            'currentHalfYearStart' => $currentHalfYearStart,
-            'currentHalfYearEnd' => $currentHalfYearEnd,
+            'currentYearBuyers' => $currentYearBuyers,
+            'lastYearBuyers' => $lastYearBuyers,
+            'currentYearStart' => $currentYearStart,
+            'currentYearEnd' => $currentYearEnd,
+            'lastYearStart' => $lastYearStart,
+            'lastYearEnd' => $lastYearEnd,
             'salesByCategories' => $categories,
             'salesByBrands' => $brands,
             'salesByDates' => array_values($dates),
