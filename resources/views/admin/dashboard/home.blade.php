@@ -267,8 +267,10 @@
                             <label style="color: black;">Top Seller</label>
                             <ul class="icons-list">
                                 @if(!empty($salesBreakdown))
+                                    <?php $productCounter = 0; ?>
                                     @foreach($salesBreakdown as $itemKey => $item)
-                                        @switch($itemKey)
+                                        <?php $productCounter++ ?>
+                                        @switch($productCounter)
                                             @case(1)
                                             <?php $className = "bg-danger" ?>
                                             @break
@@ -282,7 +284,7 @@
                                             <?php $className = "bg-primary" ?>
                                         @endswitch
                                         <li>
-                                            <i class="{{ $className }}">{{ $itemKey }}</i>
+                                            <i class="{{ $className }}">{{ $productCounter }}</i>
                                             <div class="desc">
                                                 <div class="title">{{ $item['name'] }}</div>
                                             </div>
