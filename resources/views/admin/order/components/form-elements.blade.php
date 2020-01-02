@@ -18,7 +18,7 @@
                 <select v-model="form.customer_address_id" id="address_selection" name="customer_address_id" class="form-control">
                     @if(isset($addresses) && !empty($addresses))
                         @foreach($addresses as $address)
-                            <option value="{{ $address->id }}">{{ $address->address }}</option>
+                            <option value="{{ $address->id }}">{{ $address->address. ' ' . $address->contact_person . ' ' . $address->contact_number }}</option>
                         @endforeach
                     @endif
                 </select>

@@ -180,7 +180,7 @@ class OrdersController extends Controller
         $order = Order::with(['customer', 'products.detail.brand'])->where(['id' => $order->id])->first();
         $this->authorize('admin.order.edit', $order);
 
-        $addresses = CustomerAddress::where(['customer_id' => $order->customer_id])->get();
+        $addresses = CustomerAddress::where(['customer_id' => $order->customer_id, 'status' => CustomerAddress::STATUS_ACTIVE])->get();
         $customers = Customer::where(['user_id' => Auth::id(), 'status' => Customer::STATUS_ACTIVE])->select(['id','name', 'wechat_name'])->get();
         $products = Product::with('brand')->where(['user_id' => Auth::id(), 'status' => Product::STATUS_ACTIVE])->get();
         $rate = session('rate') ? session('rate') : 4.5;
