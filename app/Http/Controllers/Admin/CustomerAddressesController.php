@@ -182,16 +182,22 @@ class CustomerAddressesController extends Controller
         if (!$customer){
             return null;
         }
-
+        
         $addresses = $customer->addresses;
+        $toArray = [];
+
         if (!empty($addresses)) {
             foreach ($addresses as $key => $address) {
                 if ($address['status'] != CustomerAddress::STATUS_ACTIVE) {
                     unset($addresses[$key]);
                 }
             }
+
+            foreach ($addresses as $key => $address) {
+                $toArray[] = $address;
+            }
         }
 
-        return $addresses;
+        return $toArray;
     }
 }

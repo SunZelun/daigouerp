@@ -51,7 +51,9 @@
                     $('#address_selection').empty();
                     var option = '<option value=""></option>';
                     $('#address_selection').append(option);
+                    console.log(result);
                     if (result.length > 0){
+                        console.log("not empty");
                         $.each(result, function (i,val) {
                             var option = '<option value="'+val.id+'">'+val.address+' '+val.contact_person+' '+val.contact_number+'</option>';
                             $('#address_selection').append(option);
