@@ -6,7 +6,7 @@
 
     <product-listing
         :data="{{ $data->toJson() }}"
-        :url="'{{ url('admin/products') }}'"
+        :url="'{{ url('admin/stock') }}'"
         inline-template>
 
         <div class="row">
