@@ -124,7 +124,7 @@ class DashboardController extends Controller
                 }
 
                 // get current year buyers
-                if ($orderDate >= $currentHalfYearStart && $orderDate <= $currentYearEnd){
+                if ($orderDate >= $currentYearStart && $orderDate <= $currentYearEnd){
                     //group sales based on customer
                     if (empty($currentYearBuyers) || !in_array($activeOrder->customer_id, array_keys($currentYearBuyers))){
                         $currentYearBuyers[$activeOrder->customer_id] = [
