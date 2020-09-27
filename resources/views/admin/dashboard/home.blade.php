@@ -11,7 +11,7 @@
                     <i style="font-size: 30px;"><small>Current Year Cost</small></i>
                     <ul>
                         <li style="width: 100%; border-right: none;">
-                            <b>RMB {{ $currentYearSummary['cost_in_rmb'] }} / SGD {{ $currentYearSummary['cost_in_sgd'] }}</b><br>
+                            <b>RMB {{ round($currentYearSummary['cost_in_rmb'],2) }} / SGD {{ round($currentYearSummary['cost_in_sgd'],2) }}</b><br>
                         </li>
                     </ul>
                 </div>
@@ -22,7 +22,7 @@
                     <i style="font-size: 30px;"><small>Current Year Revenue</small></i>
                     <ul>
                         <li style="width: 100%; border-right: none;">
-                            <b>RMB {{ $currentYearSummary['revenue_in_rmb'] }} / SGD {{ $currentYearSummary['revenue_in_sgd'] }}</b><br>
+                            <b>RMB {{ round($currentYearSummary['revenue_in_rmb'],2) }} / SGD {{ round($currentYearSummary['revenue_in_sgd'],2) }}</b><br>
                         </li>
                     </ul>
                 </div>
@@ -33,7 +33,7 @@
                     <i style="font-size: 30px;"><small>Current Year Profit</small></i>
                     <ul>
                         <li style="width: 100%; border-right: none;">
-                            <b>RMB {{ $currentYearSummary['profit_in_rmb'] }} / SGD {{ $currentYearSummary['profit_in_sgd'] }}</b><br>
+                            <b>RMB {{ round($currentYearSummary['profit_in_rmb'],2) }} / SGD {{ round($currentYearSummary['profit_in_sgd'],2) }}</b><br>
                         </li>
                     </ul>
                 </div>
@@ -44,7 +44,7 @@
                     <i style="font-size: 20px;"><small>Current Year Profit(With Misc)</small></i>
                     <ul>
                         <li style="width: 100%; border-right: none;">
-                            <b>RMB {{ $currentYearSummary['rmbInHand'] }} / SGD {{ $currentYearSummary['sgdInHand'] }}</b><br>
+                            <b>RMB {{ round($currentYearSummary['rmbInHand'],2) }} / SGD {{ round($currentYearSummary['sgdInHand'],2) }}</b><br>
                         </li>
                     </ul>
                 </div>
@@ -57,7 +57,7 @@
                     <i style="font-size: 30px;"><small>Cost</small></i>
                     <ul>
                         <li style="width: 100%; border-right: none;">
-                            <b>RMB {{ $summary['cost_in_rmb'] }} / SGD {{ $summary['cost_in_sgd'] }}</b><br>
+                            <b>RMB {{ round($summary['cost_in_rmb'],2) }} / SGD {{ round($summary['cost_in_sgd'],2) }}</b><br>
                         </li>
                     </ul>
                 </div>
@@ -68,7 +68,7 @@
                     <i style="font-size: 30px;"><small>Revenue</small></i>
                     <ul>
                         <li style="width: 100%; border-right: none;">
-                            <b>RMB {{ $summary['revenue_in_rmb'] }} / SGD {{ $summary['revenue_in_sgd'] }}</b><br>
+                            <b>RMB {{ round($summary['revenue_in_rmb'],2) }} / SGD {{ round($summary['revenue_in_sgd'],2) }}</b><br>
                         </li>
                     </ul>
                 </div>
@@ -79,7 +79,7 @@
                     <i style="font-size: 30px;"><small>Profit</small></i>
                     <ul>
                         <li style="width: 100%; border-right: none;">
-                            <b>RMB {{ $summary['profit_in_rmb'] }} / SGD {{ $summary['profit_in_sgd'] }}</b><br>
+                            <b>RMB {{ round($summary['profit_in_rmb'],2) }} / SGD {{ round($summary['profit_in_sgd'],2) }}</b><br>
                         </li>
                     </ul>
                 </div>
@@ -90,7 +90,7 @@
                     <i style="font-size: 30px;"><small>Profit(With Misc)</small></i>
                     <ul>
                         <li style="width: 100%; border-right: none;">
-                            <b>RMB {{ $summary['rmbInHand'] }} / SGD {{ $summary['sgdInHand'] }}</b><br>
+                            <b>RMB {{ round($summary['rmbInHand'],2) }} / SGD {{ round($summary['sgdInHand'],2) }}</b><br>
                         </li>
                     </ul>
                 </div>
