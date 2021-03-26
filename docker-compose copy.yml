@@ -7,12 +7,12 @@ services:
         uid: 1000
       context: ./
       dockerfile: Dockerfile
-    image: daigou:latest
+    image: jerrysun/daigou:latest
     container_name: daigou-app
     restart: unless-stopped
     working_dir: /var/www/
     volumes:
-      - ./:/var/www
+      - ${WEBAPP_STORAGE_HOME}:/var/www
     networks:
       - daigou
 
@@ -27,7 +27,7 @@ services:
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     volumes:
-      - ./docker-compose/mysql:/docker-entrypoint-initdb.d
+      - ${WEBAPP_STORAGE_HOME}/docker-compose/mysql:/docker-entrypoint-initdb.d
     networks:
       - daigou
 
@@ -38,8 +38,8 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./:/var/www
-      - ./docker-compose/nginx:/etc/nginx/conf.d
+      - ${WEBAPP_STORAGE_HOME}:/var/www
+      - ${WEBAPP_STORAGE_HOME}/docker-compose/nginx:/etc/nginx/conf.d
     networks:
       - daigou
 
