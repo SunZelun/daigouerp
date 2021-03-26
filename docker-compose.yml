@@ -12,7 +12,7 @@ services:
     restart: unless-stopped
     working_dir: /var/www/
     volumes:
-      - ${WEBAPP_STORAGE_HOME}:/var/www
+      - ./:/var/www
     networks:
       - daigou
 
@@ -27,7 +27,7 @@ services:
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     volumes:
-      - ${WEBAPP_STORAGE_HOME}/docker-compose/mysql:/docker-entrypoint-initdb.d
+      - ./docker-compose/mysql:/docker-entrypoint-initdb.d
     networks:
       - daigou
 
@@ -38,8 +38,8 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ${WEBAPP_STORAGE_HOME}:/var/www
-      - ${WEBAPP_STORAGE_HOME}/docker-compose/nginx:/etc/nginx/conf.d
+      - ./:/var/www
+      - ./docker-compose/nginx:/etc/nginx/conf.d
     networks:
       - daigou
 
