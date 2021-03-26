@@ -1,0 +1,48 @@
+version: "3.7"
+services:
+  app:
+    build:
+      args:
+        user: lex
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: jerrysun/daigou:latest
+    container_name: daigou-app
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ${WEBAPP_STORAGE_HOME}:/var/www
+    networks:
+      - daigou
+
+  db:
+    image: mysql:5.7
+    container_name: daigou-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - ${WEBAPP_STORAGE_HOME}/docker-compose/mysql:/docker-entrypoint-initdb.d
+    networks:
+      - daigou
+
+  nginx:
+    image: nginx:alpine
+    container_name: daigou-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ${WEBAPP_STORAGE_HOME}:/var/www
+      - ${WEBAPP_STORAGE_HOME}/docker-compose/nginx:/etc/nginx/conf.d
+    networks:
+      - daigou
+
+networks:
+  daigou:
+    driver: bridge
