@@ -12,12 +12,12 @@ services:
     restart: unless-stopped
     working_dir: /var/www/
     volumes:
-      - ${WEBAPP_STORAGE_HOME}:/var/www
+      - ${WEBAPP_STORAGE_HOME}/source/daigou:/var/www
     networks:
       - daigou
 
   db:
-    image: mysql:5.7
+    image: jerrysun/mysql:5.7
     container_name: daigou-db
     restart: unless-stopped
     environment:
@@ -27,8 +27,8 @@ services:
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     volumes:
-      - ${WEBAPP_STORAGE_HOME}/docker-compose/mysql:/docker-entrypoint-initdb.d
-    networks:
+      - ${WEBAPP_STORAGE_HOME}/source/daigou/docker-compose/mysql:/docker-entrypoint-initdb.d
+    networks: 
       - daigou
 
   nginx:
@@ -38,8 +38,8 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ${WEBAPP_STORAGE_HOME}:/var/www
-      - ${WEBAPP_STORAGE_HOME}/docker-compose/nginx:/etc/nginx/conf.d
+      - ${WEBAPP_STORAGE_HOME}/source/daigou:/var/www
+      - ${WEBAPP_STORAGE_HOME}/source/daigou/docker-compose/nginx:/etc/nginx/conf.d
     networks:
       - daigou
 
