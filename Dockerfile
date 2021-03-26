@@ -28,8 +28,10 @@ RUN useradd -G www-data,root -u $uid -d /home/$user $user
 RUN mkdir -p /home/$user/.composer && \
     chown -R $user:$user /home/$user
 
+COPY . /var/www
+
 # Set working directory
 WORKDIR /var/www
-COPY . /var/www
+RUN composer install
 
 USER $user
